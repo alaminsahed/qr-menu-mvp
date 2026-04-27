@@ -16,16 +16,28 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const [activeCategory, setActiveCategory] = useState(categories[0] || "");
   const featuredItem = menuItems[0];
   const visibleCategories = categories.slice(0, 4);
+  const categoryTitles: Record<string, string> = {
+    Burgers: "Bengali Fusion Burgers",
+    Drinks: "Cooling Drinks",
+    Coffee: "Coffee",
+  };
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-sm bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
         <header className="mb-5 flex items-center justify-between gap-3">
-          <h1 className="text-xl font-bold text-[#7c2c16]">Shonali Bhoj</h1>
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#8c2d0f] text-xs font-bold text-[#ffe6bf] shadow-[0_3px_10px_rgba(140,45,15,0.35)]">
+              SB
+            </span>
+            <h1 className="text-[1.65rem] leading-none font-bold text-[#7c2c16]">
+              Shonali Bhoj
+            </h1>
+          </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="rounded-full bg-[#22c55e] px-3 py-1.5 text-xs font-semibold text-white"
+              className="rounded-full bg-[#22c55e] px-3.5 py-1.5 text-xs font-semibold text-white shadow-[0_3px_9px_rgba(34,197,94,0.35)]"
             >
               Call Waiter
             </button>
@@ -48,8 +60,8 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
                   onClick={() => setActiveCategory(category)}
                   className={`rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap ${
                     isActive
-                      ? "bg-[#4b6f4f] text-white"
-                      : "bg-[#e8e5df] text-[#5f4f49]"
+                      ? "bg-[#4b6f4f] text-white shadow-[0_4px_10px_rgba(75,111,79,0.26)]"
+                      : "bg-[#e8e5df] text-[#5f4f49] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)]"
                   }`}
                 >
                   {category}
@@ -63,7 +75,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           <h2 className="mb-3 text-[2rem] leading-none font-bold text-[#7c2c16]">
             Today&apos;s Special
           </h2>
-          <article className="relative overflow-hidden rounded-3xl">
+          <article className="relative overflow-hidden rounded-3xl shadow-[0_10px_28px_rgba(0,0,0,0.26)]">
             <Image
               src={featuredItem.image_url}
               alt={featuredItem.name_en}
@@ -77,7 +89,9 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
               <span className="mb-2 inline-flex rounded-full bg-[#f8df9f] px-3 py-1 text-sm font-semibold text-[#4a3729]">
                 Popular
               </span>
-              <h3 className="text-xl font-semibold">{featuredItem.name_en}</h3>
+              <h3 className="text-[1.35rem] leading-tight font-semibold">
+                {featuredItem.name_en}
+              </h3>
               <div className="mt-1 flex items-center justify-between gap-2">
                 <p className="max-w-[72%] truncate text-sm text-white/90">
                   {featuredItem.description_en}
@@ -98,7 +112,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           return (
             <section key={category} className="mb-8 space-y-3">
               <h3 className="text-[2rem] leading-none font-bold text-[#7c2c16]">
-                {category === "Drinks" ? "Cooling Drinks" : `${category}`}
+                {categoryTitles[category] ?? category}
               </h3>
               {itemsByCategory.map((item) => (
                 <MenuItemCard key={item.id} item={item} />
@@ -108,7 +122,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         })}
       </div>
       <FloatingBasketBar />
-      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-sm border-t border-[#ebe7df] bg-[#f7f5f1]">
+      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-sm border-t border-[#ebe7df] bg-[#f7f5f1] shadow-[0_-6px_14px_rgba(57,34,23,0.08)]">
         <button
           type="button"
           className="flex-1 py-3 text-sm font-semibold text-[#8c2d0f]"

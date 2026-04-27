@@ -17,7 +17,7 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
   const qty = getItemQty(item.id);
 
   return (
-    <div className="flex gap-3 rounded-2xl bg-white p-3 shadow-[0_2px_14px_rgba(80,40,20,0.07)]">
+    <div className="flex gap-3 rounded-2xl bg-white p-3 shadow-[0_5px_14px_rgba(80,40,20,0.08)]">
       <div className="flex-1">
         <h3 className="text-2xl leading-tight font-semibold text-[#171717]">
           {getLocalizedName(item, language)}

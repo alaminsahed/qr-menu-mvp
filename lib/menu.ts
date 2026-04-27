@@ -56,7 +56,7 @@ export const menuItems: MenuItem[] = [
     description_bn: "ক্রিমি দই, ম্যাঙ্গো পাল্প এবং জাফরান।",
     price: 180,
     image_url:
-      "https://images.unsplash.com/photo-1626200419199-e8c7b9675f9d?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1000&auto=format&fit=crop",
     available: true,
   },
   {
