@@ -11,26 +11,32 @@ export function QuantityPicker({
 }: QuantityPickerProps) {
   if (quantity === 0) {
     return (
-      <button type="button" onClick={onAdd} className="ui-btn-primary text-sm">
+      <button
+        type="button"
+        onClick={onAdd}
+        className="rounded-full bg-[#8c2d0f] px-5 py-1.5 text-sm font-semibold text-white"
+      >
         Add
       </button>
     );
   }
 
   return (
-    <div className="flex items-center rounded-full bg-elevated px-1 py-1">
+    <div className="flex items-center gap-1 rounded-full bg-[#f3f0ea] px-1 py-1">
       <button
         type="button"
         onClick={onRemove}
-        className="h-8 w-8 rounded-full bg-surface text-sm"
+        className="h-7 w-7 rounded-full bg-white text-sm text-[#423733]"
       >
         -
       </button>
-      <span className="px-3 text-sm font-semibold">{quantity}</span>
+      <span className="min-w-7 text-center text-sm font-semibold text-[#3b2f2a]">
+        {quantity}
+      </span>
       <button
         type="button"
         onClick={onAdd}
-        className="h-8 w-8 rounded-full bg-primary-ui text-sm text-white"
+        className="h-7 w-7 rounded-full bg-[#8c2d0f] text-sm text-white"
       >
         +
       </button>

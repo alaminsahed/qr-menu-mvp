@@ -32,7 +32,7 @@ Set up a fresh Next.js project using App Router, TypeScript, and Tailwind; add S
   - Sign-in page in `[app/login/page.tsx](/home/alamin/Desktop/web-dev/qr-menu/app/login/page.tsx)`
   - Auth callback route in `[app/auth/callback/route.ts](/home/alamin/Desktop/web-dev/qr-menu/app/auth/callback/route.ts)`
   - Protected sample page in `[app/protected/page.tsx](/home/alamin/Desktop/web-dev/qr-menu/app/protected/page.tsx)`
-  - Optional middleware/session check in `[middleware.ts](/home/alamin/Desktop/web-dev/qr-menu/middleware.ts)` for protected routing behavior.
+  - Optional proxy/session check in `[proxy.ts](/home/alamin/Desktop/web-dev/qr-menu/proxy.ts)` for protected routing behavior.
 - Configure Prettier with `[.prettierrc](/home/alamin/Desktop/web-dev/qr-menu/.prettierrc)`, `[.prettierignore](/home/alamin/Desktop/web-dev/qr-menu/.prettierignore)`, and npm scripts (`format`, `format:check`).
 - Ensure ESLint is enabled and aligned with Next.js defaults, then add scripts (`lint`, optionally `lint:fix`) in `[package.json](/home/alamin/Desktop/web-dev/qr-menu/package.json)`.
 - Verify setup by running install + checks (`npm run lint`, `npm run format:check`, and build/dev smoke test).
