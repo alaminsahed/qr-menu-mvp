@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { BasketItemRow } from "@/components/client/basket-item-row";
 import { LanguageToggle } from "@/components/client/language-toggle";
 import { TopAppBar } from "@/components/client/top-app-bar";
@@ -15,10 +16,12 @@ const SERVICE_FEE = 40;
 const WHATSAPP_NUMBER = "8801700000000";
 
 export default function BasketPage() {
+  const searchParams = useSearchParams();
+  const tableFromQuery = searchParams.get("table")?.trim() ?? "";
   const { language } = useLanguage();
   const { cart, subtotal, itemCount } = useCart();
   const [orderType, setOrderType] = useState<"dinein" | "delivery">("dinein");
-  const [table, setTable] = useState("");
+  const [table, setTable] = useState(tableFromQuery);
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
 
@@ -73,7 +76,10 @@ export default function BasketPage() {
       <TopAppBar
         title="Your Basket"
         left={
-          <Link href="/menu" className="ui-text-body-sm">
+          <Link
+            href={tableFromQuery ? `/menu?table=${tableFromQuery}` : "/menu"}
+            className="ui-text-body-sm"
+          >
             Back
           </Link>
         }
@@ -83,9 +89,9 @@ export default function BasketPage() {
       <div className="ui-screen space-y-4">
         {cartItems.length === 0 ? (
           <div className="ui-card p-6 text-center">
-            <p className="ui-text-body-sm">Basket is empty.</p>
+            <p className="ui-text-body-sm">No product in basket.</p>
             <Link
-              href="/menu"
+              href={tableFromQuery ? `/menu?table=${tableFromQuery}` : "/menu"}
               className="ui-text-body-sm mt-3 inline-block text-primary-ui underline"
             >
               Go to menu
@@ -97,60 +103,72 @@ export default function BasketPage() {
           ))
         )}
 
-        <section className="ui-panel space-y-3">
-          <h2 className="ui-text-title">Order Method</h2>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setOrderType("dinein")}
-              className={`flex-1 ${
-                orderType === "dinein" ? "ui-btn-primary" : "ui-btn-secondary"
-              }`}
-            >
-              At Restaurant
-            </button>
-            <button
-              type="button"
-              onClick={() => setOrderType("delivery")}
-              className={`flex-1 ${
-                orderType === "delivery" ? "ui-btn-primary" : "ui-btn-secondary"
-              }`}
-            >
-              Delivery
-            </button>
-          </div>
-          {orderType === "dinein" ? (
-            <input
-              type="text"
-              value={table}
-              onChange={(e) => setTable(e.target.value)}
-              placeholder="Table number"
-              className="ui-input"
-            />
-          ) : (
-            <textarea
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Delivery address"
-              className="ui-input min-h-24"
-            />
-          )}
-        </section>
+        {cartItems.length > 0 ? (
+          <>
+            <section className="ui-panel space-y-3">
+              <h2 className="ui-text-title">Order Method</h2>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setOrderType("dinein")}
+                  className={`flex-1 ${
+                    orderType === "dinein" ? "ui-btn-primary" : "ui-btn-secondary"
+                  }`}
+                >
+                  At Restaurant
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOrderType("delivery")}
+                  className={`flex-1 ${
+                    orderType === "delivery"
+                      ? "ui-btn-primary"
+                      : "ui-btn-secondary"
+                  }`}
+                >
+                  Delivery
+                </button>
+              </div>
+              {orderType === "dinein" ? (
+                tableFromQuery ? (
+                  <div className="ui-input bg-elevated">
+                    Table {tableFromQuery}
+                  </div>
+                ) : (
+                  <input
+                    type="text"
+                    value={table}
+                    onChange={(e) => setTable(e.target.value)}
+                    placeholder="Table number"
+                    className="ui-input"
+                  />
+                )
+              ) : (
+                <textarea
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Delivery address"
+                  className="ui-input min-h-24"
+                />
+              )}
+            </section>
 
-        <section className="ui-panel space-y-2">
-          <div className="ui-text-body-sm flex justify-between">
-            <span>Subtotal</span>
-            <span>{formatBdt(subtotal)}</span>
-          </div>
-          <div className="ui-text-body-sm flex justify-between">
-            <span>Service / Delivery</span>
-            <span>{formatBdt(itemCount > 0 ? SERVICE_FEE : 0)}</span>
-          </div>
-          <div className="flex justify-between border-t border-default pt-2 font-semibold text-primary-ui">
-            <span>Total</span>
-            <span>{formatBdt(total)}</span>
-          </div>
-        </section>
+            <section className="ui-panel space-y-2">
+              <div className="ui-text-body-sm flex justify-between">
+                <span>Subtotal</span>
+                <span>{formatBdt(subtotal)}</span>
+              </div>
+              <div className="ui-text-body-sm flex justify-between">
+                <span>Service / Delivery</span>
+                <span>{formatBdt(itemCount > 0 ? SERVICE_FEE : 0)}</span>
+              </div>
+              <div className="flex justify-between border-t border-default pt-2 font-semibold text-primary-ui">
+                <span>Total</span>
+                <span>{formatBdt(total)}</span>
+              </div>
+            </section>
+          </>
+        ) : null}
       </div>
 
       <div className="fixed inset-x-0 bottom-0 border-t border-default bg-surface p-4">
@@ -158,7 +176,8 @@ export default function BasketPage() {
         <button
           type="button"
           onClick={handleWhatsAppOrder}
-          className="ui-btn-whatsapp"
+          className="ui-btn-whatsapp disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={itemCount === 0}
         >
           Order via WhatsApp
         </button>

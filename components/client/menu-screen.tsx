@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FloatingBasketBar } from "@/components/client/floating-basket-bar";
 import { LanguageToggle } from "@/components/client/language-toggle";
@@ -21,6 +22,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
     Drinks: "Cooling Drinks",
     Coffee: "Coffee",
   };
+  const basketHref = tableNumber ? `/basket?table=${tableNumber}` : "/basket";
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-sm bg-[#f7f5f1] pb-36">
@@ -45,9 +47,9 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           </div>
         </header>
 
-        <p className="mb-3 text-xs text-[#7f6b63]">
-          {tableNumber ? `Table ${tableNumber}` : "Table not selected"}
-        </p>
+        {tableNumber ? (
+          <p className="mb-3 text-xs text-[#7f6b63]">Table {tableNumber}</p>
+        ) : null}
 
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
@@ -121,17 +123,27 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           );
         })}
       </div>
-      <FloatingBasketBar />
-      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-sm border-t border-[#ebe7df] bg-[#f7f5f1] shadow-[0_-6px_14px_rgba(57,34,23,0.08)]">
+      <FloatingBasketBar tableNumber={tableNumber} />
+      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-sm items-center justify-around rounded-t-2xl border-t border-[#ebe7df] bg-[#f7f5f1]/95 px-2 py-3 backdrop-blur-lg shadow-[0_-4px_20px_rgba(172,68,37,0.08)]">
         <button
           type="button"
-          className="flex-1 py-3 text-sm font-semibold text-[#8c2d0f]"
+          className="flex min-w-21 flex-col items-center justify-center rounded-xl bg-[#fff1ec] px-4 py-1.5 text-[#8c2d0f] transition-all duration-200"
         >
-          Menu
+          <span
+            className="material-symbols-outlined"
+            style={{ fontVariationSettings: '"FILL" 1' }}
+          >
+            restaurant_menu
+          </span>
+          <span className="mt-1 text-[11px] font-medium">Menu</span>
         </button>
-        <button type="button" className="flex-1 py-3 text-sm text-[#95877f]">
-          Basket
-        </button>
+        <Link
+          href={basketHref}
+          className="flex min-w-21 flex-col items-center justify-center px-4 py-1.5 text-[#9b8f87] transition-all duration-200"
+        >
+          <span className="material-symbols-outlined">shopping_basket</span>
+          <span className="mt-1 text-[11px] font-medium">Basket</span>
+        </Link>
       </nav>
     </main>
   );
