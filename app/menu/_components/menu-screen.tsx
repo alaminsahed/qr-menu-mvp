@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { FloatingBasketBar } from "@/components/client/floating-basket-bar";
 import { LanguageToggle } from "@/components/client/language-toggle";
-import { MenuItemCard } from "@/components/client/menu-item-card";
 import { formatBdt } from "@/lib/client-format";
 import { menuItems } from "@/lib/menu";
+import { FloatingBasketBar } from "@/app/menu/_components/floating-basket-bar";
+import { MenuItemCard } from "@/app/menu/_components/menu-item-card";
 
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const categories = useMemo(
@@ -46,6 +46,10 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
             <LanguageToggle />
           </div>
         </header>
+
+        {tableNumber ? (
+          <p className="mb-3 text-xs text-[#7f6b63]">Table {tableNumber}</p>
+        ) : null}
 
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">

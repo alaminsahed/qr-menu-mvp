@@ -1,4 +1,4 @@
-import { MenuScreen } from "@/components/client/menu-screen";
+import { MenuScreen } from "@/app/menu/_components/menu-screen";
 
 export default async function MenuPage({
   searchParams,

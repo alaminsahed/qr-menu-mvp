@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { BasketItemRow } from "@/components/client/basket-item-row";
+import { BasketItemRow } from "@/app/basket/_components/basket-item-row";
+import { TopAppBar } from "@/app/basket/_components/top-app-bar";
 import { LanguageToggle } from "@/components/client/language-toggle";
-import { TopAppBar } from "@/components/client/top-app-bar";
 import { useCart } from "@/components/client/cart-provider";
 import { useLanguage } from "@/components/client/language-provider";
 import { formatBdt, getLocalizedName } from "@/lib/client-format";

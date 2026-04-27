@@ -1,0 +1,12 @@
+---
+description: Keep only cross-page reusable components in global components
+alwaysApply: true
+---
+
+# Component Placement Rule
+
+- Put page/feature-specific UI inside that feature route, e.g. `app/menu/_components` or `app/basket/_components`.
+- Keep `components/` for components reused by multiple pages/routes.
+- Before adding a new global component, verify it is used (or will be used) in at least two different pages.
+- If a component becomes single-use after refactor, move it back to the owning feature folder.
+- Shared providers and truly cross-page primitives can remain in `components/`.
