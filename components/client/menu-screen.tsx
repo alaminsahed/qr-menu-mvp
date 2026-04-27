@@ -47,10 +47,6 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           </div>
         </header>
 
-        {tableNumber ? (
-          <p className="mb-3 text-xs text-[#7f6b63]">Table {tableNumber}</p>
-        ) : null}
-
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
             {visibleCategories.map((category) => {
