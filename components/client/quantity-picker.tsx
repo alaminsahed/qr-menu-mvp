@@ -22,7 +22,7 @@ export function QuantityPicker({
   }
 
   return (
-    <div className="flex items-center gap-1 rounded-full bg-[#f3f0ea] px-1 py-1">
+    <div className="inline-flex w-fit items-center gap-1 rounded-full bg-[#f3f0ea] px-1 py-1">
       <button
         type="button"
         onClick={onRemove}
