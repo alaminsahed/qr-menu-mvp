@@ -1,0 +1,419 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      name="viewport"
+    />
+    <title>Shonali Bhoj | Artisanal Bangladeshi Flavors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              outline: "#8a726b",
+              tertiary: "#664800",
+              "surface-container-lowest": "#ffffff",
+              "outline-variant": "#dec0b8",
+              "on-secondary-fixed": "#03210c",
+              "inverse-surface": "#2f312e",
+              "surface-container-low": "#f4f4f0",
+              "primary-container": "#ac4425",
+              "on-primary-fixed-variant": "#832609",
+              "on-secondary-fixed-variant": "#2f4d34",
+              "on-primary-fixed": "#3b0900",
+              "surface-tint": "#a33d1f",
+              "inverse-primary": "#ffb5a0",
+              "on-tertiary-fixed": "#271900",
+              "on-primary": "#ffffff",
+              error: "#ba1a1a",
+              "on-background": "#1b1c1a",
+              "secondary-fixed": "#c8ecc9",
+              "on-tertiary-fixed-variant": "#5e4200",
+              "tertiary-fixed": "#ffdea7",
+              "error-container": "#ffdad6",
+              "on-primary-container": "#ffdcd3",
+              "on-tertiary": "#ffffff",
+              background: "#faf9f5",
+              "surface-dim": "#dbdad6",
+              "on-error": "#ffffff",
+              "surface-container": "#efeeea",
+              "on-surface": "#1b1c1a",
+              "on-error-container": "#93000a",
+              "on-secondary-container": "#4c6c50",
+              secondary: "#47664b",
+              "on-surface-variant": "#57423c",
+              "surface-container-high": "#e9e8e4",
+              "tertiary-container": "#855e00",
+              "surface-variant": "#e3e2df",
+              "inverse-on-surface": "#f2f1ed",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#faf9f5",
+              "secondary-container": "#c8ecc9",
+              "surface-container-highest": "#e3e2df",
+              "primary-fixed": "#ffdbd1",
+              "tertiary-fixed-dim": "#f8bd45",
+              primary: "#8c2d0f",
+              surface: "#faf9f5",
+              "secondary-fixed-dim": "#adcfae",
+              "on-tertiary-container": "#ffdfaa",
+              "primary-fixed-dim": "#ffb5a0",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              sm: "16px",
+              xl: "48px",
+              xs: "8px",
+              base: "4px",
+              "margin-mobile": "20px",
+              md: "24px",
+              lg: "32px",
+              gutter: "16px",
+            },
+            fontFamily: {
+              "body-lg": ["Be Vietnam Pro"],
+              h3: ["Epilogue"],
+              "body-md": ["Be Vietnam Pro"],
+              h1: ["Epilogue"],
+              h2: ["Epilogue"],
+              "label-sm": ["Be Vietnam Pro"],
+            },
+            fontSize: {
+              "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+              h3: ["20px", { lineHeight: "1.4", fontWeight: "600" }],
+              "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+              h1: [
+                "32px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              h2: ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+              "label-sm": [
+                "14px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .active-chip {
+        background-color: #47664b;
+        color: #ffffff;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md antialiased pb-32">
+    <!-- Top AppBar -->
+    <header
+      class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-white/90 dark:bg-stone-950/90 backdrop-blur-md border-b border-stone-100 dark:border-stone-800 shadow-sm dark:shadow-none"
+    >
+      <div
+        class="flex items-center gap-3 active:scale-95 transition-transform duration-150"
+      >
+        <h1
+          class="font-epilogue font-semibold tracking-tight text-lg font-bold text-orange-900 dark:text-orange-50"
+        >
+          Shonali Bhoj
+        </h1>
+      </div>
+      <button
+        class="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors active:scale-95 shadow-sm"
+        style="background-color: #25d366"
+      >
+        <span class="material-symbols-outlined text-[18px] text-white"
+          >notifications</span
+        >
+        <span class="font-display text-[12px] font-bold text-white"
+          >Call Waiter</span
+        >
+      </button>
+      <div
+        class="flex items-center gap-1 mr-2 px-3 py-1.5 rounded-full bg-surface-container-high/50 border border-outline-variant/20 font-display text-[12px] leading-none"
+      >
+        <button class="font-bold text-primary">EN</button>
+        <span class="text-outline-variant/50">|</span>
+        <button
+          class="text-on-surface-variant hover:text-on-surface transition-colors"
+        >
+          BN
+        </button>
+      </div>
+    </header>
+    <main class="mt-20 px-margin-mobile">
+      <!-- Category Switcher -->
+      <div
+        class="sticky top-16 z-40 bg-background/80 backdrop-blur-md -mx-margin-mobile px-margin-mobile py-4 mb-lg"
+      >
+        <div class="flex gap-3 overflow-x-auto no-scrollbar">
+          <button
+            class="flex-none px-5 py-2.5 rounded-full bg-secondary text-white font-label-sm shadow-sm transition-all active:scale-95"
+          >
+            Burgers
+          </button>
+          <button
+            class="flex-none px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm hover:bg-surface-container-highest transition-all active:scale-95"
+          >
+            Drinks
+          </button>
+          <button
+            class="flex-none px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm hover:bg-surface-container-highest transition-all active:scale-95"
+          >
+            Coffee
+          </button>
+          <button
+            class="flex-none px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm hover:bg-surface-container-highest transition-all active:scale-95"
+          >
+            Sides
+          </button>
+        </div>
+      </div>
+      <!-- Featured Section (Bento Inspired) -->
+      <section class="mb-lg">
+        <h2 class="font-h2 text-h2 text-primary mb-sm">Today's Special</h2>
+        <div
+          class="relative w-full aspect-[16/10] rounded-3xl overflow-hidden shadow-lg group"
+        >
+          <img
+            alt="Naga King Burger"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            data-alt="Gourmet beef burger with melting cheese, spicy naga sauce, and crisp lettuce on a toasted brioche bun, vibrant colors"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzth1lJCAjIGusZZInU02My193mTF-KiWTWm4yWBS_r50SxzyJ2EznS_7KQmiRj537WfCndlJyGAYpO1gm2hhAwY6O85ruvBLDLhc5OfFtqZIAWJFXUs3LnLvSXgHXo9ZDhgWBGZY5geEXNq3bLpYMaKF3jjHyUEgNHw0Uuck9TXmvNLJ_CGlP6smDSArNAZBbpSQEqARMp5mti6YScG7g2aaezIRF7SdG4XhW-8CjMbcLiKLiif2NbaBsELiD1FNjWNiGJi_igShf"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6"
+          >
+            <div class="flex justify-between items-end">
+              <div>
+                <span
+                  class="inline-block px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm mb-2"
+                  >Popular</span
+                >
+                <h3 class="font-h1 text-white">Naga King Burger</h3>
+                <p class="text-white/80 font-body-md line-clamp-1">
+                  Smoked beef patty with authentic Sylheti Naga morich glaze.
+                </p>
+              </div>
+              <div class="text-white font-h2 mb-1">৳450</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Menu Grid -->
+      <section class="space-y-lg">
+        <h2 class="font-h2 text-h2 text-primary">Bengali Fusion Burgers</h2>
+        <!-- Burger Item 1 -->
+        <div
+          class="bg-surface-container-lowest rounded-2xl p-4 flex gap-4 shadow-[0_4px_20px_rgba(172,68,37,0.05)] border border-stone-100/50"
+        >
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span
+                class="material-symbols-outlined text-secondary text-[16px]"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >restaurant</span
+              >
+              <h3 class="font-h3 text-h3 text-on-surface">
+                Shutki Spice Burger
+              </h3>
+            </div>
+            <p class="text-on-surface-variant font-body-md text-sm mb-3">
+              Bold spicy dried fish infusion with pickled onions.
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="font-h3 text-primary">৳380</span>
+              <div
+                class="flex items-center bg-tertiary-container/10 rounded-full px-1 py-1"
+              >
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm active:scale-90 transition-transform"
+                >
+                  <span class="material-symbols-outlined text-sm">remove</span>
+                </button>
+                <span class="px-3 font-label-sm">1</span>
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white shadow-sm active:scale-90 transition-transform"
+                >
+                  <span class="material-symbols-outlined text-sm">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+            <img
+              alt="Spicy Burger"
+              class="w-full h-full object-cover"
+              data-alt="Close-up of a stacked burger with visible red chili flakes and vibrant purple pickled onions"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD78qdfpAwWz9z9fnB6RNFfenkBQvYu-UbhSEOdhyUUyHa7IWRddtmnU-0tQSDt3Cd_D79IEeXrMUCtT7T1r9ShI3ZLUwHPBDsN4jAwfZdfTMF0iShLy8BMMjPgXDxOnlZ3KUsnw_nL309ZvuXYFMOAw2-deaozGIayti1586BWC260BkF2uPKOzJDhpNJwmqMc0atbibBDjeT9RuMnyqQnx79LV4ThFXpzxq3vgF55fvpe8iwTAGnm0zImoJqKi7RBndShjtgRdZZt"
+            />
+          </div>
+        </div>
+        <!-- Burger Item 2 -->
+        <div
+          class="bg-surface-container-lowest rounded-2xl p-4 flex gap-4 shadow-[0_4px_20px_rgba(172,68,37,0.05)] border border-stone-100/50"
+        >
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span
+                class="material-symbols-outlined text-secondary text-[16px]"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >restaurant</span
+              >
+              <h3 class="font-h3 text-h3 text-on-surface">
+                Dhakaiya Paneer Bun
+              </h3>
+            </div>
+            <p class="text-on-surface-variant font-body-md text-sm mb-3">
+              Grilled marinated paneer with cilantro chutney.
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="font-h3 text-primary">৳320</span>
+              <button
+                class="px-6 py-2 rounded-full bg-primary text-white font-label-sm active:scale-95 transition-all"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+            <img
+              alt="Paneer Burger"
+              class="w-full h-full object-cover"
+              data-alt="Grilled vegetarian burger featuring a thick slab of paneer cheese and fresh herbs"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8t9WWVGy1UGgX9GKY9jO-kqNFVIHY4pUTYYE2WiHfIj5r1KxDLt62Qy7YUt3hdSEjd6lknZReUuBtlv1j3qc-MIhmyw0v4UpN7ZUflpX3zwKMhD2eLUhYVTyEQaFAVjrMOPupc9tGubFNoaOkfLtadYkI18zBCbF7X8KUCFMmRuEafH7rzkZB7qjQHcNJzk-4muf4774zH5DgGiuRnHQbh6MLo7OZLbigGzY37Ta_KTO1FCaL4dDJJgxFaF4lOagCA2TkPh2SiL__"
+            />
+          </div>
+        </div>
+        <h2 class="font-h2 text-h2 text-primary pt-4">Cooling Drinks</h2>
+        <!-- Drink Item 1 -->
+        <div
+          class="bg-surface-container-lowest rounded-2xl p-4 flex gap-4 shadow-[0_4px_20px_rgba(172,68,37,0.05)] border border-stone-100/50"
+        >
+          <div class="flex-1">
+            <h3 class="font-h3 text-h3 text-on-surface mb-1">
+              Mango Lassi Supreme
+            </h3>
+            <p class="text-on-surface-variant font-body-md text-sm mb-3">
+              Creamy yogurt with Alphonso mango pulp and saffron.
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="font-h3 text-primary">৳180</span>
+              <div
+                class="flex items-center bg-tertiary-container/10 rounded-full px-1 py-1"
+              >
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm active:scale-90 transition-transform"
+                >
+                  <span class="material-symbols-outlined text-sm">remove</span>
+                </button>
+                <span class="px-3 font-label-sm">1</span>
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white shadow-sm active:scale-90 transition-transform"
+                >
+                  <span class="material-symbols-outlined text-sm">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+            <img
+              alt="Mango Lassi"
+              class="w-full h-full object-cover"
+              data-alt="Vibrant orange mango lassi in a glass with a mint sprig and scattered saffron threads"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKOAK-7N-AjBAp83G4V39GtpWRpAw8313T9fwITHfe8QkDmPbRkkYmO8jRwDPP0yrakIQeF3dqo_J_MnpH0Vkvbj_pqIN57C0-ZjBxSy0iyCzyXaw6dwV2Z6svS3IDoxzM-OHVYS7przqgaruMqg2YOFhx9uUNNzNFwkuS4bM7wb4u9pKn7HE54jsH5IItrsTxi7whKQ_fNKJP2zGr34Y5LA-VXRxf2BKr5ORImJNhQD-lC2RmyYlbkt-iw9N3WCKJaz7Ok_lm8K3b"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Sticky Floating Basket -->
+    <div class="fixed bottom-24 left-0 w-full px-margin-mobile z-50">
+      <button
+        class="w-full h-14 bg-primary text-white rounded-2xl shadow-xl flex items-center justify-between px-6 active:scale-[0.98] transition-all group"
+      >
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >shopping_basket</span
+            >
+            <span
+              class="absolute -top-2 -right-2 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"
+              >2</span
+            >
+          </div>
+          <span class="font-label-sm font-bold tracking-wide">View Basket</span>
+        </div>
+        <span class="font-h3">৳630</span>
+      </button>
+    </div>
+    <!-- Bottom NavBar -->
+    <nav
+      class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-white/95 dark:bg-stone-950/95 backdrop-blur-lg border-t border-stone-100 dark:border-stone-800 shadow-[0_-4px_20px_rgba(172,68,37,0.08)] rounded-t-2xl"
+    >
+      <a
+        class="flex flex-col items-center justify-center bg-orange-50 dark:bg-orange-900/20 text-orange-800 dark:text-orange-400 rounded-xl px-4 py-1.5 active:scale-90 transition-all duration-200"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >restaurant_menu</span
+        >
+        <span class="font-epilogue text-[11px] font-medium mt-1">Menu</span>
+      </a>
+      <a
+        class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-4 py-1.5 active:scale-90 transition-all duration-200"
+        href="#"
+      >
+        <span class="material-symbols-outlined">shopping_basket</span>
+        <span class="font-epilogue text-[11px] font-medium mt-1">Basket</span>
+      </a>
+    </nav>
+  </body>
+</html>

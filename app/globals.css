@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+:root {
+  /* Color tokens */
+  --color-bg-app: #faf9f5;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-soft: #efeeea;
+  --color-bg-elevated: #f4f4f0;
+  --color-text-primary: #1b1c1a;
+  --color-text-secondary: #57423c;
+  --color-text-muted: #8a726b;
+  --color-text-inverse: #ffffff;
+  --color-border-default: #dec0b8;
+  --color-border-soft: #e3e2df;
+  --color-action-primary: #8c2d0f;
+  --color-action-primary-hover: #ac4425;
+  --color-action-secondary: #47664b;
+  --color-action-secondary-hover: #2f4d34;
+  --color-action-whatsapp: #25d366;
+  --color-state-disabled-bg: #e3e2df;
+  --color-state-disabled-text: #8a726b;
+
+  /* Typography tokens */
+  --font-size-title-lg: 1.25rem;
+  --font-size-title-md: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-body-sm: 0.875rem;
+  --font-weight-semibold: 600;
+
+  /* Spacing tokens */
+  --space-screen-x: 1.25rem;
+  --space-screen-y: 1rem;
+  --space-card: 0.75rem;
+  --space-section: 1rem;
+  --space-chip-x: 1rem;
+  --space-chip-y: 0.5rem;
+  --space-button-y: 0.5rem;
+
+  /* Radius tokens */
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+  --radius-pill: 9999px;
+
+  /* Border + elevation tokens */
+  --border-width-default: 1px;
+  --shadow-card: 0 4px 20px rgb(172 68 37 / 0.06);
+  --shadow-floating: 0 10px 24px rgb(0 0 0 / 0.12);
+
+  /* Layout constants */
+  --top-app-bar-height: 4rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.bg-app {
+  background-color: var(--color-bg-app);
+}
+
+.bg-surface {
+  background-color: var(--color-bg-surface);
+}
+
+.bg-surface-soft {
+  background-color: var(--color-bg-surface-soft);
+}
+
+.bg-elevated {
+  background-color: var(--color-bg-elevated);
+}
+
+.text-primary-ui {
+  color: var(--color-text-primary);
+}
+
+.text-secondary-ui {
+  color: var(--color-text-secondary);
+}
+
+.text-muted-ui {
+  color: var(--color-text-muted);
+}
+
+.border-default {
+  border-color: var(--color-border-default);
+}
+
+.bg-primary-ui {
+  background-color: var(--color-action-primary);
+}
+
+.bg-primary-ui:hover {
+  background-color: var(--color-action-primary-hover);
+}
+
+.bg-secondary-ui {
+  background-color: var(--color-action-secondary);
+}
+
+.bg-whatsapp-ui {
+  background-color: var(--color-action-whatsapp);
+}
+
+.ui-btn-whatsapp {
+  width: 100%;
+  background-color: var(--color-action-whatsapp);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-pill);
+  padding: 0.75rem 1rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-screen {
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+  padding-inline: var(--space-screen-x);
+  padding-block: var(--space-screen-y);
+}
+
+.ui-card {
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  box-shadow: var(--shadow-card);
+}
+
+.ui-panel {
+  background-color: var(--color-bg-surface-soft);
+  border-radius: var(--radius-panel);
+  padding: var(--space-section);
+}
+
+.ui-input {
+  width: 100%;
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.ui-btn-primary {
+  background-color: var(--color-action-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-pill);
+  padding: var(--space-button-y) 1rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-btn-secondary {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  padding: var(--space-button-y) 1rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-text-title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-title-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-text-body {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body);
+}
+
+.ui-text-body-sm {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+}
+
+.ui-badge-disabled {
+  background-color: var(--color-state-disabled-bg);
+  color: var(--color-state-disabled-text);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.ui-chip {
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  padding: var(--space-chip-y) var(--space-chip-x);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-chip-active {
+  background-color: var(--color-action-secondary);
+  color: var(--color-text-inverse);
+}
+
+.ui-chip-inactive {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  border: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ui-top-offset {
+  top: var(--top-app-bar-height);
+}
+
+.ui-lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--radius-pill);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-floating-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.5rem;
+  border-radius: var(--radius-panel);
+  background-color: var(--color-action-primary);
+  color: var(--color-text-inverse);
+  padding: 0.5rem 1.25rem;
+  box-shadow: var(--shadow-floating);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ui-error {
+  color: #b42318;
+  font-size: var(--font-size-body-sm);
+}

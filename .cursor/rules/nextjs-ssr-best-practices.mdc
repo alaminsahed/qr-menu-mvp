@@ -1,0 +1,14 @@
+---
+description: Next.js SSR and server component best practices for App Router
+alwaysApply: false
+---
+
+# Next.js SSR Best Practices
+
+- Default to Server Components; add `"use client"` only for browser APIs, local state, or event handlers.
+- Fetch data on the server close to where it is used; avoid unnecessary client-side fetching for initial render.
+- Keep secrets and privileged logic on the server; never expose service-role keys to the client.
+- Choose caching intentionally: use defaults for static-safe data and explicit `noStore()` or revalidation for dynamic data.
+- Use route-level loading/error boundaries (`loading.tsx`, `error.tsx`) to improve UX and resilience.
+- For auth-protected pages, verify session/user on the server and redirect early when unauthorized.
+- Keep components small and composable: separate data access from presentational markup when complexity grows.

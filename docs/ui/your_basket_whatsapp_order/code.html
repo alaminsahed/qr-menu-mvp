@@ -1,0 +1,467 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#dec0b8",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#ffdcd3",
+              "error-container": "#ffdad6",
+              "tertiary-fixed": "#ffdea7",
+              "primary-fixed-dim": "#ffb5a0",
+              "surface-container": "#efeeea",
+              "inverse-on-surface": "#f2f1ed",
+              outline: "#8a726b",
+              "surface-variant": "#e3e2df",
+              "on-background": "#1b1c1a",
+              "surface-container-high": "#e9e8e4",
+              "surface-container-low": "#f4f4f0",
+              "on-primary-fixed": "#3b0900",
+              "on-secondary-container": "#4c6c50",
+              "surface-container-highest": "#e3e2df",
+              "on-primary": "#ffffff",
+              "on-primary-fixed-variant": "#832609",
+              "secondary-fixed-dim": "#adcfae",
+              secondary: "#47664b",
+              error: "#ba1a1a",
+              surface: "#faf9f5",
+              "inverse-primary": "#ffb5a0",
+              "surface-dim": "#dbdad6",
+              "secondary-fixed": "#c8ecc9",
+              primary: "#8c2d0f",
+              background: "#faf9f5",
+              "tertiary-container": "#855e00",
+              "surface-bright": "#faf9f5",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#2f4d34",
+              tertiary: "#664800",
+              "on-tertiary-fixed-variant": "#5e4200",
+              "surface-tint": "#a33d1f",
+              "secondary-container": "#c8ecc9",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1b1c1a",
+              "on-error": "#ffffff",
+              "primary-fixed": "#ffdbd1",
+              "on-tertiary-container": "#ffdfaa",
+              "primary-container": "#ac4425",
+              "on-secondary-fixed": "#03210c",
+              "inverse-surface": "#2f312e",
+              "on-tertiary-fixed": "#271900",
+              "tertiary-fixed-dim": "#f8bd45",
+              "on-surface-variant": "#57423c",
+              "on-secondary": "#ffffff",
+              whatsapp: "#25D366",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              md: "24px",
+              xl: "48px",
+              sm: "16px",
+              gutter: "16px",
+              xs: "8px",
+              "margin-mobile": "20px",
+              base: "4px",
+              lg: "32px",
+            },
+            fontFamily: {
+              "body-md": ["Be Vietnam Pro"],
+              h2: ["Epilogue"],
+              h1: ["Epilogue"],
+              "label-sm": ["Be Vietnam Pro"],
+              h3: ["Epilogue"],
+              "body-lg": ["Be Vietnam Pro"],
+            },
+            fontSize: {
+              "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+              h2: ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+              h1: [
+                "32px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-sm": [
+                "14px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              h3: ["20px", { lineHeight: "1.4", fontWeight: "600" }],
+              "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        background-color: #faf9f5;
+      }
+      .order-type-toggle input:checked + label {
+        background-color: #ac4425;
+        color: white;
+      }
+      #address-field,
+      #table-field {
+        display: none;
+      }
+      #order-type-delivery:checked ~ #address-field {
+        display: block;
+      }
+      #order-type-dinein:checked ~ #table-field {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-on-surface font-body-md min-h-screen pb-48">
+    <!-- TopAppBar -->
+    <header
+      class="bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md flex justify-between items-center px-5 h-16 w-full docked full-width top-0 z-50 border-b border-stone-200/50 dark:border-stone-800/50 sticky gap-2"
+    >
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-100 dark:hover:bg-stone-900 transition-opacity active:opacity-70"
+      >
+        <span
+          class="material-symbols-outlined text-orange-900 dark:text-orange-50"
+          data-icon="arrow_back"
+          >arrow_back</span
+        >
+      </button>
+      <h1
+        class="font-['Epilogue'] font-semibold text-lg tracking-tight text-orange-900 dark:text-orange-50"
+      >
+        Your Basket
+      </h1>
+      <button
+        class="flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors mr-1"
+      >
+        <span
+          class="font-['Epilogue'] text-xs font-bold text-orange-900 dark:text-orange-50"
+          >EN</span
+        >
+        <span class="w-[1px] h-3 bg-stone-300 dark:bg-stone-700"></span>
+        <span
+          class="font-['Epilogue'] text-xs font-medium text-stone-400 dark:text-stone-500"
+          >BN</span
+        >
+      </button>
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-100 dark:hover:bg-stone-900 transition-opacity active:opacity-70"
+      >
+        <span
+          class="material-symbols-outlined text-orange-900 dark:text-orange-50"
+          data-icon="more_vert"
+          >more_vert</span
+        >
+      </button>
+    </header>
+    <main class="max-w-md mx-auto px-margin-mobile pt-sm space-y-lg">
+      <!-- Cart Items Section -->
+      <section class="space-y-md">
+        <!-- Naga King Burger -->
+        <div
+          class="flex items-center gap-sm bg-surface-container-low p-sm rounded-[24px] shadow-[0_4px_20px_rgba(172,68,37,0.04)]"
+        >
+          <img
+            alt="Naga King Burger"
+            class="w-20 h-20 rounded-xl object-cover shrink-0"
+            data-alt="close-up of a spicy gourmet chicken burger with Naga chili sauce, melting cheese, and fresh lettuce on a toasted bun"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAu8vGMwbEdsyh3hJdSQppisQx3X--mvHRbqjRM715y8n4SMnaUhjw00N1ZUXhnbxmXD3y_d0YT_o5RIZLs-xkO-YVui7zc90xwAUt-oOGnHBV0KBbocKsE4ufw8oo4yhgNVovvRFj63e61ibYjkb0CDdo0xa54aK-SGueuVcbw7dkBfMSRaCwytnbUh32PkfbF3A109z7WqRLZ7KwV-aP03hndavIrdCEnOTHjSpEnPT7lRsSMMcrfyILSpoGfkhh3IauC7NT_UUm"
+          />
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start">
+              <h3 class="font-h3 text-body-md text-on-surface truncate">
+                Naga King Burger
+              </h3>
+              <button class="text-stone-400 hover:text-error transition-colors">
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="delete"
+                  >delete</span
+                >
+              </button>
+            </div>
+            <p class="font-label-sm text-primary font-bold mt-base">৳450</p>
+            <div class="flex items-center justify-between mt-sm">
+              <div
+                class="flex items-center bg-tertiary-fixed/30 rounded-full px-base py-[2px]"
+              >
+                <button
+                  class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-tertiary-fixed transition-colors"
+                >
+                  <span
+                    class="material-symbols-outlined text-[18px]"
+                    data-icon="remove"
+                    >remove</span
+                  >
+                </button>
+                <span class="px-sm font-semibold text-on-surface">1</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-tertiary-fixed transition-colors"
+                >
+                  <span
+                    class="material-symbols-outlined text-[18px]"
+                    data-icon="add"
+                    >add</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Mango Lassi Supreme -->
+        <div
+          class="flex items-center gap-sm bg-surface-container-low p-sm rounded-[24px] shadow-[0_4px_20px_rgba(172,68,37,0.04)]"
+        >
+          <img
+            alt="Mango Lassi Supreme"
+            class="w-20 h-20 rounded-xl object-cover shrink-0"
+            data-alt="vibrant yellow mango lassi in a tall glass with a sprig of mint and fresh mango chunks on top, warm sunlight"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWjLYak8slZXYHOiJlgfGExaduFFFYMxB7SdiXhUy4Q-nO5BoT24DLGZ3i-ISSTFRp0ZVZAn-9Z30ZtBhs0Ye7S_ozGNfWFsyaKOwSBsIU_P0bsCewRzoivBLAyW28QpFKwsQsZi808fbWmZ12C0KoHeWxw5MryD0vwa1QzPkzL1c1Gm1vjB7ccpj1asMcesuQ0jg-0kMX1dKcJUCOL1EBm_AYGOJYZ7PJpBA-_4ck69E0t-hSrMgbJQv301yf2kBkUoWCKtC1ZTBQ"
+          />
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start">
+              <h3 class="font-h3 text-body-md text-on-surface truncate">
+                Mango Lassi Supreme
+              </h3>
+              <button class="text-stone-400 hover:text-error transition-colors">
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  data-icon="delete"
+                  >delete</span
+                >
+              </button>
+            </div>
+            <p class="font-label-sm text-primary font-bold mt-base">৳180</p>
+            <div class="flex items-center justify-between mt-sm">
+              <div
+                class="flex items-center bg-tertiary-fixed/30 rounded-full px-base py-[2px]"
+              >
+                <button
+                  class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-tertiary-fixed transition-colors"
+                >
+                  <span
+                    class="material-symbols-outlined text-[18px]"
+                    data-icon="remove"
+                    >remove</span
+                  >
+                </button>
+                <span class="px-sm font-semibold text-on-surface">1</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-tertiary-fixed transition-colors"
+                >
+                  <span
+                    class="material-symbols-outlined text-[18px]"
+                    data-icon="add"
+                    >add</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Order Method Section -->
+      <section class="bg-surface-container-high rounded-[32px] p-sm space-y-md">
+        <h2 class="font-h3 text-lg px-2">Order Method</h2>
+        <div
+          class="flex p-1 bg-surface-container-lowest rounded-full order-type-toggle"
+        >
+          <input
+            checked=""
+            class="hidden"
+            id="order-type-dinein"
+            name="order-type"
+            type="radio"
+          />
+          <label
+            class="flex-1 text-center py-2.5 rounded-full font-label-sm cursor-pointer transition-colors text-stone-500"
+            for="order-type-dinein"
+            >At Restaurant</label
+          >
+          <input
+            class="hidden"
+            id="order-type-delivery"
+            name="order-type"
+            type="radio"
+          />
+          <label
+            class="flex-1 text-center py-2.5 rounded-full font-label-sm cursor-pointer transition-colors text-stone-500"
+            for="order-type-delivery"
+            >Delivery</label
+          >
+          <!-- Hidden containers toggled via CSS based on radio state -->
+          <div class="hidden"></div>
+        </div>
+        <!-- Dynamic Fields -->
+        <div class="space-y-sm px-2">
+          <div class="block-if-dinein" id="table-field">
+            <label
+              class="block font-label-sm text-stone-500 mb-xs"
+              for="table-num"
+              >Table Number</label
+            >
+            <input
+              class="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 placeholder:text-stone-400"
+              id="table-num"
+              placeholder="Enter table number (e.g. 12)"
+              type="text"
+            />
+          </div>
+          <div class="block-if-delivery" id="address-field">
+            <label
+              class="block font-label-sm text-stone-500 mb-xs"
+              for="delivery-address"
+              >Delivery Address</label
+            >
+            <textarea
+              class="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 placeholder:text-stone-400 min-h-[80px]"
+              id="delivery-address"
+              placeholder="Enter your full address"
+            ></textarea>
+          </div>
+        </div>
+      </section>
+      <!-- Summary Section -->
+      <section class="bg-surface-container-high rounded-[32px] p-lg space-y-sm">
+        <div class="flex justify-between items-center text-on-surface-variant">
+          <span class="font-body-md">Subtotal</span>
+          <span class="font-semibold">৳630</span>
+        </div>
+        <div class="flex justify-between items-center text-on-surface-variant">
+          <span class="font-body-md">Service / Delivery</span>
+          <span class="font-semibold">৳40</span>
+        </div>
+        <div
+          class="border-t border-outline-variant pt-sm mt-sm flex justify-between items-center"
+        >
+          <span class="font-h2 text-on-surface">Total</span>
+          <span class="font-h2 text-primary">৳670</span>
+        </div>
+      </section>
+      <!-- Promo Code Input -->
+      <section
+        class="bg-surface-container-low p-sm rounded-[24px] border border-outline-variant/30"
+      >
+        <div class="flex items-center gap-xs">
+          <div class="flex-1 relative">
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-[20px]"
+              data-icon="redeem"
+              >redeem</span
+            >
+            <input
+              class="w-full bg-surface-container-lowest border-none rounded-full pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-stone-400 font-body-md"
+              placeholder="Promo Code"
+              type="text"
+            />
+          </div>
+          <button
+            class="bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-label-sm hover:opacity-90 active:scale-95 transition-all"
+          >
+            Apply
+          </button>
+        </div>
+      </section>
+    </main>
+    <!-- Floating Order & Navigation -->
+    <div class="fixed bottom-0 left-0 w-full z-50">
+      <!-- WhatsApp Button -->
+      <div class="px-margin-mobile pb-sm">
+        <button
+          class="w-full bg-whatsapp text-white py-md rounded-full font-h3 flex items-center justify-center gap-xs shadow-[0_8px_24px_rgba(37,211,102,0.3)] active:scale-95 transition-transform"
+        >
+          <svg
+            class="w-6 h-6 fill-current"
+            viewbox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.12.554 4.189 1.605 6.02L0 24l6.117-1.605a11.803 11.803 0 005.925 1.583h.005c6.635 0 12.032-5.396 12.035-12.032a11.761 11.761 0 00-3.528-8.486"
+            ></path>
+          </svg>
+          <span>Order via WhatsApp</span>
+        </button>
+      </div>
+      <!-- BottomNavBar -->
+      <nav
+        class="bg-white/90 dark:bg-stone-900/90 backdrop-blur-lg border-t border-stone-100 dark:border-stone-800 shadow-[0_-4px_20px_rgba(172,68,37,0.08)] flex justify-around items-center px-4 pb-6 pt-3 rounded-t-[32px]"
+      >
+        <div
+          class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-orange-700 active:scale-90 transition-transform cursor-pointer"
+        >
+          <span class="material-symbols-outlined" data-icon="restaurant_menu"
+            >restaurant_menu</span
+          >
+          <span class="font-['Epilogue'] text-[11px] font-medium">Menu</span>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center text-orange-800 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-2xl px-6 py-1 active:scale-90 transition-transform cursor-pointer"
+        >
+          <span
+            class="material-symbols-outlined"
+            data-icon="shopping_basket"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >shopping_basket</span
+          >
+          <span class="font-['Epilogue'] text-[11px] font-medium">Basket</span>
+        </div>
+      </nav>
+    </div>
+    <script>
+      // Simple logic to handle conditional display if needed beyond CSS
+      const dineInRadio = document.getElementById("order-type-dinein");
+      const deliveryRadio = document.getElementById("order-type-delivery");
+      const tableField = document.getElementById("table-field");
+      const addressField = document.getElementById("address-field");
+
+      function toggleFields() {
+        if (dineInRadio.checked) {
+          tableField.style.display = "block";
+          addressField.style.display = "none";
+        } else {
+          tableField.style.display = "none";
+          addressField.style.display = "block";
+        }
+      }
+
+      dineInRadio.addEventListener("change", toggleFields);
+      deliveryRadio.addEventListener("change", toggleFields);
+
+      // Initial state
+      toggleFields();
+    </script>
+  </body>
+</html>

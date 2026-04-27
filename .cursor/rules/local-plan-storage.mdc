@@ -1,0 +1,10 @@
+---
+description: Keep plan files inside this project's .cursor/plans directory
+alwaysApply: true
+---
+
+# Local Plan Storage
+
+- When creating a plan, store it in `./.cursor/plans/` for this repository.
+- If the plan is initially created in the global Cursor plans directory, immediately copy it to `./.cursor/plans/` and continue using the local copy.
+- Prefer filenames like `<topic>_<id>.plan.md` and keep plan files in version-control-friendly markdown.

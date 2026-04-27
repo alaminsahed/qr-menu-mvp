@@ -1,0 +1,15 @@
+---
+description: Next.js Server Actions patterns for validation, security, and reliability
+globs: app/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Next.js Server Actions Best Practices
+
+- Use Server Actions for trusted server-side mutations from forms and UI workflows.
+- Co-locate simple actions with the page/component; extract shared actions to dedicated server files.
+- Validate all inputs on the server (prefer schema-based validation) before DB or API writes.
+- Enforce authorization inside each action; never rely only on client checks.
+- Return typed success/error states for recoverable UI errors; throw only for unexpected failures.
+- Revalidate affected paths/tags (`revalidatePath`/`revalidateTag`) after mutations to keep UI consistent.
+- Keep actions idempotent where possible and log meaningful context for operational debugging.
