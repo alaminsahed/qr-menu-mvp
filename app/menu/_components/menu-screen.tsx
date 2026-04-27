@@ -25,7 +25,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const basketHref = tableNumber ? `/basket?table=${tableNumber}` : "/basket";
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-sm bg-[#f7f5f1] pb-36">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
         <MenuHeader />
 
