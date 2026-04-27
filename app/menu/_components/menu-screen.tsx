@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LanguageToggle } from "@/components/client/language-toggle";
 import { formatBdt } from "@/lib/client-format";
 import { menuItems } from "@/lib/menu";
 import { FloatingBasketBar } from "@/app/menu/_components/floating-basket-bar";
+import { MenuHeader } from "@/app/menu/_components/menu-header";
 import { MenuItemCard } from "@/app/menu/_components/menu-item-card";
 
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
@@ -27,29 +27,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   return (
     <main className="mx-auto min-h-screen w-full max-w-sm bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
-        <header className="mb-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#8c2d0f] text-xs font-bold text-[#ffe6bf] shadow-[0_3px_10px_rgba(140,45,15,0.35)]">
-              SB
-            </span>
-            <h1 className="text-[1.65rem] leading-none font-bold text-[#7c2c16]">
-              Shonali Bhoj
-            </h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              className="rounded-full bg-[#22c55e] px-3.5 py-1.5 text-xs font-semibold text-white shadow-[0_3px_9px_rgba(34,197,94,0.35)]"
-            >
-              Call Waiter
-            </button>
-            <LanguageToggle />
-          </div>
-        </header>
-
-        {tableNumber ? (
-          <p className="mb-3 text-xs text-[#7f6b63]">Table {tableNumber}</p>
-        ) : null}
+        <MenuHeader />
 
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
