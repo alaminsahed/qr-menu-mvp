@@ -52,7 +52,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         </div>
 
         <section className="mb-7">
-          <h2 className="mb-3 text-[2rem] leading-none font-bold text-[#7c2c16]">
+          <h2 className="mb-3 text-[1.8rem] leading-none font-bold text-[#7c2c16]">
             Today&apos;s Special
           </h2>
           <article className="relative overflow-hidden rounded-3xl shadow-[0_10px_28px_rgba(0,0,0,0.26)]">
@@ -91,7 +91,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           if (itemsByCategory.length === 0) return null;
           return (
             <section key={category} className="mb-8 space-y-3">
-              <h3 className="text-[2rem] leading-none font-bold text-[#7c2c16]">
+              <h3 className="text-[1.5rem] leading-none font-bold text-[#7c2c16]">
                 {categoryTitles[category] ?? category}
               </h3>
               {itemsByCategory.map((item) => (
