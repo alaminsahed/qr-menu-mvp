@@ -108,7 +108,11 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           </section>
         ) : null}
 
-        {categories.map((category) => {
+        {categories
+          .filter(
+            (category) => !activeCategory || category.key === activeCategory,
+          )
+          .map((category) => {
           const itemsByCategory = menuItems.filter(
             (item) => (item.category_slug ?? item.category) === category.key,
           );
