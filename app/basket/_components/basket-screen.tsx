@@ -67,6 +67,7 @@ export function BasketScreen({ tableNumber }: { tableNumber: string | null }) {
       lines: cartItems.map(({ item, quantity }) => ({
         name: getLocalizedName(item, language),
         quantity,
+        unitPrice: item.price,
       })),
       subtotal,
       fee: itemCount > 0 ? SERVICE_FEE : 0,

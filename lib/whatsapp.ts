@@ -1,6 +1,7 @@
 export type OrderLine = {
   name: string;
   quantity: number;
+  unitPrice: number;
 };
 
 export function buildWhatsAppMessage(params: {
@@ -21,7 +22,8 @@ export function buildWhatsAppMessage(params: {
       : `Table: ${params.table || "N/A"}`;
 
   const orderLines = params.lines.map(
-    (line, index) => `${index + 1}. ${line.name} (Qty: ${line.quantity})`,
+    (line, index) =>
+      `${index + 1}. ${line.name} (Qty: ${line.quantity}) - ${line.unitPrice * line.quantity} BDT`,
   );
 
   const slipLines = [
