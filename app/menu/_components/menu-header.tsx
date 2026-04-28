@@ -4,7 +4,7 @@ import { LanguageToggle } from "@/components/client/language-toggle";
 
 export function MenuHeader() {
   return (
-    <header className="mb-4 bg-[#f7f5f1] pb-2 shadow-[0_8px_10px_-10px_rgba(26,26,26,0.35)]">
+    <header className="-mx-4 mb-4 w-auto bg-[#f7f5f1]/95 px-4 pb-2 shadow-[0_8px_12px_-10px_rgba(26,26,26,0.12)] backdrop-blur-lg">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-[1.65rem] leading-none font-semibold text-[#7c2c16]">
           Shonali Bhoj

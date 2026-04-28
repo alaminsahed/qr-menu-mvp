@@ -17,7 +17,7 @@ import { menuItems } from "@/lib/menu";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const SERVICE_FEE = 40;
-const WHATSAPP_NUMBER = "8801700000000";
+const WHATSAPP_NUMBER = "01685765411";
 
 export default function BasketPage() {
   const searchParams = useSearchParams();
@@ -70,6 +70,8 @@ export default function BasketPage() {
         name: getLocalizedName(item, language),
         quantity,
       })),
+      subtotal,
+      fee: itemCount > 0 ? SERVICE_FEE : 0,
       total,
     });
 

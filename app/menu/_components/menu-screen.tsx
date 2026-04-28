@@ -25,7 +25,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const basketHref = tableNumber ? `/basket?table=${tableNumber}` : "/basket";
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f7f5f1] pb-36">
+    <main className="mx-auto min-h-screen  max-w-md bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
         <MenuHeader />
 
@@ -102,25 +102,31 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         })}
       </div>
       <FloatingBasketBar tableNumber={tableNumber} />
-      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto flex w-full max-w-sm items-center justify-around rounded-t-2xl border-t border-[#ebe7df] bg-[#f7f5f1]/95 px-2 py-3 backdrop-blur-lg shadow-[0_-4px_20px_rgba(172,68,37,0.08)]">
+      <nav className="fixed inset-x-0 bottom-3 z-30 mx-auto flex w-[calc(100%-1rem)] max-w-sm items-center justify-around rounded-3xl border border-[#eadfd3]/70 bg-[#fff9f3]/92 px-2.5 py-2.5 backdrop-blur-xl shadow-[0_14px_34px_rgba(93,43,21,0.2)]">
         <button
           type="button"
-          className="flex min-w-21 flex-col items-center justify-center rounded-xl bg-[#fff1ec] px-4 py-1.5 text-[#8c2d0f] transition-all duration-200"
+          className="flex min-w-24 flex-col items-center justify-center rounded-2xl bg-[#fff1ec] px-4 py-2 text-[#8c2d0f] shadow-[inset_0_0_0_1px_rgba(140,45,15,0.08)] transition-all duration-200"
         >
           <span
-            className="material-symbols-outlined"
+            className="material-symbols-outlined text-[22px]"
             style={{ fontVariationSettings: '"FILL" 1' }}
           >
             restaurant_menu
           </span>
-          <span className="mt-1 text-[11px] font-medium">Menu</span>
+          <span className="mt-1 text-[11px] font-semibold tracking-[0.01em]">
+            Menu
+          </span>
         </button>
         <Link
           href={basketHref}
-          className="flex min-w-21 flex-col items-center justify-center px-4 py-1.5 text-[#9b8f87] transition-all duration-200"
+          className="flex min-w-24 flex-col items-center justify-center rounded-2xl px-4 py-2 text-[#9b8f87] transition-all duration-200 hover:bg-[#f4ece2]/80 hover:text-[#7f6a5d]"
         >
-          <span className="material-symbols-outlined">shopping_basket</span>
-          <span className="mt-1 text-[11px] font-medium">Basket</span>
+          <span className="material-symbols-outlined text-[22px]">
+            shopping_basket
+          </span>
+          <span className="mt-1 text-[11px] font-medium tracking-[0.01em]">
+            Basket
+          </span>
         </Link>
       </nav>
     </main>
