@@ -77,7 +77,7 @@ export default function BasketPage() {
   };
 
   return (
-    <main className="min-h-screen bg-app pb-36">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f7f5f1] pb-36">
       <TopAppBar
         title="Your Basket"
         left={
@@ -88,7 +88,7 @@ export default function BasketPage() {
         right={<LanguageToggle />}
       />
 
-      <div className="ui-screen space-y-4">
+      <div className="space-y-4 px-4 pb-4 pt-5">
         {cartItems.length === 0 ? (
           <BasketEmptyState menuHref={menuHref} />
         ) : (
