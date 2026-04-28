@@ -92,18 +92,20 @@ export async function GET(request: NextRequest) {
   const items = rows.map((row) => {
     const categoryRef = getCategoryRef(row.category_ref);
     return {
-    id: row.id,
-    slug: row.slug,
-    category: categoryRef?.name_en ?? "Uncategorized",
-    category_slug: categoryRef?.slug ?? "",
-    name_en: row.name_en,
-    name_bn: row.name_bn,
-    description_en: row.description_en,
-    description_bn: row.description_bn,
-    price: Number(row.price),
-    image_url: row.image_url,
-    featured: row.featured,
-    available: row.available,
+      id: row.id,
+      slug: row.slug,
+      category: categoryRef?.name_en ?? "Uncategorized",
+      category_slug: categoryRef?.slug ?? "",
+      category_name_en: categoryRef?.name_en ?? "Uncategorized",
+      category_name_bn: categoryRef?.name_bn ?? "অনির্ধারিত",
+      name_en: row.name_en,
+      name_bn: row.name_bn,
+      description_en: row.description_en,
+      description_bn: row.description_bn,
+      price: Number(row.price),
+      image_url: row.image_url,
+      featured: row.featured,
+      available: row.available,
     };
   });
   return Response.json({ items });

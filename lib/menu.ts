@@ -3,6 +3,8 @@ export type MenuItem = {
   slug?: string;
   category: string;
   category_slug?: string;
+  category_name_en?: string;
+  category_name_bn?: string;
   name_en: string;
   name_bn: string;
   description_en: string;
@@ -17,6 +19,8 @@ export const menuItems: MenuItem[] = [
   {
     id: "naga-king-burger",
     category: "Burgers",
+    category_name_en: "Burgers",
+    category_name_bn: "বার্গার",
     name_en: "Naga King Burger",
     name_bn: "নাগা কিং বার্গার",
     description_en: "Smoked beef patty with Sylheti naga morich glaze.",
@@ -30,6 +34,8 @@ export const menuItems: MenuItem[] = [
   {
     id: "shutki-spice-burger",
     category: "Burgers",
+    category_name_en: "Burgers",
+    category_name_bn: "বার্গার",
     name_en: "Shutki Spice Burger",
     name_bn: "শুটকি স্পাইস বার্গার",
     description_en: "Bold spicy dried fish infusion with pickled onions.",
@@ -42,6 +48,8 @@ export const menuItems: MenuItem[] = [
   {
     id: "dhakaiya-paneer-bun",
     category: "Burgers",
+    category_name_en: "Burgers",
+    category_name_bn: "বার্গার",
     name_en: "Dhakaiya Paneer Bun",
     name_bn: "ঢাকাইয়া পনির বান",
     description_en: "Grilled marinated paneer with cilantro chutney.",
@@ -54,6 +62,8 @@ export const menuItems: MenuItem[] = [
   {
     id: "mango-lassi-supreme",
     category: "Drinks",
+    category_name_en: "Drinks",
+    category_name_bn: "ড্রিংকস",
     name_en: "Mango Lassi Supreme",
     name_bn: "ম্যাঙ্গো লাস্সি সুপ্রিম",
     description_en: "Creamy yogurt with mango pulp and saffron.",
@@ -66,6 +76,8 @@ export const menuItems: MenuItem[] = [
   {
     id: "iced-coffee",
     category: "Coffee",
+    category_name_en: "Coffee",
+    category_name_bn: "কফি",
     name_en: "Iced Coffee",
     name_bn: "আইসড কফি",
     description_en: "Cold brew coffee with light sweetness.",

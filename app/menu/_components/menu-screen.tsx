@@ -7,25 +7,38 @@ import { formatBdt } from "@/lib/client-format";
 import { FloatingBasketBar } from "@/app/menu/_components/floating-basket-bar";
 import { MenuHeader } from "@/app/menu/_components/menu-header";
 import { MenuItemCard } from "@/app/menu/_components/menu-item-card";
+import { useLanguage } from "@/components/client/language-provider";
 import { useMenu } from "@/components/client/menu-provider";
 
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
+  const { language } = useLanguage();
   const { items: menuItems, error } = useMenu();
   const categories = useMemo(
-    () => Array.from(new Set(menuItems.map((item) => item.category))),
-    [menuItems],
+    () =>
+      Array.from(
+        new Map(
+          menuItems.map((item) => [
+            item.category_slug ?? item.category,
+            {
+              key: item.category_slug ?? item.category,
+              label:
+                language === "bn"
+                  ? (item.category_name_bn ?? item.category)
+                  : (item.category_name_en ?? item.category),
+            },
+          ]),
+        ).values(),
+      ),
+    [language, menuItems],
   );
-  const [activeCategory, setActiveCategory] = useState(categories[0] || "");
+  const [activeCategory, setActiveCategory] = useState(
+    categories[0]?.key || "",
+  );
   const featuredItem = useMemo(
     () => menuItems.find((item) => item.featured) ?? menuItems[0],
     [menuItems],
   );
   const visibleCategories = categories.slice(0, 4);
-  const categoryTitles: Record<string, string> = {
-    Burgers: "Bengali Fusion Burgers",
-    Drinks: "Cooling Drinks",
-    Coffee: "Coffee",
-  };
   const basketHref = tableNumber ? `/basket?table=${tableNumber}` : "/basket";
 
   return (
@@ -41,19 +54,19 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
             {visibleCategories.map((category) => {
-              const isActive = category === activeCategory;
+              const isActive = category.key === activeCategory;
               return (
                 <button
-                  key={category}
+                  key={category.key}
                   type="button"
-                  onClick={() => setActiveCategory(category)}
+                  onClick={() => setActiveCategory(category.key)}
                   className={`rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap ${
                     isActive
                       ? "bg-[#4b6f4f] text-white shadow-[0_4px_10px_rgba(75,111,79,0.26)]"
                       : "bg-[#e8e5df] text-[#5f4f49] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)]"
                   }`}
                 >
-                  {category}
+                  {category.label}
                 </button>
               );
             })}
@@ -97,13 +110,13 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
 
         {categories.map((category) => {
           const itemsByCategory = menuItems.filter(
-            (item) => item.category === category,
+            (item) => (item.category_slug ?? item.category) === category.key,
           );
           if (itemsByCategory.length === 0) return null;
           return (
-            <section key={category} className="mb-8 space-y-3">
+            <section key={category.key} className="mb-8 space-y-3">
               <h3 className="text-[1.5rem] leading-none font-bold text-[#7c2c16]">
-                {categoryTitles[category] ?? category}
+                {category.label}
               </h3>
               {itemsByCategory.map((item) => (
                 <MenuItemCard key={item.id} item={item} />

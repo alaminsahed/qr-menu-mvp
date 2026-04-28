@@ -60,6 +60,8 @@ export async function GET(
     slug: data.slug,
     category: categoryRef?.name_en ?? "Uncategorized",
     category_slug: categoryRef?.slug ?? "",
+    category_name_en: categoryRef?.name_en ?? "Uncategorized",
+    category_name_bn: categoryRef?.name_bn ?? "অনির্ধারিত",
     name_en: data.name_en,
     name_bn: data.name_bn,
     description_en: data.description_en,
