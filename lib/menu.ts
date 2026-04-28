@@ -1,6 +1,8 @@
 export type MenuItem = {
   id: string;
+  slug?: string;
   category: string;
+  category_slug?: string;
   name_en: string;
   name_bn: string;
   description_en: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useMemo, useState } from "react";
-import { menuItems } from "@/lib/menu";
+import { useMenu } from "@/components/client/menu-provider";
 
 type CartState = Record<string, number>;
 
@@ -20,6 +20,7 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartState>({});
+  const { items } = useMenu();
 
   const addItem = (id: string) => {
     setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
@@ -55,10 +56,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(() => {
     return Object.entries(cart).reduce((acc, [id, qty]) => {
-      const item = menuItems.find((menuItem) => menuItem.id === id);
+      const item = items.find((menuItem) => menuItem.id === id);
       return acc + (item ? item.price * qty : 0);
     }, 0);
-  }, [cart]);
+  }, [cart, items]);
 
   const value: CartContextValue = {
     cart,

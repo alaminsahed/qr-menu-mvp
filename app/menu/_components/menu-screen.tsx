@@ -4,15 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { formatBdt } from "@/lib/client-format";
-import { menuItems } from "@/lib/menu";
 import { FloatingBasketBar } from "@/app/menu/_components/floating-basket-bar";
 import { MenuHeader } from "@/app/menu/_components/menu-header";
 import { MenuItemCard } from "@/app/menu/_components/menu-item-card";
+import { useMenu } from "@/components/client/menu-provider";
 
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
+  const { items: menuItems, error } = useMenu();
   const categories = useMemo(
     () => Array.from(new Set(menuItems.map((item) => item.category))),
-    [],
+    [menuItems],
   );
   const [activeCategory, setActiveCategory] = useState(categories[0] || "");
   const featuredItem = menuItems[0];
@@ -28,6 +29,11 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
     <main className="mx-auto min-h-screen  max-w-md bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
         <MenuHeader />
+        {error ? (
+          <p className="mb-3 rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            {error}
+          </p>
+        ) : null}
 
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
@@ -51,38 +57,40 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           </div>
         </div>
 
-        <section className="mb-7">
-          <h2 className="mb-3 text-[1.8rem] leading-none font-bold text-[#7c2c16]">
-            Today&apos;s Special
-          </h2>
-          <article className="relative overflow-hidden rounded-3xl shadow-[0_10px_28px_rgba(0,0,0,0.26)]">
-            <Image
-              src={featuredItem.image_url}
-              alt={featuredItem.name_en}
-              width={700}
-              height={360}
-              className="h-[190px] w-full object-cover"
-              priority
-            />
-            <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/75 via-black/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-              <span className="mb-2 inline-flex rounded-full bg-[#f8df9f] px-3 py-1 text-sm font-semibold text-[#4a3729]">
-                Popular
-              </span>
-              <h3 className="text-[1.35rem] leading-tight font-semibold">
-                {featuredItem.name_en}
-              </h3>
-              <div className="mt-1 flex items-center justify-between gap-2">
-                <p className="max-w-[72%] truncate text-sm text-white/90">
-                  {featuredItem.description_en}
-                </p>
-                <span className="text-lg font-semibold">
-                  {formatBdt(featuredItem.price)}
+        {featuredItem ? (
+          <section className="mb-7">
+            <h2 className="mb-3 text-[1.8rem] leading-none font-bold text-[#7c2c16]">
+              Today&apos;s Special
+            </h2>
+            <article className="relative overflow-hidden rounded-3xl shadow-[0_10px_28px_rgba(0,0,0,0.26)]">
+              <Image
+                src={featuredItem.image_url}
+                alt={featuredItem.name_en}
+                width={700}
+                height={360}
+                className="h-[190px] w-full object-cover"
+                priority
+              />
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/75 via-black/30 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                <span className="mb-2 inline-flex rounded-full bg-[#f8df9f] px-3 py-1 text-sm font-semibold text-[#4a3729]">
+                  Popular
                 </span>
+                <h3 className="text-[1.35rem] leading-tight font-semibold">
+                  {featuredItem.name_en}
+                </h3>
+                <div className="mt-1 flex items-center justify-between gap-2">
+                  <p className="max-w-[72%] truncate text-sm text-white/90">
+                    {featuredItem.description_en}
+                  </p>
+                  <span className="text-lg font-semibold">
+                    {formatBdt(featuredItem.price)}
+                  </span>
+                </div>
               </div>
-            </div>
-          </article>
-        </section>
+            </article>
+          </section>
+        ) : null}
 
         {categories.map((category) => {
           const itemsByCategory = menuItems.filter(

@@ -11,8 +11,8 @@ import { TopAppBar } from "@/app/basket/_components/top-app-bar";
 import { LanguageToggle } from "@/components/client/language-toggle";
 import { useCart } from "@/components/client/cart-provider";
 import { useLanguage } from "@/components/client/language-provider";
+import { useMenu } from "@/components/client/menu-provider";
 import { getLocalizedName } from "@/lib/client-format";
-import { menuItems } from "@/lib/menu";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const SERVICE_FEE = 40;
@@ -22,6 +22,7 @@ export function BasketScreen({ tableNumber }: { tableNumber: string | null }) {
   const tableFromQuery = tableNumber?.trim() ?? "";
   const menuHref = tableFromQuery ? `/menu?table=${tableFromQuery}` : "/menu";
   const { language } = useLanguage();
+  const { items: menuItems } = useMenu();
   const { cart, subtotal, itemCount } = useCart();
   const [orderType, setOrderType] = useState<"dinein" | "delivery">("dinein");
   const [table, setTable] = useState(tableFromQuery);
@@ -41,7 +42,7 @@ export function BasketScreen({ tableNumber }: { tableNumber: string | null }) {
         ): value is { item: (typeof menuItems)[number]; quantity: number } =>
           Boolean(value),
       );
-  }, [cart]);
+  }, [cart, menuItems]);
 
   const total = subtotal + (itemCount > 0 ? SERVICE_FEE : 0);
 
