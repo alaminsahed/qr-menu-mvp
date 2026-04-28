@@ -16,7 +16,10 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
     [menuItems],
   );
   const [activeCategory, setActiveCategory] = useState(categories[0] || "");
-  const featuredItem = menuItems[0];
+  const featuredItem = useMemo(
+    () => menuItems.find((item) => item.featured) ?? menuItems[0],
+    [menuItems],
+  );
   const visibleCategories = categories.slice(0, 4);
   const categoryTitles: Record<string, string> = {
     Burgers: "Bengali Fusion Burgers",

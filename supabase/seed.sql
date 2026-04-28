@@ -20,6 +20,7 @@ insert into public.menu_items (
   description_bn,
   price,
   image_url,
+  featured,
   available,
   is_active
 )
@@ -34,6 +35,7 @@ values
     450,
     'https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1000&auto=format&fit=crop',
     true,
+    true,
     true
   ),
   (
@@ -45,6 +47,7 @@ values
     'ঝাল শুটকির ফ্লেভার ও পিকলড পেঁয়াজ।',
     380,
     'https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=1000&auto=format&fit=crop',
+    false,
     true,
     true
   ),
@@ -57,6 +60,7 @@ values
     'গ্রিলড মেরিনেটেড পনির ও ধনেপাতা চাটনি।',
     320,
     'https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=1000&auto=format&fit=crop',
+    false,
     true,
     true
   ),
@@ -69,6 +73,7 @@ values
     'ক্রিমি দই, ম্যাঙ্গো পাল্প এবং জাফরান।',
     180,
     'https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1000&auto=format&fit=crop',
+    false,
     true,
     true
   ),
@@ -82,6 +87,7 @@ values
     220,
     'https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1000&auto=format&fit=crop',
     false,
+    false,
     true
   )
 on conflict (slug) do update
@@ -93,6 +99,7 @@ set
   description_bn = excluded.description_bn,
   price = excluded.price,
   image_url = excluded.image_url,
+  featured = excluded.featured,
   available = excluded.available,
   is_active = excluded.is_active,
   updated_at = now();

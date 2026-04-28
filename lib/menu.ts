@@ -9,6 +9,7 @@ export type MenuItem = {
   description_bn: string;
   price: number;
   image_url: string;
+  featured?: boolean;
   available: boolean;
 };
 
@@ -23,6 +24,7 @@ export const menuItems: MenuItem[] = [
     price: 450,
     image_url:
       "https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1000&auto=format&fit=crop",
+    featured: true,
     available: true,
   },
   {

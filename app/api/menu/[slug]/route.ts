@@ -37,6 +37,7 @@ export async function GET(
       description_bn,
       price,
       image_url,
+      featured,
       available,
       category_ref:menu_categories!inner(slug, name_en, name_bn, sort_order)
     `,
@@ -65,6 +66,7 @@ export async function GET(
     description_bn: data.description_bn,
     price: Number(data.price),
     image_url: data.image_url,
+    featured: data.featured,
     available: data.available,
   };
 

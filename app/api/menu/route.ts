@@ -12,6 +12,7 @@ type MenuRow = {
   description_bn: string;
   price: number;
   image_url: string;
+  featured: boolean;
   available: boolean;
   category_ref:
     | {
@@ -58,11 +59,13 @@ export async function GET(request: NextRequest) {
       description_bn,
       price,
       image_url,
+      featured,
       available,
       category_ref:menu_categories!inner(slug, name_en, name_bn, sort_order)
     `,
     )
     .order("sort_order", { referencedTable: "menu_categories", ascending: true })
+    .order("featured", { ascending: false })
     .order("name_en", { ascending: true });
 
   if (query.category) {
@@ -99,6 +102,7 @@ export async function GET(request: NextRequest) {
     description_bn: row.description_bn,
     price: Number(row.price),
     image_url: row.image_url,
+    featured: row.featured,
     available: row.available,
     };
   });
