@@ -1,8 +1,19 @@
 "use client";
 
 import { LanguageToggle } from "@/components/client/language-toggle";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-export function MenuHeader() {
+const WHATSAPP_NUMBER = "+8801685765411";
+
+export function MenuHeader({ tableNumber }: { tableNumber: string | null }) {
+  const handleCallWaiter = () => {
+    const table = tableNumber?.trim();
+    const message = table
+      ? `Immediately need waiter help. Table: ${table}`
+      : "Immediately need waiter help.";
+    window.location.href = buildWhatsAppUrl(WHATSAPP_NUMBER, message);
+  };
+
   return (
     <header className="-mx-4 mb-4 w-auto bg-[#f7f5f1]/95 px-4 pb-2 shadow-[0_8px_12px_-10px_rgba(26,26,26,0.12)] backdrop-blur-lg">
       <div className="flex items-center justify-between gap-3">
@@ -12,6 +23,7 @@ export function MenuHeader() {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            onClick={handleCallWaiter}
             className="rounded-full bg-[#22c55e] px-3 py-1 text-[11px] font-semibold text-white shadow-[0_3px_6px_rgba(34,197,94,0.28)]"
           >
             Call Waiter
