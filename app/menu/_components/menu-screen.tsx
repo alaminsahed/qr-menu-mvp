@@ -47,6 +47,10 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.key || "",
   );
+  const resolvedActiveCategory =
+    categories.some((category) => category.key === activeCategory)
+      ? activeCategory
+      : (categories[0]?.key ?? "");
   const featuredItem = useMemo(
     () => menuItems.find((item) => item.featured) ?? menuItems[0],
     [menuItems],
@@ -67,7 +71,7 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         <div className="mb-6 overflow-x-auto">
           <div className="flex gap-2">
             {visibleCategories.map((category) => {
-              const isActive = category.key === activeCategory;
+              const isActive = category.key === resolvedActiveCategory;
               return (
                 <button
                   key={category.key}
@@ -122,7 +126,10 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         ) : null}
 
         {categories
-          .filter((category) => !activeCategory || category.key === activeCategory)
+          .filter(
+            (category) =>
+              !resolvedActiveCategory || category.key === resolvedActiveCategory,
+          )
           .map((category) => {
             const itemsForCategory = itemsByCategory.get(category.key) ?? [];
             if (itemsForCategory.length === 0) return null;
