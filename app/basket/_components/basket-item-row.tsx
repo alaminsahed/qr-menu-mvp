@@ -63,7 +63,9 @@ export function BasketItemRow({
             Remove
           </button>
         </div>
-        <p className="mt-1 text-sm text-secondary-ui">{formatBdt(item.price)}</p>
+        <p className="mt-1 text-sm text-secondary-ui">
+          {formatBdt(item.price)}
+        </p>
         <div className="mt-2">
           <QuantityPicker
             quantity={quantity}

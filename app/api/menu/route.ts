@@ -30,9 +30,7 @@ type MenuRow = {
     | null;
 };
 
-function getCategoryRef(
-  categoryRef: MenuRow["category_ref"],
-): {
+function getCategoryRef(categoryRef: MenuRow["category_ref"]): {
   slug: string;
   name_en: string;
   name_bn: string;
@@ -64,12 +62,18 @@ export async function GET(request: NextRequest) {
       category_ref:menu_categories!inner(slug, name_en, name_bn, sort_order)
     `,
     )
-    .order("sort_order", { referencedTable: "menu_categories", ascending: true })
+    .order("sort_order", {
+      referencedTable: "menu_categories",
+      ascending: true,
+    })
     .order("featured", { ascending: false })
     .order("name_en", { ascending: true });
 
   if (query.category) {
-    menuQuery = menuQuery.eq("menu_categories.slug", query.category.toLowerCase());
+    menuQuery = menuQuery.eq(
+      "menu_categories.slug",
+      query.category.toLowerCase(),
+    );
   }
 
   if (typeof query.available === "boolean") {

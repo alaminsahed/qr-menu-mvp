@@ -47,10 +47,11 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.key || "",
   );
-  const resolvedActiveCategory =
-    categories.some((category) => category.key === activeCategory)
-      ? activeCategory
-      : (categories[0]?.key ?? "");
+  const resolvedActiveCategory = categories.some(
+    (category) => category.key === activeCategory,
+  )
+    ? activeCategory
+    : (categories[0]?.key ?? "");
   const featuredItem = useMemo(
     () => menuItems.find((item) => item.featured) ?? menuItems[0],
     [menuItems],
@@ -128,7 +129,8 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         {categories
           .filter(
             (category) =>
-              !resolvedActiveCategory || category.key === resolvedActiveCategory,
+              !resolvedActiveCategory ||
+              category.key === resolvedActiveCategory,
           )
           .map((category) => {
             const itemsForCategory = itemsByCategory.get(category.key) ?? [];

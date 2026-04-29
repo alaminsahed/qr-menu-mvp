@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isAdminUser } from "@/lib/admin/is-admin";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -7,9 +8,9 @@ export default async function ProtectedPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/login");
-  }
+  if (!user) redirect("/login?error=unauthorized");
+  const admin = await isAdminUser(supabase, user.id);
+  if (!admin) redirect("/login?error=unauthorized");
 
   async function signOut() {
     "use server";

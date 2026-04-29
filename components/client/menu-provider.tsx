@@ -27,7 +27,11 @@ export function MenuProvider({ children }: { children: React.ReactNode }) {
         }
 
         const payload = (await response.json()) as { items?: MenuItem[] };
-        if (isMounted && Array.isArray(payload.items) && payload.items.length > 0) {
+        if (
+          isMounted &&
+          Array.isArray(payload.items) &&
+          payload.items.length > 0
+        ) {
           setItems(payload.items);
         }
       } catch {
