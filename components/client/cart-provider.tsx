@@ -21,6 +21,10 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartState>({});
   const { items } = useMenu();
+  const itemsById = useMemo(
+    () => new Map(items.map((menuItem) => [menuItem.id, menuItem])),
+    [items],
+  );
 
   const addItem = (id: string) => {
     setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
@@ -56,10 +60,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(() => {
     return Object.entries(cart).reduce((acc, [id, qty]) => {
-      const item = items.find((menuItem) => menuItem.id === id);
+      const item = itemsById.get(id);
       return acc + (item ? item.price * qty : 0);
     }, 0);
-  }, [cart, items]);
+  }, [cart, itemsById]);
 
   const value: CartContextValue = {
     cart,

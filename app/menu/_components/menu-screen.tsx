@@ -13,6 +13,19 @@ import { useMenu } from "@/components/client/menu-provider";
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const { language } = useLanguage();
   const { items: menuItems, error } = useMenu();
+  const itemsByCategory = useMemo(() => {
+    const grouped = new Map<string, typeof menuItems>();
+    for (const item of menuItems) {
+      const key = item.category_slug ?? item.category;
+      const existing = grouped.get(key);
+      if (existing) {
+        existing.push(item);
+      } else {
+        grouped.set(key, [item]);
+      }
+    }
+    return grouped;
+  }, [menuItems]);
   const categories = useMemo(
     () =>
       Array.from(
@@ -109,25 +122,21 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
         ) : null}
 
         {categories
-          .filter(
-            (category) => !activeCategory || category.key === activeCategory,
-          )
+          .filter((category) => !activeCategory || category.key === activeCategory)
           .map((category) => {
-          const itemsByCategory = menuItems.filter(
-            (item) => (item.category_slug ?? item.category) === category.key,
-          );
-          if (itemsByCategory.length === 0) return null;
-          return (
-            <section key={category.key} className="mb-8 space-y-3">
-              <h3 className="text-[1.5rem] leading-none font-bold text-[#7c2c16]">
-                {category.label}
-              </h3>
-              {itemsByCategory.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
-              ))}
-            </section>
-          );
-        })}
+            const itemsForCategory = itemsByCategory.get(category.key) ?? [];
+            if (itemsForCategory.length === 0) return null;
+            return (
+              <section key={category.key} className="mb-8 space-y-3">
+                <h3 className="text-[1.5rem] leading-none font-bold text-[#7c2c16]">
+                  {category.label}
+                </h3>
+                {itemsForCategory.map((item) => (
+                  <MenuItemCard key={item.id} item={item} />
+                ))}
+              </section>
+            );
+          })}
       </div>
       <FloatingBasketBar tableNumber={tableNumber} />
       <nav className="fixed inset-x-0 bottom-3 z-30 mx-auto flex w-[calc(100%-1rem)] max-w-sm items-center justify-around rounded-3xl border border-[#eadfd3]/70 bg-[#fff9f3]/92 px-2.5 py-2.5 backdrop-blur-xl shadow-[0_14px_34px_rgba(93,43,21,0.2)]">
