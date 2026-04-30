@@ -71,6 +71,36 @@ and get the correct session user.
 
 ## Full flow: admin login end-to-end (request-by-request)
 
+```mermaid
+flowchart TD
+  A[Open /login] --> B[Server render app/login/page.tsx]
+  B --> C{Existing session user?}
+  C -->|No| D[Show login form]
+  C -->|Yes| E[isAdminUser check]
+  E -->|Admin| F[Redirect to /protected]
+  E -->|Not admin| G[Redirect /login?error=unauthorized]
+
+  D --> H[Submit email + password]
+  H --> I[Server action signInWithPassword]
+  I --> J[Supabase sets auth cookies via SSR setAll]
+  J --> K[Redirect to /protected]
+
+  K --> L[Request /protected with cookies]
+  L --> M[Middleware updateSession]
+  M --> N[supabase.auth.getUser]
+  N --> O{Admin for /protected path?}
+  O -->|No| G
+  O -->|Yes| P[Protected page render]
+
+  P --> Q{Page-level checks}
+  Q -->|No user or not admin| G
+  Q -->|Valid admin| R[Protected content]
+
+  R --> S[Sign out]
+  S --> T[supabase.auth.signOut]
+  T --> U[Clear cookies + redirect /login]
+```
+
 ### 0) Precondition
 
 - Admin exists in `auth.users`
