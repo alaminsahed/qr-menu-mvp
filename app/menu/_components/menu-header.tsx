@@ -3,22 +3,28 @@
 import { LanguageToggle } from "@/components/client/language-toggle";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-const WHATSAPP_NUMBER = "+8801685765411";
-
-export function MenuHeader({ tableNumber }: { tableNumber: string | null }) {
+export function MenuHeader({
+  tableNumber,
+  restaurantName,
+  whatsappNumber,
+}: {
+  tableNumber: string | null;
+  restaurantName: string;
+  whatsappNumber: string;
+}) {
   const handleCallWaiter = () => {
     const table = tableNumber?.trim();
     const message = table
       ? `Immediately need waiter help. Table: ${table}`
       : "Immediately need waiter help.";
-    window.location.href = buildWhatsAppUrl(WHATSAPP_NUMBER, message);
+    window.location.href = buildWhatsAppUrl(whatsappNumber, message);
   };
 
   return (
     <header className="-mx-4 mb-4 w-auto bg-[#f7f5f1]/95 px-4 pb-2 shadow-[0_8px_12px_-10px_rgba(26,26,26,0.12)] backdrop-blur-lg">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-[1.65rem] leading-none font-semibold text-[#7c2c16]">
-          Shonali Bhoj
+          {restaurantName}
         </h1>
         <div className="flex items-center gap-2">
           <button

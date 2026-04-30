@@ -19,7 +19,7 @@ todos:
     status: completed
   - id: admin-settings-qr
     content: Add restaurant settings editor and QR table-link generation/print view.
-    status: in_progress
+    status: completed
   - id: admin-hardening-tests
     content: Add error handling, optimistic update rollback, and integration test coverage for admin flows.
     status: pending

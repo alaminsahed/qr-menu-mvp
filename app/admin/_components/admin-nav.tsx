@@ -18,7 +18,7 @@ export function AdminNav() {
       {ADMIN_LINKS.map((link) => {
         const isActive =
           pathname === link.href ||
-          (link.href !== "/admin" && pathname.startsWith(link.href));
+          pathname.startsWith(link.href);
 
         return (
           <Link

@@ -10,7 +10,15 @@ import { MenuItemCard } from "@/app/menu/_components/menu-item-card";
 import { useLanguage } from "@/components/client/language-provider";
 import { useMenu } from "@/components/client/menu-provider";
 
-export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
+export function MenuScreen({
+  tableNumber,
+  restaurantName,
+  whatsappNumber,
+}: {
+  tableNumber: string | null;
+  restaurantName: string;
+  whatsappNumber: string;
+}) {
   const { language } = useLanguage();
   const { items: menuItems, categories: menuCategories, error } = useMenu();
   const itemsByCategory = useMemo(() => {
@@ -52,7 +60,11 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   return (
     <main className="mx-auto min-h-screen w-full max-w-md bg-[#f7f5f1] pb-36">
       <div className="px-4 pb-4 pt-5">
-        <MenuHeader tableNumber={tableNumber} />
+        <MenuHeader
+          tableNumber={tableNumber}
+          restaurantName={restaurantName}
+          whatsappNumber={whatsappNumber}
+        />
         {error ? (
           <p className="mb-3 rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-800">
             {error}

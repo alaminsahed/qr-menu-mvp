@@ -8,6 +8,7 @@ type AdminButtonProps = {
   variant?: AdminButtonVariant;
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
 };
 
 export function AdminButton({
@@ -16,6 +17,7 @@ export function AdminButton({
   variant = "primary",
   className = "",
   disabled = false,
+  onClick,
 }: AdminButtonProps) {
   const variantClass =
     variant === "primary"
@@ -26,6 +28,7 @@ export function AdminButton({
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
       className={`cursor-pointer rounded-full px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${variantClass} ${className}`}
     >
       {children}

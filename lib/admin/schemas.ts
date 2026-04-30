@@ -31,6 +31,14 @@ export type CategoryUpdateInput = CategoryCreateInput & { id: string };
 export type CategoryDeleteInput = { id: string };
 export type CategoryToggleInput = { id: string; is_active: boolean };
 export type CategoryReorderInput = { id: string; direction: "up" | "down" };
+export type RestaurantSettingsInput = {
+  restaurant_name: string;
+  whatsapp_number: string;
+  phone: string;
+  address: string;
+  hours: string;
+  maps_url: string;
+};
 
 function parseText(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -67,6 +75,11 @@ function parseId(value: unknown, fieldName: string): ParseResult<string> {
 
 function resolveBilingual(primary: string, secondary: string) {
   return secondary || primary;
+}
+
+function isValidPhone(value: string) {
+  if (!value) return true;
+  return /^\+?[0-9()\-\s]{7,20}$/.test(value);
 }
 
 export function toSlug(value: string) {
@@ -226,4 +239,52 @@ export function parseCategoryReorder(payload: unknown): ParseResult<CategoryReor
     return { ok: false, message: "Direction must be either up or down." };
   }
   return { ok: true, data: { id: idResult.data, direction } };
+}
+
+export function parseRestaurantSettings(
+  payload: unknown,
+): ParseResult<RestaurantSettingsInput> {
+  if (!payload || typeof payload !== "object") {
+    return { ok: false, message: "Invalid request payload." };
+  }
+
+  const obj = payload as Record<string, unknown>;
+  const restaurant_name = parseText(obj.restaurant_name);
+  const whatsapp_number = parseText(obj.whatsapp_number);
+  const phone = parseText(obj.phone);
+  const address = parseText(obj.address);
+  const hours = parseText(obj.hours);
+  const maps_url = parseText(obj.maps_url);
+
+  if (!restaurant_name) {
+    return { ok: false, message: "Restaurant name is required." };
+  }
+  if (!isValidPhone(whatsapp_number) || !isValidPhone(phone)) {
+    return {
+      ok: false,
+      message: "WhatsApp and phone must use a valid phone number format.",
+    };
+  }
+  if (maps_url) {
+    try {
+      const parsed = new URL(maps_url);
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        return { ok: false, message: "Maps URL must start with http:// or https://." };
+      }
+    } catch {
+      return { ok: false, message: "Maps URL must be a valid URL." };
+    }
+  }
+
+  return {
+    ok: true,
+    data: {
+      restaurant_name,
+      whatsapp_number,
+      phone,
+      address,
+      hours,
+      maps_url,
+    },
+  };
 }
