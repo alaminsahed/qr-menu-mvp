@@ -33,7 +33,7 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen bg-[#faf9f5] text-primary-ui">
-      <aside className="hidden w-64 flex-col border-r border-default bg-[#f8f7f4] p-4 lg:flex">
+      <aside className="hidden w-64 flex-col bg-[#f8f7f4] p-4 shadow-[6px_0_20px_rgba(15,23,42,0.06)] lg:flex">
         <div className="mb-6 flex items-center gap-3 px-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-ui text-white">
             <span className="material-symbols-outlined text-xl">restaurant</span>
@@ -50,8 +50,8 @@ export default async function AdminLayout({
           <AdminNav />
         </div>
 
-        <div className="mt-4 border-t border-default pt-4">
-          <div className="mt-4 flex items-center gap-3 rounded-xl border border-default bg-white px-3 py-3">
+        <div className="mt-4 pt-4">
+          <div className="mt-4 flex items-center gap-3 rounded-xl bg-white px-3 py-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-soft text-secondary-ui">
               <span className="material-symbols-outlined text-xl">account_circle</span>
             </div>
@@ -64,7 +64,7 @@ export default async function AdminLayout({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-default bg-white/80 px-4 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-30 bg-white/80 px-4 shadow-sm backdrop-blur sm:px-6">
           <div className="flex min-h-16 items-center justify-between gap-3">
             <div className="relative w-full max-w-lg">
               <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-ui">
@@ -100,13 +100,13 @@ export default async function AdminLayout({
               </form>
             </div>
           </div>
-          <div className="mt-4 border-t border-default pt-3 lg:hidden">
+          <div className="mt-4 pt-3 lg:hidden">
             <AdminNav />
           </div>
         </header>
 
         <main className="flex-1 px-4 py-5 sm:px-6 sm:py-6">{children}</main>
-        <footer className="border-t border-default bg-white px-6 py-5 text-center text-xs uppercase tracking-[0.14em] text-muted-ui">
+        <footer className="bg-white px-6 py-5 text-center text-xs uppercase tracking-[0.14em] text-muted-ui shadow-[0_-4px_14px_rgba(15,23,42,0.04)]">
           © 2024 Bhojon Hub. Artisanal Bangladeshi culinary management platform.
         </footer>
       </div>

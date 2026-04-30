@@ -250,7 +250,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <AdminToast
         status={status}
         message={message}
@@ -261,27 +261,27 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
           Failed to load menu management data.
         </div>
       ) : null}
-      <section className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <section className="flex flex-col justify-between gap-2 md:flex-row md:items-end">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-primary-ui">Menu Management</h1>
-          <p className="text-secondary-ui">Manage your restaurant&apos;s digital menu items</p>
+          <h1 className="text-2xl font-bold tracking-tight text-primary-ui">Menu Management</h1>
+          <p className="text-sm text-secondary-ui">Manage your restaurant&apos;s digital menu items</p>
         </div>
       </section>
 
       <section className="rounded-2xl border border-default bg-white shadow-sm">
         <details open={Boolean(selectedCategoryId)} className="[&_summary::-webkit-details-marker]:hidden">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5">
             <div className="flex items-center gap-2 text-sm font-semibold text-primary-ui">
               <span className="material-symbols-outlined text-base">filter_alt</span>
               Filter by category
             </div>
             <span className="text-xs font-medium text-muted-ui">Toggle</span>
           </summary>
-          <div className="border-t border-default px-3 pb-3 pt-3">
+          <div className="border-t border-default px-3 pb-2.5 pt-2.5">
             <div className="flex gap-2 overflow-x-auto">
               <Link
                 href={getCategoryHref()}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${
                   !selectedCategoryId
                     ? "bg-secondary-ui text-white"
                     : "bg-surface-soft text-secondary-ui"
@@ -293,7 +293,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
                 <Link
                   href={getCategoryHref(category.id)}
                   key={category.id}
-                  className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+                  className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${
                     selectedCategoryId === category.id
                       ? "bg-secondary-ui text-white"
                       : "bg-surface-soft text-secondary-ui"
