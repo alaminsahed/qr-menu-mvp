@@ -64,7 +64,7 @@ export function MenuItemsTable({
             <div key={`${item.id}-actions`} className="flex flex-wrap gap-2">
               <a
                 href={`/admin/menu?edit=${item.id}`}
-                className="inline-flex items-center gap-1.5 rounded-full border border-default bg-surface px-3 py-1 text-xs font-semibold text-secondary-ui hover:bg-surface-soft"
+                className="inline-flex items-center gap-1.5 rounded-full border border-blue-200! bg-blue-50! px-3 py-1 text-xs font-semibold text-blue-700! hover:bg-blue-100!"
               >
                 <span className="material-symbols-outlined text-sm">edit</span>
                 Edit
@@ -79,7 +79,11 @@ export function MenuItemsTable({
                 <AdminButton
                   type="submit"
                   variant="secondary"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 text-xs"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs ${
+                    item.available
+                      ? "border-amber-200! bg-amber-50! text-amber-700! hover:bg-amber-100!"
+                      : "border-emerald-200! bg-emerald-50! text-emerald-700! hover:bg-emerald-100!"
+                  }`}
                 >
                   <span className="material-symbols-outlined text-sm">
                     {item.available ? "toggle_off" : "toggle_on"}
@@ -92,7 +96,7 @@ export function MenuItemsTable({
                 <AdminButton
                   type="submit"
                   variant="secondary"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 text-xs"
+                  className="inline-flex items-center gap-1.5 border-red-200! bg-red-50! px-3 py-1 text-xs text-red-700! hover:bg-red-100!"
                 >
                   <span className="material-symbols-outlined text-sm">delete</span>
                   Delete

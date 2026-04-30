@@ -36,6 +36,11 @@ export function EditCategoryModal({
         </div>
         <form action={onUpdateCategory} className="grid gap-3">
           <input type="hidden" name="id" value={category.id} />
+          <input
+            type="hidden"
+            name="current_is_active"
+            value={String(category.is_active)}
+          />
           <AdminField label="Name (English)" htmlFor="edit_name_en">
             <AdminInput
               id="edit_name_en"
@@ -59,17 +64,6 @@ export function EditCategoryModal({
               defaultValue={category.sort_order}
               required
             />
-          </AdminField>
-          <AdminField label="Status" htmlFor="edit_is_active">
-            <select
-              id="edit_is_active"
-              name="is_active"
-              defaultValue={String(category.is_active)}
-              className="ui-input pr-10"
-            >
-              <option value="true">Active</option>
-              <option value="false">Inactive</option>
-            </select>
           </AdminField>
           <div className="flex flex-wrap gap-2">
             <AdminButton

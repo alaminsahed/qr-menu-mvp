@@ -27,10 +27,6 @@ function parseSortOrder(value: FormDataEntryValue | null) {
   return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : 0;
 }
 
-function parseIsActive(value: FormDataEntryValue | null) {
-  return String(value ?? "true") === "true";
-}
-
 async function ensureAdmin() {
   const supabase = await createClient();
   const {
@@ -115,7 +111,7 @@ export default async function AdminCategoriesPage({
     const nameBn = String(formData.get("name_bn") ?? "").trim();
     const resolvedNameBn = nameBn || nameEn;
     const sortOrder = parseSortOrder(formData.get("sort_order"));
-    const isActive = parseIsActive(formData.get("is_active"));
+    const isActive = String(formData.get("current_is_active") ?? "true") === "true";
 
     if (!id || !nameEn) {
       await refreshCategories("error", "English name is required.");
@@ -143,6 +139,37 @@ export default async function AdminCategoriesPage({
     }
 
     await refreshCategories("success", "Category updated.");
+  }
+
+  async function toggleCategoryAvailability(formData: FormData) {
+    "use server";
+
+    await ensureAdmin();
+    const serviceClient = createServiceRoleClient();
+    const id = String(formData.get("id") ?? "").trim();
+    const nextIsActive =
+      String(formData.get("next_is_active") ?? "false") === "true";
+
+    if (!id) {
+      await refreshCategories("error", "Category id is required.");
+    }
+
+    const { error: updateError } = await serviceClient
+      .from("menu_categories")
+      .update({
+        is_active: nextIsActive,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      await refreshCategories("error", "Failed to update category status.");
+    }
+
+    await refreshCategories(
+      "success",
+      nextIsActive ? "Category enabled." : "Category disabled.",
+    );
   }
 
   async function deleteCategory(formData: FormData) {
@@ -273,6 +300,7 @@ export default async function AdminCategoriesPage({
         categories={categories}
         onMoveCategory={moveCategory}
         onDeleteCategory={deleteCategory}
+        onToggleAvailability={toggleCategoryAvailability}
       />
 
       {categoryToEdit ? (

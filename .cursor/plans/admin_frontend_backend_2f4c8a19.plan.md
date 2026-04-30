@@ -10,16 +10,16 @@ todos:
     status: completed
   - id: admin-menu-crud-ui
     content: Implement menu management UI with create/edit/delete and availability toggles.
-    status: pending
+    status: completed
   - id: admin-category-crud-ui
     content: Implement category management UI with create/edit/delete and sort controls.
     status: completed
   - id: admin-backend-mutations
     content: Add server actions or API handlers with validation, authorization checks, and cache revalidation.
-    status: pending
+    status: completed
   - id: admin-settings-qr
     content: Add restaurant settings editor and QR table-link generation/print view.
-    status: pending
+    status: in_progress
   - id: admin-hardening-tests
     content: Add error handling, optimistic update rollback, and integration test coverage for admin flows.
     status: pending
