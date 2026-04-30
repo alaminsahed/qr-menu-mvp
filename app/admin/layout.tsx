@@ -74,8 +74,8 @@ export default async function AdminLayout({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 h-16 border-b border-default bg-white/80 px-4 backdrop-blur sm:px-6">
-          <div className="flex items-center justify-between gap-3">
+        <header className="sticky top-0 z-30 border-b border-default bg-white/80 px-4 backdrop-blur sm:px-6">
+          <div className="flex min-h-16 items-center justify-between gap-3">
             <div className="relative w-full max-w-lg">
               <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-ui">
                 search
