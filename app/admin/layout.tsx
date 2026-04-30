@@ -17,6 +17,12 @@ export default async function AdminLayout({
   if (!user) redirect("/login?error=unauthorized");
   const admin = await isAdminUser(supabase, user.id);
   if (!admin) redirect("/login?error=unauthorized");
+  const { data: restaurantSettings } = await supabase
+    .from("restaurant_settings")
+    .select("restaurant_name")
+    .limit(1)
+    .maybeSingle();
+  const restaurantName = restaurantSettings?.restaurant_name?.trim() || "Your Restaurant";
 
   async function signOut() {
     "use server";
@@ -33,7 +39,7 @@ export default async function AdminLayout({
             <span className="material-symbols-outlined text-xl">restaurant</span>
           </div>
           <div>
-            <p className="text-xl font-bold leading-tight text-primary-ui">Bengal Earth</p>
+            <p className="text-xl font-bold leading-tight text-primary-ui">{restaurantName}</p>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-ui">
               Restaurateur Suite
             </p>
@@ -45,22 +51,6 @@ export default async function AdminLayout({
         </div>
 
         <div className="mt-4 border-t border-default pt-4">
-          <div className="space-y-1">
-            <Link
-              href="/admin/settings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-secondary-ui hover:bg-surface-soft hover:text-primary-ui"
-            >
-              <span className="material-symbols-outlined text-base leading-none">help</span>
-              Support
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-secondary-ui hover:bg-surface-soft hover:text-primary-ui"
-            >
-              <span className="material-symbols-outlined text-base leading-none">settings</span>
-              Settings
-            </Link>
-          </div>
           <div className="mt-4 flex items-center gap-3 rounded-xl border border-default bg-white px-3 py-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-soft text-secondary-ui">
               <span className="material-symbols-outlined text-xl">account_circle</span>

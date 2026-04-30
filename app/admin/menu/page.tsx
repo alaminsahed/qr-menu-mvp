@@ -268,32 +268,43 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
         </div>
       </section>
 
-      <section className="rounded-2xl border border-default bg-white p-3 shadow-sm">
-        <div className="flex gap-2 overflow-x-auto">
-          <Link
-            href={getCategoryHref()}
-            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
-              !selectedCategoryId
-                ? "bg-secondary-ui text-white"
-                : "bg-surface-soft text-secondary-ui"
-            }`}
-          >
-            All Items
-          </Link>
-          {categories.slice(0, 8).map((category) => (
-            <Link
-              href={getCategoryHref(category.id)}
-              key={category.id}
-              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
-                selectedCategoryId === category.id
-                  ? "bg-secondary-ui text-white"
-                  : "bg-surface-soft text-secondary-ui"
-              }`}
-            >
-              {category.name_en}
-            </Link>
-          ))}
-        </div>
+      <section className="rounded-2xl border border-default bg-white shadow-sm">
+        <details open={Boolean(selectedCategoryId)} className="[&_summary::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-primary-ui">
+              <span className="material-symbols-outlined text-base">filter_alt</span>
+              Filter by category
+            </div>
+            <span className="text-xs font-medium text-muted-ui">Toggle</span>
+          </summary>
+          <div className="border-t border-default px-3 pb-3 pt-3">
+            <div className="flex gap-2 overflow-x-auto">
+              <Link
+                href={getCategoryHref()}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+                  !selectedCategoryId
+                    ? "bg-secondary-ui text-white"
+                    : "bg-surface-soft text-secondary-ui"
+                }`}
+              >
+                All Items
+              </Link>
+              {categories.slice(0, 8).map((category) => (
+                <Link
+                  href={getCategoryHref(category.id)}
+                  key={category.id}
+                  className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+                    selectedCategoryId === category.id
+                      ? "bg-secondary-ui text-white"
+                      : "bg-surface-soft text-secondary-ui"
+                  }`}
+                >
+                  {category.name_en}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </details>
       </section>
 
       <CreateMenuItemForm categories={categories} onCreateMenuItem={createMenuItem} defaultOpen={status === "error"} />

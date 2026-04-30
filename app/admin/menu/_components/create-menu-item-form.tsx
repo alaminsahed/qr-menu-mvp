@@ -1,3 +1,6 @@
+ "use client";
+
+import { useEffect, useState } from "react";
 import {
   AdminButton,
   AdminField,
@@ -17,11 +20,20 @@ export function CreateMenuItemForm({
   onCreateMenuItem,
   defaultOpen = false,
 }: CreateMenuItemFormProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    setIsOpen(defaultOpen);
+  }, [defaultOpen]);
+
   return (
     <details
       id="create-menu-item"
       className="overflow-hidden rounded-2xl border border-default bg-surface [&_summary::-webkit-details-marker]:hidden"
-      open={defaultOpen}
+      open={isOpen}
+      onToggle={(event) => {
+        setIsOpen(event.currentTarget.open);
+      }}
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-white px-4 py-3 sm:px-5">
         <div>
@@ -32,9 +44,14 @@ export function CreateMenuItemForm({
         </div>
         <button
           type="button"
-          className="rounded-lg bg-primary-ui px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            setIsOpen((previous) => !previous);
+          }}
+          className="inline-flex items-center justify-center rounded-lg bg-primary-ui px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40"
         >
-          + Add New Item
+          Add Menu Item
         </button>
       </summary>
       <div className="border-t border-default px-4 py-4 sm:px-5">
