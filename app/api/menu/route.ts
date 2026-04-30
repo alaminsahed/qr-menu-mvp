@@ -30,6 +30,13 @@ type MenuRow = {
     | null;
 };
 
+type CategoryRow = {
+  slug: string;
+  name_en: string;
+  name_bn: string;
+  sort_order: number;
+};
+
 function getCategoryRef(categoryRef: MenuRow["category_ref"]): {
   slug: string;
   name_en: string;
@@ -92,6 +99,16 @@ export async function GET(request: NextRequest) {
     return jsonError("Failed to load menu items.", 500);
   }
 
+  const { data: categoryData, error: categoryError } = await supabase
+    .from("menu_categories")
+    .select("slug, name_en, name_bn, sort_order")
+    .order("sort_order", { ascending: true })
+    .order("name_en", { ascending: true });
+
+  if (categoryError) {
+    return jsonError("Failed to load menu categories.", 500);
+  }
+
   const rows = (data ?? []) as MenuRow[];
   const items = rows.map((row) => {
     const categoryRef = getCategoryRef(row.category_ref);
@@ -112,5 +129,13 @@ export async function GET(request: NextRequest) {
       available: row.available,
     };
   });
-  return Response.json({ items });
+
+  const categories = ((categoryData ?? []) as CategoryRow[]).map((category) => ({
+    key: category.slug,
+    label_en: category.name_en,
+    label_bn: category.name_bn,
+    sort_order: category.sort_order,
+  }));
+
+  return Response.json({ items, categories });
 }

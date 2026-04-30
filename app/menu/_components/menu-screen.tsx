@@ -12,7 +12,7 @@ import { useMenu } from "@/components/client/menu-provider";
 
 export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   const { language } = useLanguage();
-  const { items: menuItems, error } = useMenu();
+  const { items: menuItems, categories: menuCategories, error } = useMenu();
   const itemsByCategory = useMemo(() => {
     const grouped = new Map<string, typeof menuItems>();
     for (const item of menuItems) {
@@ -28,21 +28,11 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
   }, [menuItems]);
   const categories = useMemo(
     () =>
-      Array.from(
-        new Map(
-          menuItems.map((item) => [
-            item.category_slug ?? item.category,
-            {
-              key: item.category_slug ?? item.category,
-              label:
-                language === "bn"
-                  ? (item.category_name_bn ?? item.category)
-                  : (item.category_name_en ?? item.category),
-            },
-          ]),
-        ).values(),
-      ),
-    [language, menuItems],
+      menuCategories.map((category) => ({
+        key: category.key,
+        label: language === "bn" ? category.label_bn : category.label_en,
+      })),
+    [language, menuCategories],
   );
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.key || "",
@@ -134,15 +124,20 @@ export function MenuScreen({ tableNumber }: { tableNumber: string | null }) {
           )
           .map((category) => {
             const itemsForCategory = itemsByCategory.get(category.key) ?? [];
-            if (itemsForCategory.length === 0) return null;
             return (
               <section key={category.key} className="mb-8 space-y-3">
                 <h3 className="text-[1.5rem] leading-none font-bold text-[#7c2c16]">
                   {category.label}
                 </h3>
-                {itemsForCategory.map((item) => (
-                  <MenuItemCard key={item.id} item={item} />
-                ))}
+                {itemsForCategory.length > 0 ? (
+                  itemsForCategory.map((item) => (
+                    <MenuItemCard key={item.id} item={item} />
+                  ))
+                ) : (
+                  <p className="rounded-2xl bg-[#ece8df] px-4 py-3 text-sm text-[#7b6a62]">
+                    No items in this category yet.
+                  </p>
+                )}
               </section>
             );
           })}

@@ -20,7 +20,7 @@ export default async function LoginPage({
 
   if (user) {
     const admin = await isAdminUser(supabase, user.id);
-    if (admin) redirect("/protected");
+    if (admin) redirect("/admin");
     // Avoid redirect loops if we're already on the unauthorized page.
     if (error !== "unauthorized") {
       redirect("/login?error=unauthorized");
@@ -49,7 +49,7 @@ export default async function LoginPage({
       redirect("/login?error=invalid_credentials");
     }
 
-    redirect("/protected");
+    redirect("/admin");
   }
 
   const unauthorized = error === "unauthorized";

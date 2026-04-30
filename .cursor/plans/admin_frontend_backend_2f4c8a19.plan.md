@@ -4,13 +4,16 @@ overview: Build a secure admin panel with Supabase-backed CRUD, auth-gated write
 todos:
   - id: admin-auth-foundation
     content: Implement admin login + session guard. Admin is defined by membership in `public.admin_users` (no signup flow).
-    status: pending
+    status: completed
   - id: admin-frontend-shell
     content: Build admin layout, navigation, dashboard shell, and reusable form/table UI primitives.
-    status: pending
+    status: completed
   - id: admin-menu-crud-ui
-    content: Implement menu and category management UI with create/edit/delete and availability toggles.
+    content: Implement menu management UI with create/edit/delete and availability toggles.
     status: pending
+  - id: admin-category-crud-ui
+    content: Implement category management UI with create/edit/delete and sort controls.
+    status: completed
   - id: admin-backend-mutations
     content: Add server actions or API handlers with validation, authorization checks, and cache revalidation.
     status: pending
@@ -120,8 +123,8 @@ Deliver a production-ready admin experience for restaurant owners to manage menu
 - create/update/delete category
 - upsert restaurant settings
 
-6. Add centralized error mapping for user-friendly admin errors.
-7. Add cache invalidation strategy:
+1. Add centralized error mapping for user-friendly admin errors.
+2. Add cache invalidation strategy:
 
 - revalidate admin pages immediately
 - revalidate public menu routes/tags after relevant writes

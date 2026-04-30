@@ -18,8 +18,8 @@ export default function Home() {
         >
           Go to login
         </Link>
-        <Link href="/protected" className="rounded-md border px-4 py-2">
-          Open protected page
+        <Link href="/admin" className="rounded-md border px-4 py-2">
+          Open admin panel
         </Link>
       </div>
     </main>

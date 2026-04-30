@@ -1,0 +1,14 @@
+---
+description: Keep page files under 300 lines by extracting components and optimizing code paths
+globs: app/**/page.{ts,tsx,js,jsx}
+alwaysApply: false
+---
+
+# Page Size and Optimization Rule
+
+- Keep every `page` file at or below 300 lines.
+- If a page grows beyond 300 lines, extract UI sections into route-local components (for example `app/<route>/_components/*`).
+- Move reusable logic into shared hooks/utilities only when it is used across multiple routes.
+- Prefer small, focused components with clear props to reduce re-render surface area.
+- Keep generated code optimization-first: avoid unnecessary state, expensive computations in render, and duplicate data fetching.
+- Use memoization (`useMemo`, `useCallback`, `React.memo`) only when there is a measurable or obvious render-performance benefit.
