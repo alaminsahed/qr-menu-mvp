@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const ADMIN_LINKS = [
-  { href: "/admin", label: "Dashboard", icon: "dashboard" },
   { href: "/admin/menu", label: "Menu Management", icon: "restaurant_menu" },
   { href: "/admin/categories", label: "Categories", icon: "list_alt" },
   { href: "/admin/settings", label: "Settings", icon: "settings" },

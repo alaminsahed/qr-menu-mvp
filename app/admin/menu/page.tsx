@@ -18,7 +18,7 @@ import { isAdminUser } from "@/lib/admin/is-admin";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 
 type AdminMenuPageProps = {
-  searchParams?: Promise<{ status?: string; message?: string; edit?: string }>;
+  searchParams?: Promise<{ status?: string; message?: string; edit?: string; category?: string }>;
 };
 
 function toSlug(value: string) {
@@ -84,11 +84,19 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     ...item,
     price: Number(item.price),
   }));
+  const selectedCategoryId = categories.some((category) => category.id === params?.category)
+    ? params?.category
+    : undefined;
+  const filteredItems = selectedCategoryId
+    ? items.filter((item) => item.category_id === selectedCategoryId)
+    : items;
   const categoriesById = new Map(categories.map((category) => [category.id, category]));
   const itemToEdit = editId ? items.find((item) => item.id === editId) : undefined;
-  const totalItems = items.length;
-  const activeItems = items.filter((item) => item.available).length;
-  const outOfStockItems = totalItems - activeItems;
+
+  function getCategoryHref(categoryId?: string) {
+    if (!categoryId) return "/admin/menu";
+    return `/admin/menu?category=${encodeURIComponent(categoryId)}`;
+  }
 
   async function createMenuItem(formData: FormData) {
     "use server";
@@ -111,8 +119,9 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
       const upload = await uploadMenuImage(imageFile);
       if ("error" in upload) {
         await refreshMenu("error", upload.error);
+      } else {
+        imageUrl = upload.publicUrl;
       }
-      imageUrl = upload.publicUrl;
     }
 
     if (!nameEn || !categoryId || !descriptionEn || !imageUrl || !slug) {
@@ -160,11 +169,12 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
       const upload = await uploadMenuImage(imageFile);
       if ("error" in upload) {
         await refreshMenu("error", upload.error);
-      }
-      imageUrl = upload.publicUrl;
-      const oldPath = parseStoragePathFromPublicUrl(currentImageUrl);
-      if (oldPath) {
-        await removeMenuImage(oldPath);
+      } else {
+        imageUrl = upload.publicUrl;
+        const oldPath = parseStoragePathFromPublicUrl(currentImageUrl);
+        if (oldPath) {
+          await removeMenuImage(oldPath);
+        }
       }
     }
 
@@ -256,67 +266,43 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
           <h1 className="text-3xl font-bold tracking-tight text-primary-ui">Menu Management</h1>
           <p className="text-secondary-ui">Manage your restaurant&apos;s digital menu items</p>
         </div>
-        <Link
-          href="#create-menu-item"
-          className="inline-flex items-center gap-2 rounded-xl bg-primary-ui px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95"
-        >
-          <span className="material-symbols-outlined text-base">add</span>
-          Add New Item
-        </Link>
-      </section>
-
-      <section className="grid grid-cols-1 gap-3 md:grid-cols-3">
-        <div className="rounded-2xl border border-default bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-ui">Total Items</p>
-          <p className="mt-1 text-4xl font-bold text-primary-ui">{totalItems}</p>
-        </div>
-        <div className="rounded-2xl border border-default bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-ui">Active</p>
-          <p className="mt-1 text-4xl font-bold text-emerald-700">{activeItems}</p>
-        </div>
-        <div className="rounded-2xl border border-default bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-ui">Out of Stock</p>
-          <p className="mt-1 text-4xl font-bold text-red-700">{outOfStockItems}</p>
-        </div>
       </section>
 
       <section className="rounded-2xl border border-default bg-white p-3 shadow-sm">
         <div className="flex gap-2 overflow-x-auto">
-          <span className="rounded-full bg-secondary-ui px-4 py-2 text-sm font-medium text-white">
+          <Link
+            href={getCategoryHref()}
+            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+              !selectedCategoryId
+                ? "bg-secondary-ui text-white"
+                : "bg-surface-soft text-secondary-ui"
+            }`}
+          >
             All Items
-          </span>
+          </Link>
           {categories.slice(0, 8).map((category) => (
-            <span
+            <Link
+              href={getCategoryHref(category.id)}
               key={category.id}
-              className="whitespace-nowrap rounded-full bg-surface-soft px-4 py-2 text-sm font-medium text-secondary-ui"
+              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ${
+                selectedCategoryId === category.id
+                  ? "bg-secondary-ui text-white"
+                  : "bg-surface-soft text-secondary-ui"
+              }`}
             >
               {category.name_en}
-            </span>
+            </Link>
           ))}
         </div>
       </section>
 
       <CreateMenuItemForm categories={categories} onCreateMenuItem={createMenuItem} defaultOpen={status === "error"} />
       <MenuItemsTable
-        items={items}
+        items={filteredItems}
         categoriesById={categoriesById}
         onDeleteMenuItem={deleteMenuItem}
         onToggleAvailability={toggleAvailability}
       />
-      <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <div className="rounded-3xl border border-default bg-surface p-5">
-          <h3 className="text-lg font-semibold text-primary-ui">Quick Tip</h3>
-          <p className="mt-2 text-sm leading-relaxed text-secondary-ui">
-            High-quality images increase menu conversion. Use clear, close-up photos for signature items.
-          </p>
-        </div>
-        <div className="rounded-3xl border border-default bg-surface p-5">
-          <h3 className="text-lg font-semibold text-primary-ui">Top Performing Category</h3>
-          <p className="mt-2 text-sm leading-relaxed text-secondary-ui">
-            Traditional items usually perform best. Consider adding seasonal specials for higher repeat orders.
-          </p>
-        </div>
-      </section>
       {itemToEdit ? (
         <EditMenuItemModal
           item={itemToEdit}

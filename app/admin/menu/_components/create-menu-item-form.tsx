@@ -30,9 +30,12 @@ export function CreateMenuItemForm({
             Upload image with bilingual details and availability defaults.
           </p>
         </div>
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-ui">
-          Toggle
-        </span>
+        <button
+          type="button"
+          className="rounded-lg bg-primary-ui px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40"
+        >
+          + Add New Item
+        </button>
       </summary>
       <div className="border-t border-default px-4 py-4 sm:px-5">
         <form action={onCreateMenuItem} className="grid gap-3 lg:grid-cols-2">
