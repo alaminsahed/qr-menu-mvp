@@ -70,6 +70,7 @@ export default async function AdminSettingsPage({
     });
     if (!parsed.ok) {
       await refreshSettings("error", parsed.message);
+      return;
     }
 
     const service = createServiceRoleClient();

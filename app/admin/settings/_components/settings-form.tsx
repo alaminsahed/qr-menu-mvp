@@ -25,7 +25,12 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <AdminButton type="submit" disabled={pending}>
-      {pending ? "Saving..." : "Save settings"}
+      <span className="inline-flex items-center gap-1.5">
+        <span className="material-symbols-outlined text-[18px]">
+          {pending ? "progress_activity" : "save"}
+        </span>
+        <span>{pending ? "Saving..." : "Save settings"}</span>
+      </span>
     </AdminButton>
   );
 }
