@@ -153,7 +153,7 @@ export default function Home() {
                 width={TAB_BITE_LOGO_PX.w}
                 height={TAB_BITE_LOGO_PX.h}
                 sizes="(max-width: 640px) 96px, 112px"
-                className="h-full w-full origin-center scale-[1.78] object-contain sm:scale-[1.9]"
+                className="h-full w-full origin-center scale-[1.5] object-contain sm:scale-[1.7]"
                 priority
               />
             </span>
@@ -508,8 +508,8 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-white/80">
               Send a join request today. We will help you launch per-table QR
-              codes, WhatsApp ordering with table numbers, and your local delivery
-              flow when you need it.
+              codes, WhatsApp ordering with table numbers, and your local
+              delivery flow when you need it.
             </p>
             <Link
               href="/wishlist"
