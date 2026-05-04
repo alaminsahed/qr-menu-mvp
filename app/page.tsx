@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -138,8 +139,20 @@ export default function Home() {
     <div className="bg-app min-h-screen overflow-x-hidden font-sans">
       <nav className="lp-fade-up sticky top-0 z-50 border-b border-(--color-border-soft) bg-(--color-bg-app)/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <span className="text-base font-semibold tracking-tight text-primary-ui">
-            Tab Bite
+          <span className="inline-flex items-center gap-2.5">
+            <span className="relative h-12 w-12 overflow-hidden rounded-full border border-(--color-border-default) bg-surface shadow-sm">
+              <Image
+                src="/logo/logo2.png"
+                alt="Tab Bite logo"
+                width={48}
+                height={48}
+                className="h-full w-full object-contain"
+                priority
+              />
+            </span>
+            <span className="text-[0.95rem] font-bold tracking-[0.18em] uppercase text-(--color-action-primary)">
+              Tab Bite
+            </span>
           </span>
           <div className="flex items-center gap-6 text-sm">
             <Link
@@ -159,7 +172,7 @@ export default function Home() {
       </nav>
 
       <main>
-        <section className="relative mx-auto max-w-6xl px-5 pt-14 pb-20 md:pt-20">
+        <section className="relative mx-auto max-w-6xl px-5 pt-10 pb-20 md:pt-5">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -171,10 +184,16 @@ export default function Home() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <span className="lp-fade-up inline-flex items-center gap-2 rounded-full border border-(--color-border-default) bg-surface px-3 py-1 text-xs font-semibold tracking-wide text-(--color-action-secondary)">
-                <span className="material-symbols-outlined text-sm">
-                  storefront
+                <span className="relative h-8 w-8 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+                  <Image
+                    src="/logo/logo2.png"
+                    alt="Tab Bite"
+                    width={32}
+                    height={32}
+                    className="h-full w-full object-contain"
+                  />
                 </span>
-                Built for restaurant owners
+                Tab Bite for Restaurant Owners
               </span>
 
               <h1 className="lp-fade-up lp-d1 mt-5 text-balance text-4xl font-semibold leading-tight tracking-tight text-primary-ui md:text-6xl">
@@ -263,7 +282,9 @@ export default function Home() {
                         <p className="text-sm font-semibold text-primary-ui">
                           {item.name}
                         </p>
-                        <p className="text-xs text-secondary-ui">{item.price}</p>
+                        <p className="text-xs text-secondary-ui">
+                          {item.price}
+                        </p>
                       </div>
                       {item.available ? (
                         <span className="rounded-full bg-(--color-action-primary)/15 px-2.5 py-1 text-xs font-medium text-(--color-action-primary)">
@@ -279,7 +300,9 @@ export default function Home() {
                 </div>
 
                 <div className="mt-4 rounded-xl bg-(--color-action-primary) px-4 py-3 text-white">
-                  <p className="text-xs text-white/80">Order sent to WhatsApp</p>
+                  <p className="text-xs text-white/80">
+                    Order sent to WhatsApp
+                  </p>
                   <p className="mt-1 text-sm font-semibold">
                     2 items • ৳400 • Ready for dispatch
                   </p>
@@ -397,54 +420,68 @@ export default function Home() {
               One Price for Software, Domain, and Hosting
             </h2>
             <p className="lp-reveal mx-auto mb-10 max-w-xl text-center text-sm text-secondary-ui">
-              Start free for 3 months, then choose monthly or yearly billing.
-              No separate hosting or domain costs.
+              Start free for 3 months, then choose monthly or yearly billing. No
+              separate hosting or domain costs.
             </p>
             <div className="lp-stagger grid gap-5 md:grid-cols-3">
               {PRICING.map(
-                ({ name, price, period, detail, badge, highlight, ctaDisabled }) => (
-                <div
-                  key={name}
-                  className={`lp-hover relative flex flex-col rounded-(--radius-panel) border p-7 ${
-                    highlight
-                      ? "border-(--color-action-primary) bg-(--color-bg-surface-soft) shadow-lg ring-1 ring-(--color-action-primary)/20"
-                      : "border-(--color-border-default) bg-surface"
-                  }`}
-                >
-                  {badge ? (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-(--color-action-primary) px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-                      {badge}
-                    </span>
-                  ) : null}
-                  <h3 className="text-lg font-semibold text-primary-ui">{name}</h3>
-                  <p className="mt-4 flex items-baseline gap-1">
-                    <span className="text-4xl font-semibold text-primary-ui">
-                      {price}
-                    </span>
-                    <span className="text-sm text-secondary-ui">{period}</span>
-                  </p>
-                  <p className="mt-2 flex-1 text-sm text-secondary-ui">{detail}</p>
-                  {ctaDisabled ? (
-                    <button
-                      type="button"
-                      disabled
-                      className="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-(--color-border-default) bg-(--color-state-disabled-bg) px-5 py-3 text-sm font-semibold text-(--color-state-disabled-text)"
-                    >
-                      Request to Join
-                    </button>
-                  ) : (
-                    <Link
-                      href="/wishlist"
-                      className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold ${
-                        highlight
-                          ? "bg-(--color-action-primary) text-white"
-                          : "border border-(--color-border-default) bg-(--color-bg-app) text-primary-ui"
-                      }`}
-                    >
-                      Request to Join
-                    </Link>
-                  )}
-                </div>
+                ({
+                  name,
+                  price,
+                  period,
+                  detail,
+                  badge,
+                  highlight,
+                  ctaDisabled,
+                }) => (
+                  <div
+                    key={name}
+                    className={`lp-hover relative flex flex-col rounded-(--radius-panel) border p-7 ${
+                      highlight
+                        ? "border-(--color-action-primary) bg-(--color-bg-surface-soft) shadow-lg ring-1 ring-(--color-action-primary)/20"
+                        : "border-(--color-border-default) bg-surface"
+                    }`}
+                  >
+                    {badge ? (
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-(--color-action-primary) px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+                        {badge}
+                      </span>
+                    ) : null}
+                    <h3 className="text-lg font-semibold text-primary-ui">
+                      {name}
+                    </h3>
+                    <p className="mt-4 flex items-baseline gap-1">
+                      <span className="text-4xl font-semibold text-primary-ui">
+                        {price}
+                      </span>
+                      <span className="text-sm text-secondary-ui">
+                        {period}
+                      </span>
+                    </p>
+                    <p className="mt-2 flex-1 text-sm text-secondary-ui">
+                      {detail}
+                    </p>
+                    {ctaDisabled ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-(--color-border-default) bg-(--color-state-disabled-bg) px-5 py-3 text-sm font-semibold text-(--color-state-disabled-text)"
+                      >
+                        Request to Join
+                      </button>
+                    ) : (
+                      <Link
+                        href="/wishlist"
+                        className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold ${
+                          highlight
+                            ? "bg-(--color-action-primary) text-white"
+                            : "border border-(--color-border-default) bg-(--color-bg-app) text-primary-ui"
+                        }`}
+                      >
+                        Request to Join
+                      </Link>
+                    )}
+                  </div>
                 ),
               )}
             </div>
@@ -480,13 +517,24 @@ export default function Home() {
 
       <footer className="border-t border-(--color-border-soft) bg-surface py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-base font-semibold tracking-tight text-secondary-ui">
-              Tab Bite
-            </p>
-            <p className="mt-1 text-xs text-muted-ui">
-              Modern QR Ordering for Restaurants
-            </p>
+          <div className="flex items-center gap-2.5">
+            <span className="relative h-11 w-11 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+              <Image
+                src="/logo/logo2.png"
+                alt="Tab Bite logo"
+                width={44}
+                height={44}
+                className="h-full w-full object-contain"
+              />
+            </span>
+            <div>
+              <p className="text-[0.9rem] font-bold tracking-[0.16em] uppercase text-(--color-action-primary)">
+                Tab Bite
+              </p>
+              <p className="mt-1 text-xs text-muted-ui">
+                Modern QR Ordering for Restaurants
+              </p>
+            </div>
           </div>
           <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-ui">
             <Link
