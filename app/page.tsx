@@ -141,12 +141,12 @@ export default function Home() {
   return (
     <div className="bg-app min-h-screen overflow-x-hidden font-sans">
       <nav className="lp-fade-up sticky top-0 z-50 border-b border-(--color-border-soft) bg-(--color-bg-app)/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-5">
           <Link
             href="/"
             className="inline-flex items-center gap-3.5 rounded-lg -mx-1.5 -my-1 px-1.5 py-1 text-(--color-action-primary) transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-action-primary)/35"
           >
-            <span className="relative inline-block h-24 w-24 shrink-0 overflow-hidden sm:h-28 sm:w-28">
+            <span className="relative inline-block h-20 w-20 shrink-0 overflow-hidden sm:h-28 sm:w-28">
               <Image
                 src="/logo/download.png"
                 alt=""
@@ -157,11 +157,11 @@ export default function Home() {
                 priority
               />
             </span>
-            <span className="text-base font-bold tracking-[0.18em] uppercase">
+            <span className="text-sm font-bold tracking-[0.16em] uppercase sm:text-base">
               Tab Bite
             </span>
           </Link>
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-3 text-xs sm:gap-4 sm:text-sm">
             <Link
               href="/wishlist"
               className="font-medium text-(--color-action-primary) transition-opacity hover:opacity-75"
@@ -179,7 +179,7 @@ export default function Home() {
       </nav>
 
       <main>
-        <section className="relative mx-auto max-w-6xl px-5 pt-6 pb-20 md:pt-4">
+        <section className="relative mx-auto max-w-6xl px-4 pt-5 pb-16 sm:px-5 sm:pb-20 md:pt-4">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -188,9 +188,9 @@ export default function Home() {
             <div className="absolute -left-14 top-20 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(71,100,75,0.08)_0%,transparent_70%)] blur-3xl" />
           </div>
 
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-2">
             <div>
-              <span className="lp-fade-up inline-flex items-center gap-2.5 rounded-full border border-(--color-border-default) bg-surface px-3.5 py-1.5 text-xs font-semibold tracking-wide text-(--color-action-secondary)">
+              <span className="lp-fade-up inline-flex items-center gap-2 rounded-full border border-(--color-border-default) bg-surface px-3 py-1.5 text-[11px] font-semibold tracking-wide text-(--color-action-secondary) sm:gap-2.5 sm:px-3.5 sm:text-xs">
                 <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
                   <Image
                     src="/logo/logo2.png"
@@ -203,7 +203,7 @@ export default function Home() {
                 Tab Bite for Restaurant Owners
               </span>
 
-              <h1 className="lp-fade-up lp-d1 mt-5 text-balance text-4xl font-semibold leading-tight tracking-tight text-primary-ui md:text-6xl">
+              <h1 className="lp-fade-up lp-d1 mt-5 text-balance text-3xl font-semibold leading-tight tracking-tight text-primary-ui sm:text-4xl md:text-6xl">
                 Modern QR Ordering for
                 <span className="text-(--color-action-primary)">
                   {" "}
@@ -212,17 +212,17 @@ export default function Home() {
                 and Lower Costs
               </h1>
 
-              <p className="lp-fade-up lp-d2 mt-5 max-w-xl text-pretty text-lg leading-relaxed text-secondary-ui">
+              <p className="lp-fade-up lp-d2 mt-5 max-w-xl text-pretty text-base leading-relaxed text-secondary-ui sm:text-lg">
                 Put a QR on each table (or section): guests scan, browse, and
                 order in WhatsApp with that table already attached. You skip
                 marketplace commission, keep the floor calm, and use your own
                 rider group when guests want delivery.
               </p>
 
-              <div className="lp-fade-up lp-d3 mt-8 flex flex-wrap items-center gap-4">
+              <div className="lp-fade-up lp-d3 mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                 <Link
                   href="/wishlist"
-                  className="ui-btn-primary inline-flex items-center gap-2 px-6 py-3 text-sm transition-transform duration-200 hover:scale-[1.03]"
+                  className="ui-btn-primary inline-flex w-full items-center justify-center gap-2 px-6 py-3 text-sm transition-transform duration-200 hover:scale-[1.03] sm:w-auto"
                 >
                   Request to join
                   <span className="material-symbols-outlined text-base">
@@ -231,7 +231,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/menu?table=5"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-secondary-ui transition-colors duration-200 hover:-translate-y-0.5 hover:text-primary-ui"
+                  className="inline-flex w-full items-center justify-center gap-1 text-sm font-medium text-secondary-ui transition-colors duration-200 hover:-translate-y-0.5 hover:text-primary-ui sm:w-auto"
                 >
                   See Live Demo
                   <span className="material-symbols-outlined text-base">
@@ -240,7 +240,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              <ul className="lp-fade-up lp-d4 mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-ui">
+              <ul className="lp-fade-up lp-d4 mt-7 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-ui sm:gap-x-5 sm:text-sm">
                 {HIGHLIGHTS.map((item) => (
                   <li key={item} className="flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-base text-(--color-action-secondary)">
@@ -320,12 +320,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-surface py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section className="bg-surface py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-5">
             <p className="lp-reveal mb-2 text-center text-xs font-semibold tracking-widest text-(--color-action-secondary) uppercase">
               Table QR to WhatsApp
             </p>
-            <h2 className="lp-reveal mb-12 text-center text-3xl font-semibold tracking-tight text-primary-ui md:text-4xl">
+            <h2 className="lp-reveal mb-10 text-center text-2xl font-semibold tracking-tight text-primary-ui sm:text-3xl md:mb-12 md:text-4xl">
               Right Table or Doorstep
             </h2>
             <div className="lp-stagger grid gap-4 md:grid-cols-3">
@@ -354,12 +354,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-5">
             <p className="lp-reveal mb-2 text-center text-xs font-semibold tracking-widest text-(--color-action-secondary) uppercase">
               Cost Savings
             </p>
-            <h2 className="lp-reveal mb-4 text-center text-3xl font-semibold tracking-tight text-primary-ui md:text-4xl">
+            <h2 className="lp-reveal mb-4 text-center text-2xl font-semibold tracking-tight text-primary-ui sm:text-3xl md:text-4xl">
               Profit-Boosting by Design
             </h2>
             <p className="lp-reveal mx-auto mb-10 max-w-2xl text-center text-sm text-secondary-ui">
@@ -390,12 +390,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-surface py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section className="bg-surface py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-5">
             <p className="lp-reveal mb-2 text-center text-xs font-semibold tracking-widest text-(--color-action-secondary) uppercase">
               Product Features
             </p>
-            <h2 className="lp-reveal mb-12 text-center text-3xl font-semibold tracking-tight text-primary-ui md:text-4xl">
+            <h2 className="lp-reveal mb-10 text-center text-2xl font-semibold tracking-tight text-primary-ui sm:text-3xl md:mb-12 md:text-4xl">
               Everything Your Team Needs
             </h2>
             <div className="lp-stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -419,12 +419,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20">
-          <div className="mx-auto max-w-6xl px-5">
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-5">
             <p className="lp-reveal mb-2 text-center text-xs font-semibold tracking-widest text-(--color-action-secondary) uppercase">
               Pricing
             </p>
-            <h2 className="lp-reveal mb-4 text-center text-3xl font-semibold tracking-tight text-primary-ui md:text-4xl">
+            <h2 className="lp-reveal mb-4 text-center text-2xl font-semibold tracking-tight text-primary-ui sm:text-3xl md:text-4xl">
               One Price for Software, Domain, and Hosting
             </h2>
             <p className="lp-reveal mx-auto mb-10 max-w-xl text-center text-sm text-secondary-ui">
@@ -496,14 +496,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-(--color-action-primary) py-20">
-          <div className="lp-reveal mx-auto max-w-3xl px-5 text-center">
+        <section className="bg-(--color-action-primary) py-16 sm:py-20">
+          <div className="lp-reveal mx-auto max-w-3xl px-4 text-center sm:px-5">
             <span className="mx-auto inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-white/10 ring-1 ring-white/20">
               <span className="material-symbols-outlined text-6xl text-white/80 md:text-7xl">
                 restaurant_menu
               </span>
             </span>
-            <h2 className="mt-5 text-4xl font-semibold tracking-tight text-white md:text-5xl">
+            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
               Ready to Modernize Your Restaurant?
             </h2>
             <p className="mt-4 text-white/80">
@@ -525,7 +525,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-(--color-border-soft) bg-surface py-10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:px-5 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-2.5">
             <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
               <Image
@@ -572,7 +572,7 @@ export default function Home() {
             </Link>
           </nav>
         </div>
-        <div className="mx-auto mt-5 max-w-6xl border-t border-(--color-border-soft) px-5 pt-4 text-xs text-muted-ui">
+        <div className="mx-auto mt-5 max-w-6xl border-t border-(--color-border-soft) px-4 pt-4 text-xs text-muted-ui sm:px-5">
           © {new Date().getFullYear()} Tab Bite. Built for Restaurants in
           Bangladesh.
         </div>
