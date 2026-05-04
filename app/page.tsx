@@ -134,27 +134,34 @@ const PRICING = [
   },
 ] as const;
 
+/** Matches `public/logo/download.png`; keeps Next/Image aspect ratio correct. */
+const TAB_BITE_LOGO_PX = { w: 1000, h: 1000 } as const;
+
 export default function Home() {
   return (
     <div className="bg-app min-h-screen overflow-x-hidden font-sans">
       <nav className="lp-fade-up sticky top-0 z-50 border-b border-(--color-border-soft) bg-(--color-bg-app)/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <span className="inline-flex items-center gap-2.5">
-            <span className="relative h-12 w-12 overflow-hidden rounded-full border border-(--color-border-default) bg-surface shadow-sm">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3.5 rounded-lg -mx-1.5 -my-1 px-1.5 py-1 text-(--color-action-primary) transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-action-primary)/35"
+          >
+            <span className="relative inline-block h-24 w-24 shrink-0 overflow-hidden sm:h-28 sm:w-28">
               <Image
-                src="/logo/logo2.png"
-                alt="Tab Bite logo"
-                width={48}
-                height={48}
-                className="h-full w-full object-contain"
+                src="/logo/download.png"
+                alt=""
+                width={TAB_BITE_LOGO_PX.w}
+                height={TAB_BITE_LOGO_PX.h}
+                sizes="(max-width: 640px) 96px, 112px"
+                className="h-full w-full origin-center scale-[1.78] object-contain sm:scale-[1.9]"
                 priority
               />
             </span>
-            <span className="text-[0.95rem] font-bold tracking-[0.18em] uppercase text-(--color-action-primary)">
+            <span className="text-base font-bold tracking-[0.18em] uppercase">
               Tab Bite
             </span>
-          </span>
-          <div className="flex items-center gap-6 text-sm">
+          </Link>
+          <div className="flex items-center gap-4 text-sm">
             <Link
               href="/wishlist"
               className="font-medium text-(--color-action-primary) transition-opacity hover:opacity-75"
@@ -172,7 +179,7 @@ export default function Home() {
       </nav>
 
       <main>
-        <section className="relative mx-auto max-w-6xl px-5 pt-10 pb-20 md:pt-5">
+        <section className="relative mx-auto max-w-6xl px-5 pt-6 pb-20 md:pt-4">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -183,13 +190,13 @@ export default function Home() {
 
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <span className="lp-fade-up inline-flex items-center gap-2 rounded-full border border-(--color-border-default) bg-surface px-3 py-1 text-xs font-semibold tracking-wide text-(--color-action-secondary)">
-                <span className="relative h-8 w-8 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+              <span className="lp-fade-up inline-flex items-center gap-2.5 rounded-full border border-(--color-border-default) bg-surface px-3.5 py-1.5 text-xs font-semibold tracking-wide text-(--color-action-secondary)">
+                <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
                   <Image
                     src="/logo/logo2.png"
                     alt="Tab Bite"
-                    width={32}
-                    height={32}
+                    width={48}
+                    height={48}
                     className="h-full w-full object-contain"
                   />
                 </span>
@@ -518,12 +525,12 @@ export default function Home() {
       <footer className="border-t border-(--color-border-soft) bg-surface py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="relative h-11 w-11 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+            <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
               <Image
                 src="/logo/logo2.png"
                 alt="Tab Bite logo"
-                width={44}
-                height={44}
+                width={64}
+                height={64}
                 className="h-full w-full object-contain"
               />
             </span>

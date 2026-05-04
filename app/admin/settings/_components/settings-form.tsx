@@ -72,10 +72,11 @@ function LogoUploadField({ currentUrl }: { currentUrl: string | null }) {
             }}
           />
           <p className="mt-1 text-xs text-muted-ui">
-            Optional. JPG, PNG, or WebP, up to 5MB. Display size on the public menu is fixed.
+            Optional. JPG, PNG, or WebP, up to 5MB. Display size on the public
+            menu is fixed.
           </p>
         </div>
-        {(preview || currentUrl) ? (
+        {preview || currentUrl ? (
           <div className="flex items-center gap-3 rounded-xl border border-default bg-white p-3">
             <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-surface-soft ring-1 ring-black/5">
               <Image

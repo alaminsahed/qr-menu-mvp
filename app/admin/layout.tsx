@@ -24,7 +24,8 @@ export default async function AdminLayout({
     .order("updated_at", { ascending: false })
     .limit(1)
     .maybeSingle();
-  const restaurantName = restaurantSettings?.restaurant_name?.trim() || "Your Restaurant";
+  const restaurantName =
+    restaurantSettings?.restaurant_name?.trim() || "Your Restaurant";
   const logoUrl = restaurantSettings?.logo_url?.trim() || null;
 
   async function signOut() {
@@ -51,11 +52,15 @@ export default async function AdminLayout({
             </div>
           ) : (
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-ui text-white">
-              <span className="material-symbols-outlined text-xl">restaurant</span>
+              <span className="material-symbols-outlined text-xl">
+                restaurant
+              </span>
             </div>
           )}
           <div>
-            <p className="text-xl font-bold leading-tight text-primary-ui">{restaurantName}</p>
+            <p className="text-xl font-bold leading-tight text-primary-ui">
+              {restaurantName}
+            </p>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-ui">
               Restaurateur Suite
             </p>
@@ -69,11 +74,17 @@ export default async function AdminLayout({
         <div className="mt-4 pt-4">
           <div className="mt-4 flex items-center gap-3 rounded-xl bg-white px-3 py-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-soft text-secondary-ui">
-              <span className="material-symbols-outlined text-xl">account_circle</span>
+              <span className="material-symbols-outlined text-xl">
+                account_circle
+              </span>
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-primary-ui">Administrator</p>
-              <p className="truncate text-xs text-muted-ui">{user.email ?? "Main Kitchen"}</p>
+              <p className="truncate text-sm font-semibold text-primary-ui">
+                Administrator
+              </p>
+              <p className="truncate text-xs text-muted-ui">
+                {user.email ?? "Main Kitchen"}
+              </p>
             </div>
           </div>
         </div>
@@ -98,7 +109,9 @@ export default async function AdminLayout({
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-secondary-ui hover:bg-surface-soft"
                 aria-label="Notifications"
               >
-                <span className="material-symbols-outlined text-[20px]">notifications</span>
+                <span className="material-symbols-outlined text-[20px]">
+                  notifications
+                </span>
               </button>
               <Link
                 href="/menu"
