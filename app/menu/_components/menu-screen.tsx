@@ -13,10 +13,12 @@ import { useMenu } from "@/components/client/menu-provider";
 export function MenuScreen({
   tableNumber,
   restaurantName,
+  restaurantLogoUrl,
   whatsappNumber,
 }: {
   tableNumber: string | null;
   restaurantName: string;
+  restaurantLogoUrl: string | null;
   whatsappNumber: string;
 }) {
   const { language } = useLanguage();
@@ -63,6 +65,7 @@ export function MenuScreen({
         <MenuHeader
           tableNumber={tableNumber}
           restaurantName={restaurantName}
+          restaurantLogoUrl={restaurantLogoUrl}
           whatsappNumber={whatsappNumber}
         />
         {error ? (

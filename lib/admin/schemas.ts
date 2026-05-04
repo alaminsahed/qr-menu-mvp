@@ -256,9 +256,6 @@ export function parseRestaurantSettings(
   const hours = parseText(obj.hours);
   const maps_url = parseText(obj.maps_url);
 
-  if (!restaurant_name) {
-    return { ok: false, message: "Restaurant name is required." };
-  }
   if (!isValidPhone(whatsapp_number) || !isValidPhone(phone)) {
     return {
       ok: false,

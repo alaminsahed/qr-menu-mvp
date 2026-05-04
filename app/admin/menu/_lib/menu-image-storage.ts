@@ -29,6 +29,47 @@ export async function removeMenuImage(path: string) {
   await supabase.storage.from(MENU_IMAGE_BUCKET).remove([path]);
 }
 
+export async function uploadRestaurantLogo(
+  file: File,
+): Promise<UploadMenuImageResult> {
+  if (file.size <= 0) {
+    return { error: "Selected image is empty." };
+  }
+
+  if (file.size > MAX_IMAGE_SIZE_BYTES) {
+    return { error: "Image size must be 5MB or less." };
+  }
+
+  if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+    return { error: "Only JPG, PNG, and WebP images are allowed." };
+  }
+
+  const extension =
+    file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+  const now = Date.now();
+  const random = Math.random().toString(36).slice(2, 10);
+  const path = `branding/logo-${now}-${random}.${extension}`;
+
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const supabase = createServiceRoleClient();
+  const { error: uploadError } = await supabase.storage
+    .from(MENU_IMAGE_BUCKET)
+    .upload(path, bytes, {
+      contentType: file.type,
+      upsert: false,
+      cacheControl: "31536000",
+    });
+
+  if (uploadError) {
+    return { error: "Logo upload failed. Check storage bucket configuration." };
+  }
+
+  const { data } = supabase.storage.from(MENU_IMAGE_BUCKET).getPublicUrl(path, {
+    transform: { width: 512, quality: 85, resize: "contain" },
+  });
+  return { publicUrl: data.publicUrl, path };
+}
+
 export async function uploadMenuImage(file: File): Promise<UploadMenuImageResult> {
   if (file.size <= 0) {
     return { error: "Selected image is empty." };

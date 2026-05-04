@@ -6,6 +6,11 @@ import {
   SettingsForm,
   type RestaurantSettingsValues,
 } from "@/app/admin/settings/_components/settings-form";
+import {
+  parseStoragePathFromPublicUrl,
+  removeMenuImage,
+  uploadRestaurantLogo,
+} from "@/app/admin/menu/_lib/menu-image-storage";
 import { isAdminUser } from "@/lib/admin/is-admin";
 import { parseRestaurantSettings } from "@/lib/admin/schemas";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
@@ -26,6 +31,7 @@ async function ensureAdmin() {
 }
 
 async function refreshSettings(status: "success" | "error", message: string) {
+  revalidatePath("/admin");
   revalidatePath("/admin/settings");
   revalidatePath("/menu");
   redirect(`/admin/settings?status=${status}&message=${encodeURIComponent(message)}`);
@@ -41,7 +47,7 @@ export default async function AdminSettingsPage({
   const { data, error } = await serviceClient
     .from("restaurant_settings")
     .select(
-      "id, restaurant_name, whatsapp_number, phone, address, hours, maps_url",
+      "id, restaurant_name, logo_url, whatsapp_number, phone, address, hours, maps_url",
     )
     .order("updated_at", { ascending: false })
     .limit(1)
@@ -50,6 +56,7 @@ export default async function AdminSettingsPage({
 
   const settings: RestaurantSettingsValues = {
     restaurant_name: data?.restaurant_name ?? "",
+    logo_url: data?.logo_url?.trim() || null,
     whatsapp_number: data?.whatsapp_number ?? "",
     phone: data?.phone ?? "",
     address: data?.address ?? "",
@@ -74,21 +81,69 @@ export default async function AdminSettingsPage({
     }
 
     const service = createServiceRoleClient();
+    const { data: currentRow } = await service
+      .from("restaurant_settings")
+      .select("id, logo_url")
+      .order("updated_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const clearLogo = formData.get("clear_logo") === "1";
+    const logoFile = formData.get("logo");
+    const hasNewLogoFile = logoFile instanceof File && logoFile.size > 0;
+
+    let logo_url: string | null = currentRow?.logo_url?.trim() || null;
+
+    if (hasNewLogoFile && logoFile instanceof File) {
+      const upload = await uploadRestaurantLogo(logoFile);
+      if ("error" in upload) {
+        await refreshSettings("error", upload.error);
+        return;
+      }
+      const previousPath = currentRow?.logo_url
+        ? parseStoragePathFromPublicUrl(currentRow.logo_url)
+        : null;
+      if (previousPath) {
+        await removeMenuImage(previousPath);
+      }
+      logo_url = upload.publicUrl;
+    } else if (clearLogo) {
+      const previousPath = currentRow?.logo_url
+        ? parseStoragePathFromPublicUrl(currentRow.logo_url)
+        : null;
+      if (previousPath) {
+        await removeMenuImage(previousPath);
+      }
+      logo_url = null;
+    }
+
+    const nameTrimmed = parsed.data.restaurant_name.trim();
+    const rowPayload = {
+      restaurant_name: nameTrimmed ? nameTrimmed : null,
+      whatsapp_number: parsed.data.whatsapp_number,
+      phone: parsed.data.phone,
+      address: parsed.data.address,
+      hours: parsed.data.hours,
+      maps_url: parsed.data.maps_url,
+      logo_url,
+    };
+
     const now = new Date().toISOString();
-    if (existingSettingsId) {
+    const rowId = currentRow?.id ?? existingSettingsId;
+    if (rowId) {
       const { error: updateError } = await service
         .from("restaurant_settings")
         .update({
-          ...parsed.data,
+          ...rowPayload,
           updated_at: now,
         })
-        .eq("id", existingSettingsId);
+        .eq("id", rowId);
       if (updateError) {
         await refreshSettings("error", "Failed to save settings.");
       }
     } else {
       const { error: insertError } = await service.from("restaurant_settings").insert({
-        ...parsed.data,
+        ...rowPayload,
         updated_at: now,
       });
       if (insertError) {

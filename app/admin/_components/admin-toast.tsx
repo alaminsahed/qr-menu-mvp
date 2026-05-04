@@ -16,10 +16,11 @@ export function AdminToast({ status, message, clearPath }: AdminToastProps) {
   useEffect(() => {
     if (!status || !message) return;
 
+    const toastId = `admin-flash:${clearPath}`;
     if (status === "success") {
-      toast.success(message);
+      toast.success(message, { id: toastId });
     } else {
-      toast.error(message);
+      toast.error(message, { id: toastId });
     }
 
     router.replace(clearPath);

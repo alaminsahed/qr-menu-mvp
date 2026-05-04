@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AdminNav } from "@/app/admin/_components/admin-nav";
@@ -19,10 +20,12 @@ export default async function AdminLayout({
   if (!admin) redirect("/login?error=unauthorized");
   const { data: restaurantSettings } = await supabase
     .from("restaurant_settings")
-    .select("restaurant_name")
+    .select("restaurant_name, logo_url")
+    .order("updated_at", { ascending: false })
     .limit(1)
     .maybeSingle();
   const restaurantName = restaurantSettings?.restaurant_name?.trim() || "Your Restaurant";
+  const logoUrl = restaurantSettings?.logo_url?.trim() || null;
 
   async function signOut() {
     "use server";
@@ -35,9 +38,22 @@ export default async function AdminLayout({
     <div className="flex min-h-screen bg-[#faf9f5] text-primary-ui">
       <aside className="hidden w-64 flex-col bg-[#f8f7f4] p-4 shadow-[6px_0_20px_rgba(15,23,42,0.06)] lg:flex">
         <div className="mb-6 flex items-center gap-3 px-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-ui text-white">
-            <span className="material-symbols-outlined text-xl">restaurant</span>
-          </div>
+          {logoUrl ? (
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5">
+              <Image
+                src={logoUrl}
+                alt=""
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
+                sizes="40px"
+              />
+            </div>
+          ) : (
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-ui text-white">
+              <span className="material-symbols-outlined text-xl">restaurant</span>
+            </div>
+          )}
           <div>
             <p className="text-xl font-bold leading-tight text-primary-ui">{restaurantName}</p>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-ui">
