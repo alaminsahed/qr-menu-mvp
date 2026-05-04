@@ -68,9 +68,14 @@ async function downloadQrImage(filename: string, qrSrc: string) {
 }
 
 function printQrContent(title: string, url: string, qrSrc: string) {
-  const w = window.open("", "_blank", "noopener,noreferrer,width=640,height=720");
+  const w = window.open(
+    "",
+    "_blank",
+    "noopener,noreferrer,width=640,height=720",
+  );
   if (!w) return;
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>${escapeHtml(title)}</title>
+  w.document
+    .write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>${escapeHtml(title)}</title>
 <style>
   body { font-family: system-ui, sans-serif; text-align: center; padding: 24px; margin: 0; }
   h1 { font-size: 1.125rem; font-weight: 600; margin: 0 0 16px; }
@@ -90,7 +95,9 @@ function printQrContent(title: string, url: string, qrSrc: string) {
   w.document.close();
 }
 
-export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) {
+export function QrTableGenerator({
+  initialMenuBaseUrl,
+}: QrTableGeneratorProps) {
   const menuBase = useMemo(
     () => normalizeMenuBase(initialMenuBaseUrl.replace(/\/$/, "")),
     [initialMenuBaseUrl],
@@ -177,9 +184,19 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
 
         {!hasMenuBase ? (
           <p className="rounded-lg border border-amber-200 bg-amber-50 px-2 py-1.5 text-xs text-amber-800">
-            Set <code className="rounded bg-amber-100/80 px-1">NEXT_PUBLIC_SITE_URL</code> to your public
-            origin (e.g. <code className="rounded bg-amber-100/80 px-1">https://yourdomain.com</code>). QR links
-            use <code className="rounded bg-amber-100/80 px-1">{'{origin}/menu'}</code>.
+            Set{" "}
+            <code className="rounded bg-amber-100/80 px-1">
+              NEXT_PUBLIC_SITE_URL
+            </code>{" "}
+            to your public origin (e.g.{" "}
+            <code className="rounded bg-amber-100/80 px-1">
+              https://yourdomain.com
+            </code>
+            ). QR links use{" "}
+            <code className="rounded bg-amber-100/80 px-1">
+              {"{origin}/menu"}
+            </code>
+            .
           </p>
         ) : null}
 
@@ -223,7 +240,8 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
         {activeTab === "takeaway" ? (
           <div className="space-y-2 print:hidden">
             <p className="text-xs text-secondary-ui leading-snug">
-              No table number — link opens the menu for pickup, delivery, or ordering outside the venue.
+              No table number — link opens the menu for pickup, delivery, or
+              ordering outside the venue.
             </p>
             <div className="flex flex-wrap items-center gap-2">
               <AdminButton
@@ -254,7 +272,10 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
         ) : (
           <div className="grid gap-2 md:grid-cols-3 print:hidden">
             <div className="flex flex-col gap-1">
-              <label htmlFor="start_table" className="text-xs font-semibold text-primary-ui">
+              <label
+                htmlFor="start_table"
+                className="text-xs font-semibold text-primary-ui"
+              >
                 Start table
               </label>
               <input
@@ -271,7 +292,10 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label htmlFor="end_table" className="text-xs font-semibold text-primary-ui">
+              <label
+                htmlFor="end_table"
+                className="text-xs font-semibold text-primary-ui"
+              >
                 End table
               </label>
               <input
@@ -326,7 +350,9 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
                     }
                     className="w-full rounded-xl border border-default bg-surface p-2.5 text-center print:break-inside-avoid hover:bg-surface-soft cursor-pointer transition"
                   >
-                    <h4 className="text-sm font-semibold text-primary-ui">{outsideEntry.label}</h4>
+                    <h4 className="text-sm font-semibold text-primary-ui">
+                      {outsideEntry.label}
+                    </h4>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       key={outsideEntry.url}
@@ -334,13 +360,18 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
                       alt="QR code for takeaway orders"
                       className="mx-auto my-2 h-40 w-40 rounded-lg border border-default bg-white p-1 pointer-events-none"
                     />
-                    <p className="break-all text-xs text-muted-ui">{outsideEntry.url}</p>
+                    <p className="break-all text-xs text-muted-ui">
+                      {outsideEntry.url}
+                    </p>
                   </button>
                 </div>
               </>
             ) : (
               <p className="text-xs text-secondary-ui print:hidden">
-                Configure <code className="rounded border border-default bg-surface-soft px-1">NEXT_PUBLIC_SITE_URL</code>{" "}
+                Configure{" "}
+                <code className="rounded border border-default bg-surface-soft px-1">
+                  NEXT_PUBLIC_SITE_URL
+                </code>{" "}
                 to show the takeaway QR.
               </p>
             )}
@@ -374,7 +405,9 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
                   }
                   className="rounded-xl border border-default bg-surface p-2.5 text-center print:break-inside-avoid hover:bg-surface-soft cursor-pointer transition"
                 >
-                  <h3 className="text-sm font-semibold text-primary-ui">Table {entry.table}</h3>
+                  <h3 className="text-sm font-semibold text-primary-ui">
+                    Table {entry.table}
+                  </h3>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     key={entry.url}
@@ -400,10 +433,15 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
           >
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <h2 id="qr-modal-title" className="text-lg font-semibold text-primary-ui">
+                <h2
+                  id="qr-modal-title"
+                  className="text-lg font-semibold text-primary-ui"
+                >
                   {selection.label}
                 </h2>
-                <p className="mt-1 break-all text-xs text-muted-ui">{selection.url}</p>
+                <p className="mt-1 break-all text-xs text-muted-ui">
+                  {selection.url}
+                </p>
               </div>
               <button
                 type="button"
@@ -411,7 +449,9 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
                 aria-label="Close"
                 className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-default text-secondary-ui hover:bg-surface-soft"
               >
-                <span className="material-symbols-outlined text-base">close</span>
+                <span className="material-symbols-outlined text-base">
+                  close
+                </span>
               </button>
             </div>
 
@@ -445,7 +485,11 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
                 >
                   Download
                 </AdminButton>
-                <AdminButton type="button" variant="secondary" onClick={closeModal}>
+                <AdminButton
+                  type="button"
+                  variant="secondary"
+                  onClick={closeModal}
+                >
                   Close
                 </AdminButton>
               </div>
