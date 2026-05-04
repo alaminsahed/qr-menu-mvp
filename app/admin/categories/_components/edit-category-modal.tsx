@@ -15,8 +15,8 @@ export function EditCategoryModal({
   onUpdateCategory,
 }: EditCategoryModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4">
-      <div className="w-full max-w-xl rounded-2xl border border-default bg-surface p-5 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-0 sm:items-center sm:p-4">
+      <div className="max-h-[min(92vh,880px)] w-full max-w-xl overflow-y-auto rounded-t-2xl border border-default bg-surface p-5 shadow-2xl sm:rounded-2xl">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-primary-ui">

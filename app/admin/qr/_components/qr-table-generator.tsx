@@ -391,9 +391,9 @@ export function QrTableGenerator({ initialMenuBaseUrl }: QrTableGeneratorProps) 
       </div>
 
       {selection ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 print:hidden">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-0 print:hidden sm:items-center sm:p-4">
           <div
-            className="w-full max-w-md rounded-2xl border border-default bg-surface p-5 shadow-2xl"
+            className="max-h-[min(92vh,720px)] w-full max-w-md overflow-y-auto rounded-t-2xl border border-default bg-surface p-5 shadow-2xl sm:rounded-2xl"
             role="dialog"
             aria-modal="true"
             aria-labelledby="qr-modal-title"

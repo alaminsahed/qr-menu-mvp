@@ -33,8 +33,8 @@ export function CreateCategoryForm({
         setIsOpen(event.currentTarget.open);
       }}
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-white px-4 py-3 sm:px-5">
-        <div>
+      <summary className="flex cursor-pointer list-none flex-col gap-3 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <div className="min-w-0">
           <h2 className="text-base font-semibold text-primary-ui">Create category</h2>
           <p className="text-sm text-secondary-ui">
             Bilingual names and sort order for the public menu.
@@ -47,7 +47,7 @@ export function CreateCategoryForm({
             event.stopPropagation();
             setIsOpen((previous) => !previous);
           }}
-          className="inline-flex items-center justify-center rounded-lg bg-primary-ui px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40"
+          className="inline-flex shrink-0 items-center justify-center self-start rounded-lg bg-primary-ui px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40 sm:self-center"
         >
           Add Category
         </button>

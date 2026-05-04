@@ -21,7 +21,7 @@ export function CategoriesTable({
   return (
     <section className="overflow-hidden rounded-3xl bg-white shadow-sm">
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse text-left">
+        <table className="min-w-[560px] border-collapse text-left md:min-w-full">
           <thead>
             <tr className="bg-surface-soft shadow-[inset_0_-1px_0_rgba(15,23,42,0.06)]">
               <th className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-muted-ui">
