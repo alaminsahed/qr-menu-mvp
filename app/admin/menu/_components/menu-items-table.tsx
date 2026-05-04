@@ -85,17 +85,28 @@ export function MenuItemsTable({
                       ৳ {item.price.toFixed(2)}
                     </td>
                     <td className="px-3 py-2">
-                      <form action={onToggleAvailability}>
+                      <form
+                        action={onToggleAvailability}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-default bg-surface-soft/90 px-2 py-1 shadow-sm"
+                      >
                         <input type="hidden" name="id" value={item.id} />
                         <input type="hidden" name="next_available" value={String(!item.available)} />
-                        <button
-                          type="submit"
-                          className={`relative inline-flex h-4.5 w-8 items-center rounded-full transition ${
-                            item.available ? "bg-secondary-ui" : "bg-zinc-300"
+                        <span
+                          className={`text-[11px] font-semibold tracking-tight ${
+                            item.available ? "text-emerald-800" : "text-zinc-600"
                           }`}
                         >
+                          {item.available ? "In stock" : "Out"}
+                        </span>
+                        <button
+                          type="submit"
+                          className={`relative inline-flex h-[18px] w-8 shrink-0 items-center rounded-full shadow-inner transition hover:opacity-95 active:scale-95 ${
+                            item.available ? "bg-secondary-ui" : "bg-zinc-300"
+                          }`}
+                          aria-label={item.available ? "Mark unavailable" : "Mark available"}
+                        >
                           <span
-                            className={`inline-block h-3 w-3 transform rounded-full bg-white transition ${
+                            className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition ${
                               item.available ? "translate-x-4" : "translate-x-0.5"
                             }`}
                           />
@@ -103,21 +114,23 @@ export function MenuItemsTable({
                       </form>
                     </td>
                     <td className="px-3 py-2">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex flex-wrap items-center justify-end gap-1.5">
                         <a
                           href={`/admin/menu?edit=${item.id}`}
-                          className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-ui hover:bg-surface-soft hover:text-primary-ui"
+                          className="inline-flex items-center gap-1 rounded-full border border-primary-ui/25 bg-primary-ui/[0.07] px-2.5 py-1 text-[11px] font-semibold tracking-tight text-primary-ui shadow-sm transition hover:border-primary-ui/40 hover:bg-primary-ui/[0.11] hover:shadow-md active:scale-[0.98]"
                         >
-                          <span className="material-symbols-outlined text-sm">edit</span>
+                          <span className="material-symbols-outlined text-[16px] opacity-90">edit</span>
+                          Edit
                         </a>
-                        <form action={onDeleteMenuItem}>
+                        <form action={onDeleteMenuItem} className="inline-flex">
                           <input type="hidden" name="id" value={item.id} />
                           <AdminButton
                             type="submit"
                             variant="secondary"
-                            className="inline-flex h-6 w-6 items-center justify-center rounded-md border-0! bg-transparent! p-0 text-muted-ui! hover:bg-red-50! hover:text-red-600!"
+                            className="inline-flex h-auto min-h-0! min-w-0! items-center gap-1 rounded-full! border border-red-200/90! bg-red-50/95! px-2.5! py-1! text-[11px] font-semibold tracking-tight text-red-800! shadow-sm! transition hover:border-red-300! hover:bg-red-100! hover:shadow-md active:scale-[0.98]"
                           >
-                            <span className="material-symbols-outlined text-sm">delete</span>
+                            <span className="material-symbols-outlined text-[16px] opacity-90">delete</span>
+                            Delete
                           </AdminButton>
                         </form>
                       </div>

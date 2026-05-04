@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { AdminToast } from "@/app/admin/_components/admin-toast";
@@ -9,7 +10,7 @@ import { isAdminUser } from "@/lib/admin/is-admin";
 import { createServiceRoleClient, createClient } from "@/lib/supabase/server";
 
 type AdminCategoriesPageProps = {
-  searchParams?: Promise<{ status?: string; message?: string; edit?: string }>;
+  searchParams?: Promise<{ status?: string; message?: string; edit?: string; filter?: string }>;
 };
 
 function toSlug(value: string) {
@@ -40,6 +41,8 @@ async function ensureAdmin() {
 
 async function refreshCategories(status: "success" | "error", message: string) {
   revalidatePath("/admin/categories");
+  revalidatePath("/admin/menu");
+  revalidatePath("/menu");
   redirect(
     `/admin/categories?status=${status}&message=${encodeURIComponent(message)}`,
   );
@@ -61,6 +64,21 @@ export default async function AdminCategoriesPage({
     .order("name_en", { ascending: true });
 
   const categories = (data ?? []) as CategoryRow[];
+  const filterParam = params?.filter;
+  const selectedFilter =
+    filterParam === "active" || filterParam === "inactive" ? filterParam : undefined;
+  const filteredCategories =
+    selectedFilter === "active"
+      ? categories.filter((c) => c.is_active)
+      : selectedFilter === "inactive"
+        ? categories.filter((c) => !c.is_active)
+        : categories;
+
+  function getStatusFilterHref(kind: "all" | "active" | "inactive") {
+    if (kind === "all") return "/admin/categories";
+    return `/admin/categories?filter=${kind}`;
+  }
+
   const categoryToEdit = editId
     ? categories.find((category) => category.id === editId)
     : undefined;
@@ -291,13 +309,68 @@ export default async function AdminCategoriesPage({
         </div>
       ) : null}
 
+      <section className="flex flex-col justify-between gap-2 md:flex-row md:items-end">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-primary-ui">Category Management</h1>
+          <p className="text-sm text-secondary-ui">
+            Create, order, and enable categories for the public menu.
+          </p>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-default bg-white shadow-sm">
+        <details open={Boolean(selectedFilter)} className="[&_summary::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5">
+            <div className="flex items-center gap-2 text-sm font-semibold text-primary-ui">
+              <span className="material-symbols-outlined text-base">filter_alt</span>
+              Filter by status
+            </div>
+            <span className="text-xs font-medium text-muted-ui">Toggle</span>
+          </summary>
+          <div className="border-t border-default px-3 pb-2.5 pt-2.5">
+            <div className="flex gap-2 overflow-x-auto">
+              <Link
+                href={getStatusFilterHref("all")}
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  !selectedFilter ? "bg-secondary-ui text-white" : "bg-surface-soft text-secondary-ui"
+                }`}
+              >
+                All
+              </Link>
+              <Link
+                href={getStatusFilterHref("active")}
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  selectedFilter === "active"
+                    ? "bg-secondary-ui text-white"
+                    : "bg-surface-soft text-secondary-ui"
+                }`}
+              >
+                Active
+              </Link>
+              <Link
+                href={getStatusFilterHref("inactive")}
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold ${
+                  selectedFilter === "inactive"
+                    ? "bg-secondary-ui text-white"
+                    : "bg-surface-soft text-secondary-ui"
+                }`}
+              >
+                Inactive
+              </Link>
+            </div>
+          </div>
+        </details>
+      </section>
+
       <CreateCategoryForm
         defaultSortOrder={categories.length}
         onCreateCategory={createCategory}
+        defaultOpen={status === "error"}
       />
 
       <CategoriesTable
-        categories={categories}
+        categories={filteredCategories}
+        allCategories={categories}
         onMoveCategory={moveCategory}
         onDeleteCategory={deleteCategory}
         onToggleAvailability={toggleCategoryAvailability}
