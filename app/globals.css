@@ -258,3 +258,63 @@ body {
   color: #b42318;
   font-size: var(--font-size-body-sm);
 }
+
+/* ── Landing page animations ── */
+
+@keyframes lp-fade-up {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lp-slide-left {
+  from { opacity: 0; transform: translateX(44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes lp-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* Hero load animations */
+.lp-fade-up    { animation: lp-fade-up    0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp-slide-left { animation: lp-slide-left 0.70s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp-float      { animation: lp-float 5s ease-in-out 1s infinite; }
+
+/* Stagger delays (for hero) */
+.lp-d1 { animation-delay:  80ms; }
+.lp-d2 { animation-delay: 160ms; }
+.lp-d3 { animation-delay: 260ms; }
+.lp-d4 { animation-delay: 360ms; }
+.lp-d5 { animation-delay: 460ms; }
+
+/* Scroll-reveal via CSS view-timeline — progressive enhancement */
+@supports (animation-timeline: view()) {
+  .lp-reveal {
+    animation: lp-fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  /* Grid stagger: each nth-child starts slightly later in the scroll entry */
+  .lp-stagger > * {
+    animation: lp-fade-up linear both;
+    animation-timeline: view();
+    animation-range-start: entry 0%;
+    animation-range-end: entry 38%;
+  }
+  .lp-stagger > *:nth-child(2) { animation-range-start: entry 6%;  }
+  .lp-stagger > *:nth-child(3) { animation-range-start: entry 12%; }
+  .lp-stagger > *:nth-child(4) { animation-range-start: entry 8%;  }
+  .lp-stagger > *:nth-child(5) { animation-range-start: entry 16%; }
+  .lp-stagger > *:nth-child(6) { animation-range-start: entry 24%; }
+}
+
+/* Card hover lift */
+.lp-hover {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.lp-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgb(140 45 15 / 0.11);
+}
