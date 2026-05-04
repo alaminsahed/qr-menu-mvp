@@ -3,32 +3,32 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Tab Bite — Modern QR ordering for restaurants",
+  title: "Tab Bite — Modern QR Ordering for Restaurants",
   description:
-    "Tab Bite helps restaurants reduce delivery costs and speed up service with QR menus and WhatsApp ordering.",
+    "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
 };
 
 const JOURNEY = [
   {
     icon: "qr_code_2",
-    title: "Guest Scans QR",
-    body: "Open menu instantly on any phone.",
+    title: "Scan the Table’s QR",
+    body: "Print a different code per table or zone. Guests open your menu in the browser—no app install.",
   },
   {
     icon: "shopping_basket",
-    title: "Order Goes to WhatsApp",
-    body: "Staff receives structured order details.",
+    title: "Order in WhatsApp with the Table #",
+    body: "The link carries the table number, so staff see exactly where to serve or pack—no guessing at the counter.",
   },
   {
-    icon: "two_wheeler",
-    title: "Local Rider Delivers",
-    body: "Nearby rider group handles fast delivery.",
+    icon: "local_dining",
+    title: "Serve the Table or Send a Rider",
+    body: "Dine-in goes to the right table. For delivery, your local rider WhatsApp group handles the run—still no marketplace commission.",
   },
 ];
 
 const HIGHLIGHTS = [
   "No app install for guests",
-  "Direct WhatsApp ordering",
+  "Per-table QR so orders match the right table",
   "Bangla + English menu",
 ];
 
@@ -64,32 +64,32 @@ const COST_SAVINGS = [
 const FEATURES = [
   {
     icon: "language",
-    title: "Bilingual menu",
+    title: "Bilingual Menu",
     body: "Bangla and English toggle on every page.",
   },
   {
     icon: "image",
-    title: "Food photography",
+    title: "Food Photography",
     body: "Upload item images directly from the admin workspace.",
   },
   {
     icon: "category",
-    title: "Category management",
+    title: "Category Management",
     body: "Create, reorder, and rename categories in seconds.",
   },
   {
     icon: "toggle_on",
-    title: "Availability toggle",
+    title: "Availability Toggle",
     body: "Mark items sold-out in real time without deleting them.",
   },
   {
     icon: "local_dining",
-    title: "Dine-in & delivery",
+    title: "Dine-in & Delivery",
     body: "Guests pick order type and enter their table or address.",
   },
   {
     icon: "lock",
-    title: "Secure admin panel",
+    title: "Secure Admin Panel",
     body: "Staff-only workspace with Supabase auth protecting all data.",
   },
 ];
@@ -166,7 +166,7 @@ export default function Home() {
               href="/wishlist"
               className="font-medium text-(--color-action-primary) transition-opacity hover:opacity-75"
             >
-              Request to join
+              Request to Join
             </Link>
             <Link
               href="/login"
@@ -213,9 +213,10 @@ export default function Home() {
               </h1>
 
               <p className="lp-fade-up lp-d2 mt-5 max-w-xl text-pretty text-lg leading-relaxed text-secondary-ui">
-                Guests scan, browse, and order in WhatsApp. You skip marketplace
-                commission, reduce counter congestion, and deliver faster with
-                your own local rider network.
+                Put a QR on each table (or section): guests scan, browse, and
+                order in WhatsApp with that table already attached. You skip
+                marketplace commission, keep the floor calm, and use your own
+                rider group when guests want delivery.
               </p>
 
               <div className="lp-fade-up lp-d3 mt-8 flex flex-wrap items-center gap-4">
@@ -322,10 +323,10 @@ export default function Home() {
         <section className="bg-surface py-20">
           <div className="mx-auto max-w-6xl px-5">
             <p className="lp-reveal mb-2 text-center text-xs font-semibold tracking-widest text-(--color-action-secondary) uppercase">
-              Journey
+              Table QR to WhatsApp
             </p>
             <h2 className="lp-reveal mb-12 text-center text-3xl font-semibold tracking-tight text-primary-ui md:text-4xl">
-              QR to WhatsApp to Doorstep
+              Right Table or Doorstep
             </h2>
             <div className="lp-stagger grid gap-4 md:grid-cols-3">
               {JOURNEY.map(({ icon, title, body }, index) => (
@@ -506,8 +507,9 @@ export default function Home() {
               Ready to Modernize Your Restaurant?
             </h2>
             <p className="mt-4 text-white/80">
-              Send a join request today. We will help you launch QR ordering,
-              WhatsApp operations, and local delivery flow.
+              Send a join request today. We will help you launch per-table QR
+              codes, WhatsApp ordering with table numbers, and your local delivery
+              flow when you need it.
             </p>
             <Link
               href="/wishlist"
