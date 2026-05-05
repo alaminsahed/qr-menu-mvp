@@ -30,8 +30,7 @@ export function AdminNav({ variant = "sidebar" }: AdminNavProps) {
     >
       {ADMIN_LINKS.map((link) => {
         const isActive =
-          pathname === link.href ||
-          pathname.startsWith(`${link.href}/`);
+          pathname === link.href || pathname.startsWith(`${link.href}/`);
 
         const shape = isRail ? "rounded-full px-3.5" : "rounded-xl px-3";
 
@@ -41,14 +40,16 @@ export function AdminNav({ variant = "sidebar" }: AdminNavProps) {
             href={link.href}
             className={`flex shrink-0 items-center gap-2 py-2.5 text-sm transition-[color,background-color,box-shadow] sm:gap-3 ${shape} ${
               isActive
-                ? "bg-white font-semibold text-primary-ui shadow-[0_2px_8px_rgba(28,27,26,0.06)] ring-1 ring-[var(--color-border-soft)]"
+                ? "bg-white font-semibold text-primary-ui shadow-[0_2px_8px_rgba(28,27,26,0.06)] ring-1 ring-(--color-border-soft)"
                 : "font-medium text-secondary-ui hover:bg-surface-soft hover:text-primary-ui"
             }`}
             aria-current={isActive ? "page" : undefined}
           >
             <span
               className="material-symbols-outlined text-base leading-none"
-              style={isActive ? { fontVariationSettings: '"FILL" 1' } : undefined}
+              style={
+                isActive ? { fontVariationSettings: '"FILL" 1' } : undefined
+              }
             >
               {link.icon}
             </span>
