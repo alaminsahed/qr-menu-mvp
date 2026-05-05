@@ -190,10 +190,10 @@ export default function Home() {
 
           <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-2">
             <div>
-              <span className="lp-fade-up inline-flex items-center gap-2 rounded-full border border-(--color-border-default) bg-surface px-3 py-1.5 text-[11px] font-semibold tracking-wide text-(--color-action-secondary) sm:gap-2.5 sm:px-3.5 sm:text-xs">
-                <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+              <span className="lp-fade-up inline-flex items-center gap-2.5 rounded-2xl border border-(--color-border-default) bg-surface px-3 py-2 text-[11px] font-semibold tracking-wide text-(--color-action-secondary) sm:gap-3 sm:px-4 sm:text-xs">
+                <span className="relative h-11 w-11 shrink-0 overflow-hidden sm:h-12 sm:w-12">
                   <Image
-                    src="/logo/logo2.png"
+                    src="/logo/logo3.png"
                     alt="Tab Bite"
                     width={48}
                     height={48}
@@ -527,13 +527,13 @@ export default function Home() {
       <footer className="border-t border-(--color-border-soft) bg-surface py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:px-5 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-(--color-border-default) bg-surface">
+            <span className="relative h-20 w-20 shrink-0 overflow-hidden sm:h-24 sm:w-24">
               <Image
-                src="/logo/logo2.png"
+                src="/logo/logo3.png"
                 alt="Tab Bite logo"
-                width={64}
-                height={64}
-                className="h-full w-full object-contain"
+                width={96}
+                height={96}
+                className="h-full w-full object-cover"
               />
             </span>
             <div>
