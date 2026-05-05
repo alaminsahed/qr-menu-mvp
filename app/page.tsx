@@ -146,9 +146,9 @@ export default function Home() {
             href="/"
             className="inline-flex items-center gap-3.5 rounded-lg -mx-1.5 -my-1 px-1.5 py-1 text-(--color-action-primary) transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-action-primary)/35"
           >
-            <span className="relative inline-block h-20 w-20 shrink-0 overflow-hidden sm:h-28 sm:w-28">
+            <span className="relative inline-block h-18 w-20 shrink-0 overflow-hidden sm:h-18 sm:w-28">
               <Image
-                src="/logo/download.png"
+                src="/logo/logo3.png"
                 alt=""
                 width={TAB_BITE_LOGO_PX.w}
                 height={TAB_BITE_LOGO_PX.h}
