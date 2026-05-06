@@ -16,7 +16,7 @@ import { getLocalizedName } from "@/lib/client-format";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const SERVICE_FEE = 40;
-const WHATSAPP_NUMBER = "+8801685765411";
+const WHATSAPP_NUMBER = "+8801780782764";
 
 export function BasketScreen({ tableNumber }: { tableNumber: string | null }) {
   const tableFromQuery = tableNumber?.trim() ?? "";
