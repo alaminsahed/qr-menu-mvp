@@ -15,8 +15,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QR Menu Starter",
-  description: "Next.js + Supabase auth starter template",
+  title: {
+    default: "Tab Bite — Modern QR Ordering for Restaurants",
+    template: "%s | Tab Bite",
+  },
+  description:
+    "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://tapbite.org"
+  ),
+  openGraph: {
+    siteName: "Tab Bite",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@tapbite",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

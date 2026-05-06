@@ -2,10 +2,41 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tapbite.org";
+const OG_IMAGE = `${SITE_URL}/logo/logo3.png`;
+
 export const metadata: Metadata = {
   title: "Tab Bite — Modern QR Ordering for Restaurants",
   description:
     "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
+  keywords: [
+    "QR menu restaurant",
+    "WhatsApp ordering system",
+    "restaurant QR code",
+    "table QR ordering",
+    "restaurant management Bangladesh",
+    "no commission ordering",
+    "digital menu QR",
+    "Tab Bite",
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: "Tab Bite — Modern QR Ordering for Restaurants",
+    description:
+      "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
+    url: SITE_URL,
+    type: "website",
+    images: [{ url: OG_IMAGE, width: 1000, height: 1000, alt: "Tab Bite" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tab Bite — Modern QR Ordering for Restaurants",
+    description:
+      "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
+    images: [OG_IMAGE],
+  },
 };
 
 const JOURNEY = [
@@ -137,8 +168,71 @@ const PRICING = [
 /** Matches `public/logo/download.png`; keeps Next/Image aspect ratio correct. */
 const TAB_BITE_LOGO_PX = { w: 1000, h: 1000 } as const;
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Tab Bite",
+      description: "Modern QR Ordering for Restaurants",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Tab Bite",
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: OG_IMAGE,
+      },
+      description:
+        "Tab Bite provides per-table QR menus and WhatsApp ordering for restaurants in Bangladesh — zero commission, no app install for guests.",
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "Tab Bite",
+      url: SITE_URL,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      description:
+        "Per-table QR menus and WhatsApp ordering for restaurants. Guests scan, order via WhatsApp with the table number attached. No marketplace commission.",
+      offers: [
+        {
+          "@type": "Offer",
+          name: "Free Trial",
+          price: "0",
+          priceCurrency: "BDT",
+          description: "Full access free for 3 months",
+        },
+        {
+          "@type": "Offer",
+          name: "Monthly Plan",
+          price: "200",
+          priceCurrency: "BDT",
+          billingIncrement: 1,
+          description: "Monthly billing — includes domain and hosting",
+        },
+        {
+          "@type": "Offer",
+          name: "Yearly Plan",
+          price: "2000",
+          priceCurrency: "BDT",
+          description: "Yearly billing — save ৳400 vs monthly",
+        },
+      ],
+    },
+  ],
+};
+
 export default function Home() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="bg-app min-h-screen overflow-x-hidden font-sans">
       <nav className="lp-fade-up sticky top-0 z-50 border-b border-(--color-border-soft) bg-(--color-bg-app)/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 sm:px-5">
@@ -565,5 +659,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
