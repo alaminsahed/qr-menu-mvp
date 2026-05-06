@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description:
     "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://tapbite.org"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tapbite.org"
   ),
   openGraph: {
     siteName: "Tab Bite",

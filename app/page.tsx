@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tapbite.org";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tapbite.org";
 const OG_IMAGE = `${SITE_URL}/logo/logo3.png`;
 
 export const metadata: Metadata = {
