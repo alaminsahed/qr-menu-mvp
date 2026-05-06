@@ -1,10 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { isAdminUser } from "@/lib/admin/is-admin";
 
-export async function updateSession(request: NextRequest) {
+export async function updateSession(
+  request: NextRequest,
+  tenantSlug: string | null = null,
+) {
+  const requestHeaders = new Headers(request.headers);
+  if (tenantSlug) {
+    requestHeaders.set("x-tenant-slug", tenantSlug);
+  }
+
   let supabaseResponse = NextResponse.next({
-    request,
+    request: { headers: requestHeaders },
   });
 
   const supabase = createServerClient(
@@ -21,7 +28,7 @@ export async function updateSession(request: NextRequest) {
           );
 
           supabaseResponse = NextResponse.next({
-            request,
+            request: { headers: requestHeaders },
           });
 
           cookiesToSet.forEach(({ name, value, options }) =>
@@ -32,16 +39,16 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  await supabase.auth.getUser();
 
-  const isAdmin = await isAdminUser(supabase, user?.id);
-  if (request.nextUrl.pathname.startsWith("/protected") && !isAdmin) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("error", "unauthorized");
-    return NextResponse.redirect(url);
+  if (request.nextUrl.pathname.startsWith("/protected")) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

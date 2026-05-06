@@ -1,5 +1,6 @@
 import { jsonError } from "@/lib/api/responses";
 import { createClient } from "@/lib/supabase/server";
+import { resolveRestaurantId } from "@/lib/tenant";
 
 type Params = { slug: string };
 type CategoryRef = {
@@ -16,12 +17,19 @@ function getCategoryRef(categoryRef: CategoryRef | CategoryRef[] | null) {
 }
 
 export async function GET(
-  _request: Request,
+  request: Request,
   context: { params: Promise<Params> },
 ) {
   const { slug } = await context.params;
   if (!slug?.trim()) {
     return jsonError("Menu slug is required.");
+  }
+
+  const tenantSlug = (request as Request & { headers: Headers }).headers.get("x-tenant-slug");
+  const restaurantId = await resolveRestaurantId(tenantSlug);
+
+  if (!restaurantId) {
+    return jsonError("Restaurant not found.", 404);
   }
 
   const supabase = await createClient();
@@ -43,6 +51,7 @@ export async function GET(
     `,
     )
     .eq("slug", slug)
+    .eq("restaurant_id", restaurantId)
     .single();
 
   if (error) {

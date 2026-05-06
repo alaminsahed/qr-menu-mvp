@@ -11,7 +11,7 @@ import {
   removeMenuImage,
   uploadRestaurantLogo,
 } from "@/app/admin/menu/_lib/menu-image-storage";
-import { isAdminUser } from "@/lib/admin/is-admin";
+import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 import { parseRestaurantSettings } from "@/lib/admin/schemas";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 
@@ -19,15 +19,11 @@ type AdminSettingsPageProps = {
   searchParams?: Promise<{ status?: string; message?: string }>;
 };
 
-async function ensureAdmin() {
+async function getRestaurantId(): Promise<string> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/login?error=unauthorized");
-  const admin = await isAdminUser(supabase, user.id);
-  if (!admin) redirect("/login?error=unauthorized");
+  const member = await getAdminRestaurant(supabase);
+  if (!member) redirect("/login?error=unauthorized");
+  return member.restaurant_id;
 }
 
 async function refreshSettings(status: "success" | "error", message: string) {
@@ -40,19 +36,19 @@ async function refreshSettings(status: "success" | "error", message: string) {
 export default async function AdminSettingsPage({
   searchParams,
 }: AdminSettingsPageProps) {
+  const restaurantId = await getRestaurantId();
   const serviceClient = createServiceRoleClient();
   const params = searchParams ? await searchParams : undefined;
   const status = params?.status;
   const message = params?.message;
+
   const { data, error } = await serviceClient
     .from("restaurant_settings")
     .select(
       "id, restaurant_name, logo_url, whatsapp_number, phone, address, hours, maps_url",
     )
-    .order("updated_at", { ascending: false })
-    .limit(1)
+    .eq("restaurant_id", restaurantId)
     .maybeSingle();
-  const existingSettingsId = data?.id ?? null;
 
   const settings: RestaurantSettingsValues = {
     restaurant_name: data?.restaurant_name ?? "",
@@ -66,7 +62,7 @@ export default async function AdminSettingsPage({
 
   async function saveSettings(formData: FormData) {
     "use server";
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const parsed = parseRestaurantSettings({
       restaurant_name: formData.get("restaurant_name"),
       whatsapp_number: formData.get("whatsapp_number"),
@@ -84,8 +80,7 @@ export default async function AdminSettingsPage({
     const { data: currentRow } = await service
       .from("restaurant_settings")
       .select("id, logo_url")
-      .order("updated_at", { ascending: false })
-      .limit(1)
+      .eq("restaurant_id", restaurantIdInner)
       .maybeSingle();
 
     const clearLogo = formData.get("clear_logo") === "1";
@@ -95,7 +90,7 @@ export default async function AdminSettingsPage({
     let logo_url: string | null = currentRow?.logo_url?.trim() || null;
 
     if (hasNewLogoFile && logoFile instanceof File) {
-      const upload = await uploadRestaurantLogo(logoFile);
+      const upload = await uploadRestaurantLogo(logoFile, restaurantIdInner);
       if ("error" in upload) {
         await refreshSettings("error", upload.error);
         return;
@@ -126,29 +121,18 @@ export default async function AdminSettingsPage({
       hours: parsed.data.hours,
       maps_url: parsed.data.maps_url,
       logo_url,
+      updated_at: new Date().toISOString(),
     };
 
-    const now = new Date().toISOString();
-    const rowId = currentRow?.id ?? existingSettingsId;
-    if (rowId) {
-      const { error: updateError } = await service
-        .from("restaurant_settings")
-        .update({
-          ...rowPayload,
-          updated_at: now,
-        })
-        .eq("id", rowId);
-      if (updateError) {
-        await refreshSettings("error", "Failed to save settings.");
-      }
-    } else {
-      const { error: insertError } = await service.from("restaurant_settings").insert({
-        ...rowPayload,
-        updated_at: now,
-      });
-      if (insertError) {
-        await refreshSettings("error", "Failed to save settings.");
-      }
+    const { error: upsertError } = await service
+      .from("restaurant_settings")
+      .upsert(
+        { ...rowPayload, restaurant_id: restaurantIdInner },
+        { onConflict: "restaurant_id" },
+      );
+
+    if (upsertError) {
+      await refreshSettings("error", "Failed to save settings.");
     }
 
     await refreshSettings("success", "Restaurant settings saved.");

@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { parseMenuQuery } from "@/lib/api/schemas";
 import { jsonError } from "@/lib/api/responses";
 import { createClient } from "@/lib/supabase/server";
+import { resolveRestaurantId } from "@/lib/tenant";
 
 type MenuRow = {
   id: string;
@@ -49,6 +50,13 @@ function getCategoryRef(categoryRef: MenuRow["category_ref"]): {
 }
 
 export async function GET(request: NextRequest) {
+  const tenantSlug = request.headers.get("x-tenant-slug");
+  const restaurantId = await resolveRestaurantId(tenantSlug);
+
+  if (!restaurantId) {
+    return jsonError("Restaurant not found.", 404);
+  }
+
   const supabase = await createClient();
   const query = parseMenuQuery(request);
 
@@ -69,6 +77,7 @@ export async function GET(request: NextRequest) {
       category_ref:menu_categories!inner(slug, name_en, name_bn, sort_order)
     `,
     )
+    .eq("restaurant_id", restaurantId)
     .order("sort_order", {
       referencedTable: "menu_categories",
       ascending: true,
@@ -102,6 +111,7 @@ export async function GET(request: NextRequest) {
   const { data: categoryData, error: categoryError } = await supabase
     .from("menu_categories")
     .select("slug, name_en, name_bn, sort_order")
+    .eq("restaurant_id", restaurantId)
     .order("sort_order", { ascending: true })
     .order("name_en", { ascending: true });
 

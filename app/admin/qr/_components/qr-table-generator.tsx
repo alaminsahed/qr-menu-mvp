@@ -4,7 +4,8 @@ import { useCallback, useMemo, useState } from "react";
 import { AdminButton } from "@/app/admin/_components/admin-primitives";
 
 type QrTableGeneratorProps = {
-  initialMenuBaseUrl: string;
+  menuBaseUrl: string;
+  restaurantSlug: string;
 };
 
 type TableEntry = {
@@ -22,19 +23,6 @@ type QrTab = "takeaway" | "restaurant";
 function clampTable(value: number) {
   if (!Number.isFinite(value)) return 1;
   return Math.min(200, Math.max(1, Math.round(value)));
-}
-
-/** Accepts `yourdomain.com`, `https://host`, or full `/menu` URL. */
-function normalizeMenuBase(input: string): string {
-  let t = input.trim().replace(/\/$/, "");
-  if (!t) return "";
-  if (!/^https?:\/\//i.test(t)) {
-    t = `https://${t}`;
-  }
-  if (!/\/menu$/i.test(t)) {
-    t = `${t}/menu`;
-  }
-  return t;
 }
 
 function qrServiceUrl(menuUrl: string, size: number) {
@@ -96,48 +84,34 @@ function printQrContent(title: string, url: string, qrSrc: string) {
 }
 
 export function QrTableGenerator({
-  initialMenuBaseUrl,
+  menuBaseUrl,
+  restaurantSlug,
 }: QrTableGeneratorProps) {
-  const menuBase = useMemo(
-    () => normalizeMenuBase(initialMenuBaseUrl.replace(/\/$/, "")),
-    [initialMenuBaseUrl],
-  );
-  const hasMenuBase = menuBase.startsWith("http");
-
   const [startTable, setStartTable] = useState(1);
   const [endTable, setEndTable] = useState(12);
   const [activeTab, setActiveTab] = useState<QrTab>("restaurant");
   const [selection, setSelection] = useState<QrSelection | null>(null);
 
   const outsideEntry = useMemo(() => {
-    if (!hasMenuBase) return null;
-    const url = menuBase;
     return {
       label: "Takeaway",
-      url,
-      qrSrc: qrServiceUrl(url, 220),
+      url: menuBaseUrl,
+      qrSrc: qrServiceUrl(menuBaseUrl, 220),
     };
-  }, [hasMenuBase, menuBase]);
+  }, [menuBaseUrl]);
 
   const rows = useMemo<TableEntry[]>(() => {
-    if (!hasMenuBase) return [];
     const start = clampTable(Math.min(startTable, endTable));
     const end = clampTable(Math.max(startTable, endTable));
     const out: TableEntry[] = [];
-
     for (let table = start; table <= end; table += 1) {
-      const url = `${menuBase}?table=${table}`;
-      out.push({
-        table,
-        url,
-        qrSrc: qrServiceUrl(url, 220),
-      });
+      const url = `${menuBaseUrl}?table=${table}`;
+      out.push({ table, url, qrSrc: qrServiceUrl(url, 220) });
     }
     return out;
-  }, [endTable, hasMenuBase, menuBase, startTable]);
+  }, [endTable, menuBaseUrl, startTable]);
 
   const closeModal = useCallback(() => setSelection(null), []);
-
   const modalQrSrc = selection ? qrServiceUrl(selection.url, 400) : "";
 
   return (
@@ -145,60 +119,32 @@ export function QrTableGenerator({
       <style>{`
         @media print {
           @page { margin: 12mm; }
-          body * {
-            visibility: hidden !important;
-          }
-          #qr-print-root,
-          #qr-print-root * {
-            visibility: visible !important;
-          }
-          #qr-print-root {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
+          body * { visibility: hidden !important; }
+          #qr-print-root, #qr-print-root * { visibility: visible !important; }
+          #qr-print-root { position: absolute; left: 0; top: 0; width: 100%; }
         }
       `}</style>
 
       <div className="space-y-2 print:hidden">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-          <label
-            htmlFor="menu_base_url"
-            className="shrink-0 text-xs font-semibold text-primary-ui sm:min-w-36"
-          >
+          <label className="shrink-0 text-xs font-semibold text-primary-ui sm:min-w-36">
             Public menu URL
           </label>
           <input
-            id="menu_base_url"
-            name="menu_base_url"
             type="text"
-            value={hasMenuBase ? menuBase : ""}
+            value={menuBaseUrl}
             disabled
-            placeholder="Not configured — set NEXT_PUBLIC_SITE_URL"
-            className="ui-input min-h-0 flex-1 cursor-not-allowed py-1.5 text-sm opacity-80"
             readOnly
             aria-readonly="true"
+            className="ui-input min-h-0 flex-1 cursor-not-allowed py-1.5 text-sm opacity-80"
           />
         </div>
-
-        {!hasMenuBase ? (
-          <p className="rounded-lg border border-amber-200 bg-amber-50 px-2 py-1.5 text-xs text-amber-800">
-            Set{" "}
-            <code className="rounded bg-amber-100/80 px-1">
-              NEXT_PUBLIC_SITE_URL
-            </code>{" "}
-            to your public origin (e.g.{" "}
-            <code className="rounded bg-amber-100/80 px-1">
-              https://yourdomain.com
-            </code>
-            ). QR links use{" "}
-            <code className="rounded bg-amber-100/80 px-1">
-              {"{origin}/menu"}
-            </code>
-            .
-          </p>
-        ) : null}
+        <p className="text-xs text-secondary-ui">
+          Restaurant:{" "}
+          <code className="rounded border border-default bg-surface-soft px-1">
+            {restaurantSlug}
+          </code>
+        </p>
 
         <div
           className="flex w-full gap-0.5 rounded-lg border border-default bg-surface-soft p-0.5 print:hidden"
@@ -247,7 +193,6 @@ export function QrTableGenerator({
               <AdminButton
                 type="button"
                 className="px-3 py-1.5 text-xs"
-                disabled={!hasMenuBase || !outsideEntry}
                 onClick={() => window.print()}
               >
                 Print sheet
@@ -256,14 +201,12 @@ export function QrTableGenerator({
                 type="button"
                 variant="secondary"
                 className="px-3 py-1.5 text-xs"
-                disabled={!hasMenuBase || !outsideEntry}
-                onClick={() => {
-                  if (!outsideEntry) return;
+                onClick={() =>
                   downloadQrImage(
                     "qr-takeaway.png",
                     qrServiceUrl(outsideEntry.url, 400),
-                  );
-                }}
+                  )
+                }
               >
                 Download
               </AdminButton>
@@ -285,7 +228,6 @@ export function QrTableGenerator({
                 value={startTable}
                 min={1}
                 max={200}
-                disabled={!hasMenuBase}
                 onChange={(event) => setStartTable(Number(event.target.value))}
                 required
                 className="ui-input min-h-0 py-1.5 text-sm"
@@ -305,7 +247,6 @@ export function QrTableGenerator({
                 value={endTable}
                 min={1}
                 max={200}
-                disabled={!hasMenuBase}
                 onChange={(event) => setEndTable(Number(event.target.value))}
                 required
                 className="ui-input min-h-0 py-1.5 text-sm"
@@ -315,7 +256,7 @@ export function QrTableGenerator({
               <AdminButton
                 type="button"
                 className="px-3 py-1.5 text-xs"
-                disabled={!hasMenuBase || rows.length === 0}
+                disabled={rows.length === 0}
                 onClick={() => window.print()}
               >
                 Print sheet
@@ -333,48 +274,36 @@ export function QrTableGenerator({
             aria-labelledby="qr-tab-takeaway"
             className="space-y-2"
           >
-            {hasMenuBase && outsideEntry ? (
-              <>
-                <h3 className="text-center text-sm font-semibold text-primary-ui print:mb-2">
-                  Takeaway
-                </h3>
-                <div className="mx-auto max-w-sm">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setSelection({
-                        kind: "outside",
-                        label: outsideEntry.label,
-                        url: outsideEntry.url,
-                      })
-                    }
-                    className="w-full rounded-xl border border-default bg-surface p-2.5 text-center print:break-inside-avoid hover:bg-surface-soft cursor-pointer transition"
-                  >
-                    <h4 className="text-sm font-semibold text-primary-ui">
-                      {outsideEntry.label}
-                    </h4>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      key={outsideEntry.url}
-                      src={outsideEntry.qrSrc}
-                      alt="QR code for takeaway orders"
-                      className="mx-auto my-2 h-40 w-40 rounded-lg border border-default bg-white p-1 pointer-events-none"
-                    />
-                    <p className="break-all text-xs text-muted-ui">
-                      {outsideEntry.url}
-                    </p>
-                  </button>
-                </div>
-              </>
-            ) : (
-              <p className="text-xs text-secondary-ui print:hidden">
-                Configure{" "}
-                <code className="rounded border border-default bg-surface-soft px-1">
-                  NEXT_PUBLIC_SITE_URL
-                </code>{" "}
-                to show the takeaway QR.
-              </p>
-            )}
+            <h3 className="text-center text-sm font-semibold text-primary-ui print:mb-2">
+              Takeaway
+            </h3>
+            <div className="mx-auto max-w-sm">
+              <button
+                type="button"
+                onClick={() =>
+                  setSelection({
+                    kind: "outside",
+                    label: outsideEntry.label,
+                    url: outsideEntry.url,
+                  })
+                }
+                className="w-full rounded-xl border border-default bg-surface p-2.5 text-center print:break-inside-avoid hover:bg-surface-soft cursor-pointer transition"
+              >
+                <h4 className="text-sm font-semibold text-primary-ui">
+                  {outsideEntry.label}
+                </h4>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  key={outsideEntry.url}
+                  src={outsideEntry.qrSrc}
+                  alt="QR code for takeaway orders"
+                  className="mx-auto my-2 h-40 w-40 rounded-lg border border-default bg-white p-1 pointer-events-none"
+                />
+                <p className="break-all text-xs text-muted-ui">
+                  {outsideEntry.url}
+                </p>
+              </button>
+            </div>
           </section>
         ) : null}
 
@@ -386,9 +315,7 @@ export function QrTableGenerator({
             className="space-y-2"
           >
             <p className="text-xs text-secondary-ui leading-snug print:hidden">
-              {hasMenuBase
-                ? `Menu base: ${menuBase}. Tables ${rows[0]?.table ?? "—"}–${rows[rows.length - 1]?.table ?? "—"}.`
-                : "Set NEXT_PUBLIC_SITE_URL to preview table QR codes."}
+              {`Menu base: ${menuBaseUrl}. Tables ${rows[0]?.table ?? "—"}–${rows[rows.length - 1]?.table ?? "—"}.`}
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 print:grid-cols-3">
               {rows.map((entry) => (

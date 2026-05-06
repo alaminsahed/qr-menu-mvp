@@ -31,6 +31,7 @@ export async function removeMenuImage(path: string) {
 
 export async function uploadRestaurantLogo(
   file: File,
+  restaurantId: string,
 ): Promise<UploadMenuImageResult> {
   if (file.size <= 0) {
     return { error: "Selected image is empty." };
@@ -48,7 +49,7 @@ export async function uploadRestaurantLogo(
     file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
   const now = Date.now();
   const random = Math.random().toString(36).slice(2, 10);
-  const path = `branding/logo-${now}-${random}.${extension}`;
+  const path = `${restaurantId}/branding/logo-${now}-${random}.${extension}`;
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const supabase = createServiceRoleClient();
@@ -70,7 +71,10 @@ export async function uploadRestaurantLogo(
   return { publicUrl: data.publicUrl, path };
 }
 
-export async function uploadMenuImage(file: File): Promise<UploadMenuImageResult> {
+export async function uploadMenuImage(
+  file: File,
+  restaurantId: string,
+): Promise<UploadMenuImageResult> {
   if (file.size <= 0) {
     return { error: "Selected image is empty." };
   }
@@ -86,7 +90,7 @@ export async function uploadMenuImage(file: File): Promise<UploadMenuImageResult
   const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
   const now = Date.now();
   const random = Math.random().toString(36).slice(2, 10);
-  const path = `items/${now}-${random}.${extension}`;
+  const path = `${restaurantId}/items/${now}-${random}.${extension}`;
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const supabase = createServiceRoleClient();

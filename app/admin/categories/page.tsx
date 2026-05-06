@@ -6,7 +6,7 @@ import { CategoriesTable } from "@/app/admin/categories/_components/categories-t
 import { CreateCategoryForm } from "@/app/admin/categories/_components/create-category-form";
 import { EditCategoryModal } from "@/app/admin/categories/_components/edit-category-modal";
 import { type CategoryRow } from "@/app/admin/categories/_components/types";
-import { isAdminUser } from "@/lib/admin/is-admin";
+import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 import { createServiceRoleClient, createClient } from "@/lib/supabase/server";
 
 type AdminCategoriesPageProps = {
@@ -28,15 +28,11 @@ function parseSortOrder(value: FormDataEntryValue | null) {
   return Number.isFinite(parsed) ? Math.max(0, Math.round(parsed)) : 0;
 }
 
-async function ensureAdmin() {
+async function getRestaurantId(): Promise<string> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/login?error=unauthorized");
-  const admin = await isAdminUser(supabase, user.id);
-  if (!admin) redirect("/login?error=unauthorized");
+  const member = await getAdminRestaurant(supabase);
+  if (!member) redirect("/login?error=unauthorized");
+  return member.restaurant_id;
 }
 
 async function refreshCategories(status: "success" | "error", message: string) {
@@ -51,6 +47,7 @@ async function refreshCategories(status: "success" | "error", message: string) {
 export default async function AdminCategoriesPage({
   searchParams,
 }: AdminCategoriesPageProps) {
+  const restaurantId = await getRestaurantId();
   const supabase = createServiceRoleClient();
   const params = searchParams ? await searchParams : undefined;
   const status = params?.status;
@@ -60,6 +57,7 @@ export default async function AdminCategoriesPage({
   const { data, error } = await supabase
     .from("menu_categories")
     .select("id, slug, name_en, name_bn, sort_order, is_active, created_at")
+    .eq("restaurant_id", restaurantId)
     .order("sort_order", { ascending: true })
     .order("name_en", { ascending: true });
 
@@ -86,7 +84,7 @@ export default async function AdminCategoriesPage({
   async function createCategory(formData: FormData) {
     "use server";
 
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const nameEn = String(formData.get("name_en") ?? "").trim();
     const nameBn = String(formData.get("name_bn") ?? "").trim();
@@ -105,6 +103,7 @@ export default async function AdminCategoriesPage({
     const { error: insertError } = await serviceClient
       .from("menu_categories")
       .insert({
+        restaurant_id: restaurantIdInner,
         slug,
         name_en: nameEn,
         name_bn: resolvedNameBn,
@@ -122,7 +121,7 @@ export default async function AdminCategoriesPage({
   async function updateCategory(formData: FormData) {
     "use server";
 
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     const nameEn = String(formData.get("name_en") ?? "").trim();
@@ -150,7 +149,8 @@ export default async function AdminCategoriesPage({
         is_active: isActive,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (updateError) {
       await refreshCategories("error", "Failed to update category.");
@@ -162,7 +162,7 @@ export default async function AdminCategoriesPage({
   async function toggleCategoryAvailability(formData: FormData) {
     "use server";
 
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     const nextIsActive =
@@ -178,7 +178,8 @@ export default async function AdminCategoriesPage({
         is_active: nextIsActive,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (updateError) {
       await refreshCategories("error", "Failed to update category status.");
@@ -193,7 +194,7 @@ export default async function AdminCategoriesPage({
   async function deleteCategory(formData: FormData) {
     "use server";
 
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     if (!id) {
@@ -203,7 +204,8 @@ export default async function AdminCategoriesPage({
     const { count, error: countError } = await serviceClient
       .from("menu_items")
       .select("id", { count: "exact", head: true })
-      .eq("category_id", id);
+      .eq("category_id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (countError) {
       await refreshCategories("error", "Failed to validate category usage.");
@@ -219,7 +221,8 @@ export default async function AdminCategoriesPage({
     const { error: deleteError } = await serviceClient
       .from("menu_categories")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (deleteError) {
       await refreshCategories("error", "Failed to delete category.");
@@ -231,7 +234,7 @@ export default async function AdminCategoriesPage({
   async function moveCategory(formData: FormData) {
     "use server";
 
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     const direction = String(formData.get("direction") ?? "").trim();
@@ -242,6 +245,7 @@ export default async function AdminCategoriesPage({
     const { data: rows, error: fetchError } = await serviceClient
       .from("menu_categories")
       .select("id, sort_order")
+      .eq("restaurant_id", restaurantIdInner)
       .order("sort_order", { ascending: true })
       .order("name_en", { ascending: true });
 
@@ -272,7 +276,8 @@ export default async function AdminCategoriesPage({
         sort_order: targetRow.sort_order,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", currentRow.id);
+      .eq("id", currentRow.id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (firstUpdateError) {
       await refreshCategories("error", "Failed to reorder categories.");
@@ -284,7 +289,8 @@ export default async function AdminCategoriesPage({
         sort_order: currentRow.sort_order,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", targetRow.id);
+      .eq("id", targetRow.id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (secondUpdateError) {
       await refreshCategories("error", "Failed to reorder categories.");

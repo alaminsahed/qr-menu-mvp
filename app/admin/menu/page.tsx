@@ -14,7 +14,7 @@ import {
   removeMenuImage,
   uploadMenuImage,
 } from "@/app/admin/menu/_lib/menu-image-storage";
-import { isAdminUser } from "@/lib/admin/is-admin";
+import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 
 type AdminMenuPageProps = {
@@ -40,15 +40,11 @@ function parseBool(value: FormDataEntryValue | null) {
   return String(value ?? "").toLowerCase() === "true";
 }
 
-async function ensureAdmin() {
+async function getRestaurantId(): Promise<string> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/login?error=unauthorized");
-  const admin = await isAdminUser(supabase, user.id);
-  if (!admin) redirect("/login?error=unauthorized");
+  const member = await getAdminRestaurant(supabase);
+  if (!member) redirect("/login?error=unauthorized");
+  return member.restaurant_id;
 }
 
 async function refreshMenu(status: "success" | "error", message: string) {
@@ -58,6 +54,7 @@ async function refreshMenu(status: "success" | "error", message: string) {
 }
 
 export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps) {
+  const restaurantId = await getRestaurantId();
   const supabase = createServiceRoleClient();
   const params = searchParams ? await searchParams : undefined;
   const status = params?.status;
@@ -67,6 +64,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
   const { data: categoryData, error: categoryError } = await supabase
     .from("menu_categories")
     .select("id, slug, name_en, name_bn, is_active")
+    .eq("restaurant_id", restaurantId)
     .eq("is_active", true)
     .order("sort_order", { ascending: true })
     .order("name_en", { ascending: true });
@@ -76,6 +74,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     .select(
       "id, slug, category_id, name_en, name_bn, description_en, description_bn, price, image_url, featured, available",
     )
+    .eq("restaurant_id", restaurantId)
     .order("featured", { ascending: false })
     .order("name_en", { ascending: true });
 
@@ -100,7 +99,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
 
   async function createMenuItem(formData: FormData) {
     "use server";
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const nameEn = String(formData.get("name_en") ?? "").trim();
     const nameBn = String(formData.get("name_bn") ?? "").trim() || nameEn;
@@ -116,7 +115,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     let imageUrl = "";
 
     if (imageFile instanceof File && imageFile.size > 0) {
-      const upload = await uploadMenuImage(imageFile);
+      const upload = await uploadMenuImage(imageFile, restaurantIdInner);
       if ("error" in upload) {
         await refreshMenu("error", upload.error);
       } else {
@@ -129,6 +128,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     }
 
     const { error } = await serviceClient.from("menu_items").insert({
+      restaurant_id: restaurantIdInner,
       slug,
       category_id: categoryId,
       name_en: nameEn,
@@ -148,7 +148,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
 
   async function updateMenuItem(formData: FormData) {
     "use server";
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     const nameEn = String(formData.get("name_en") ?? "").trim();
@@ -166,7 +166,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     let imageUrl = currentImageUrl;
 
     if (imageFile instanceof File && imageFile.size > 0) {
-      const upload = await uploadMenuImage(imageFile);
+      const upload = await uploadMenuImage(imageFile, restaurantIdInner);
       if ("error" in upload) {
         await refreshMenu("error", upload.error);
       } else {
@@ -197,7 +197,8 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
         featured,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (error) await refreshMenu("error", "Failed to update menu item.");
     await refreshMenu("success", "Menu item updated.");
@@ -205,7 +206,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
 
   async function deleteMenuItem(formData: FormData) {
     "use server";
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     if (!id) await refreshMenu("error", "Menu item id is required.");
@@ -214,11 +215,17 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
       .from("menu_items")
       .select("image_url")
       .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner)
       .maybeSingle();
 
     if (itemFetchError) await refreshMenu("error", "Failed to load menu item.");
 
-    const { error } = await serviceClient.from("menu_items").delete().eq("id", id);
+    const { error } = await serviceClient
+      .from("menu_items")
+      .delete()
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
+
     if (error) await refreshMenu("error", "Failed to delete menu item.");
 
     const imagePath = parseStoragePathFromPublicUrl(item?.image_url ?? "");
@@ -231,7 +238,7 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
 
   async function toggleAvailability(formData: FormData) {
     "use server";
-    await ensureAdmin();
+    const restaurantIdInner = await getRestaurantId();
     const serviceClient = createServiceRoleClient();
     const id = String(formData.get("id") ?? "").trim();
     const nextAvailable = parseBool(formData.get("next_available"));
@@ -240,7 +247,8 @@ export default async function AdminMenuPage({ searchParams }: AdminMenuPageProps
     const { error } = await serviceClient
       .from("menu_items")
       .update({ available: nextAvailable, updated_at: new Date().toISOString() })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("restaurant_id", restaurantIdInner);
 
     if (error) await refreshMenu("error", "Failed to update availability.");
     await refreshMenu(

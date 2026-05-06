@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isAdminUser } from "@/lib/admin/is-admin";
+import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 import { createClient } from "@/lib/supabase/server";
 
 export type ApiError = {
@@ -23,13 +23,7 @@ export function serverError(message = "Internal server error.") {
 
 export async function requireAdminUser() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) return null;
-  const isAdmin = await isAdminUser(supabase, user.id);
-  if (!isAdmin) return null;
-
-  return user;
+  const member = await getAdminRestaurant(supabase);
+  if (!member) return null;
+  return { restaurant_id: member.restaurant_id, role: member.role };
 }

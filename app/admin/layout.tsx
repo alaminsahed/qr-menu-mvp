@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AdminNav } from "@/app/admin/_components/admin-nav";
-import { createClient } from "@/lib/supabase/server";
-import { isAdminUser } from "@/lib/admin/is-admin";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
+import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 
 export default async function AdminLayout({
   children,
@@ -16,16 +16,21 @@ export default async function AdminLayout({
   } = await supabase.auth.getUser();
 
   if (!user) redirect("/login?error=unauthorized");
-  const admin = await isAdminUser(supabase, user.id);
-  if (!admin) redirect("/login?error=unauthorized");
-  const { data: restaurantSettings } = await supabase
+
+  const member = await getAdminRestaurant(supabase);
+  if (!member) redirect("/login?error=unauthorized");
+
+  const serviceClient = createServiceRoleClient();
+  const { data: restaurantSettings } = await serviceClient
     .from("restaurant_settings")
     .select("restaurant_name, logo_url")
-    .order("updated_at", { ascending: false })
-    .limit(1)
+    .eq("restaurant_id", member.restaurant_id)
     .maybeSingle();
+
   const restaurantName =
-    restaurantSettings?.restaurant_name?.trim() || "Your Restaurant";
+    restaurantSettings?.restaurant_name?.trim() ||
+    member.restaurant.name ||
+    "Your Restaurant";
   const logoUrl = restaurantSettings?.logo_url?.trim() || null;
 
   async function signOut() {

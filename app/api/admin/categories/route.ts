@@ -26,9 +26,10 @@ function revalidateCategoryViews() {
 }
 
 export async function POST(request: Request) {
-  const user = await requireAdminUser();
-  if (!user) return unauthorized();
+  const member = await requireAdminUser();
+  if (!member) return unauthorized();
 
+  const { restaurant_id } = member;
   const serviceClient = createServiceRoleClient();
   let payload: unknown;
 
@@ -56,6 +57,7 @@ export async function POST(request: Request) {
     const { data, error } = await serviceClient
       .from("menu_categories")
       .insert({
+        restaurant_id,
         slug: toSlug(parsed.data.name_en),
         name_en: parsed.data.name_en,
         name_bn: parsed.data.name_bn,
@@ -84,7 +86,8 @@ export async function POST(request: Request) {
         is_active: parsed.data.is_active,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to update category.");
     revalidateCategoryViews();
@@ -98,7 +101,8 @@ export async function POST(request: Request) {
     const { count, error: countError } = await serviceClient
       .from("menu_items")
       .select("id", { count: "exact", head: true })
-      .eq("category_id", parsed.data.id);
+      .eq("category_id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (countError) return serverError("Failed to validate category usage.");
     if ((count ?? 0) > 0) {
@@ -108,7 +112,8 @@ export async function POST(request: Request) {
     const { error } = await serviceClient
       .from("menu_categories")
       .delete()
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to delete category.");
     revalidateCategoryViews();
@@ -125,7 +130,8 @@ export async function POST(request: Request) {
         is_active: parsed.data.is_active,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to update category status.");
     revalidateCategoryViews();
@@ -139,6 +145,7 @@ export async function POST(request: Request) {
     const { data: rows, error: fetchError } = await serviceClient
       .from("menu_categories")
       .select("id, sort_order, name_en")
+      .eq("restaurant_id", restaurant_id)
       .order("sort_order", { ascending: true })
       .order("name_en", { ascending: true });
 
@@ -164,7 +171,8 @@ export async function POST(request: Request) {
         sort_order: targetRow.sort_order,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", currentRow.id);
+      .eq("id", currentRow.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (firstError) return serverError("Failed to reorder categories.");
 
@@ -174,7 +182,8 @@ export async function POST(request: Request) {
         sort_order: currentRow.sort_order,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", targetRow.id);
+      .eq("id", targetRow.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (secondError) return serverError("Failed to reorder categories.");
     revalidateCategoryViews();

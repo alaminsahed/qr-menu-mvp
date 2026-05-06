@@ -24,9 +24,10 @@ function revalidateMenuViews() {
 }
 
 export async function POST(request: Request) {
-  const user = await requireAdminUser();
-  if (!user) return unauthorized();
+  const member = await requireAdminUser();
+  if (!member) return unauthorized();
 
+  const { restaurant_id } = member;
   const serviceClient = createServiceRoleClient();
   let payload: unknown;
 
@@ -54,6 +55,7 @@ export async function POST(request: Request) {
     const { data, error } = await serviceClient
       .from("menu_items")
       .insert({
+        restaurant_id,
         slug: toSlug(parsed.data.name_en),
         category_id: parsed.data.category_id,
         name_en: parsed.data.name_en,
@@ -93,7 +95,8 @@ export async function POST(request: Request) {
         featured: parsed.data.featured,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to update menu item.");
     revalidateMenuViews();
@@ -107,7 +110,8 @@ export async function POST(request: Request) {
     const { error } = await serviceClient
       .from("menu_items")
       .delete()
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to delete menu item.");
     revalidateMenuViews();
@@ -124,7 +128,8 @@ export async function POST(request: Request) {
         available: parsed.data.available,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", parsed.data.id);
+      .eq("id", parsed.data.id)
+      .eq("restaurant_id", restaurant_id);
 
     if (error) return serverError("Failed to update menu item availability.");
     revalidateMenuViews();
