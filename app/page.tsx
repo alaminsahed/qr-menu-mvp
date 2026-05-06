@@ -190,19 +190,6 @@ export default function Home() {
 
           <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-2">
             <div>
-              <span className="lp-fade-up inline-flex items-center gap-2.5 rounded-2xl border border-(--color-border-default) bg-surface px-3 py-2 text-[11px] font-semibold tracking-wide text-(--color-action-secondary) sm:gap-3 sm:px-4 sm:text-xs">
-                <span className="relative h-11 w-11 shrink-0 overflow-hidden sm:h-12 sm:w-12">
-                  <Image
-                    src="/logo/logo3.png"
-                    alt="Tab Bite"
-                    width={48}
-                    height={48}
-                    className="h-full w-full object-contain"
-                  />
-                </span>
-                Tab Bite for Restaurant Owners
-              </span>
-
               <h1 className="lp-fade-up lp-d1 mt-5 text-balance text-3xl font-semibold leading-tight tracking-tight text-primary-ui sm:text-4xl md:text-6xl">
                 Modern QR Ordering for
                 <span className="text-(--color-action-primary)">
