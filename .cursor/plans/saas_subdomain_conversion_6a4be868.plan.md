@@ -107,7 +107,7 @@ RLS policies:
 
 [`supabase/seed.sql`](supabase/seed.sql) updated to:
 
-1. Insert demo restaurant: `slug='demo', name='Tab Bite Demo'`
+1. Insert demo restaurant: `slug='demo', name='TapBite Demo'`
 2. Insert `restaurant_settings` row linked to demo restaurant
 3. All category inserts gain `restaurant_id`; conflict key changes to `(restaurant_id, slug)`
 4. All item inserts gain `restaurant_id`; conflict key changes to `(restaurant_id, slug)`

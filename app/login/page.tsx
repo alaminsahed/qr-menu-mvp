@@ -89,7 +89,7 @@ export default async function LoginPage({
             <Link href="/" className="block">
               <Image
                 src="/logo/logo3.png"
-                alt="Tab Bite"
+                alt="TapBite"
                 width={96}
                 height={96}
                 className="rounded-xl object-contain"
@@ -106,7 +106,7 @@ export default async function LoginPage({
                 className="mt-1 text-sm"
                 style={{ color: "var(--color-text-muted)" }}
               >
-                Admin portal · Tab Bite
+                Admin portal · TapBite
               </p>
             </div>
           </div>

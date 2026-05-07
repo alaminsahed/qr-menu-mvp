@@ -1,6 +1,6 @@
 -- ── Demo restaurant ──────────────────────────────────────────
 insert into public.restaurants (slug, name, status)
-values ('demo', 'Tab Bite Demo', 'active')
+values ('demo', 'TapBite Demo', 'active')
 on conflict (slug) do update
 set
   name   = excluded.name,
@@ -18,7 +18,7 @@ insert into public.restaurant_settings (
 )
 values (
   (select id from public.restaurants where slug = 'demo'),
-  'Tab Bite Demo',
+  'TapBite Demo',
   '+8801685765411',
   '+8801685765411',
   'Dhaka, Bangladesh',

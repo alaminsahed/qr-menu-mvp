@@ -1,6 +1,6 @@
 # Restaurant Onboarding Guide — A to Z
 
-> **Platform:** TapBite (`tapbite.org`) — multi-tenant QR menu SaaS  
+> **Platform:** TapBite (`tapbite.org`) — multi-tenant QR menu SaaS
 > **Stack:** Next.js 16 · Supabase · Vercel  
 > **Time required:** ~15 minutes per restaurant
 

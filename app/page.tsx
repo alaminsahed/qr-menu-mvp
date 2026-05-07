@@ -6,7 +6,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tapbite.org";
 const OG_IMAGE = `${SITE_URL}/logo/logo3.png`;
 
 export const metadata: Metadata = {
-  title: "Tab Bite — Modern QR Ordering for Restaurants",
+  title: "TapBite — Modern QR Ordering for Restaurants",
   description:
     "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
   keywords: [
@@ -17,22 +17,22 @@ export const metadata: Metadata = {
     "restaurant management Bangladesh",
     "no commission ordering",
     "digital menu QR",
-    "Tab Bite",
+    "TapBite",
   ],
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Tab Bite — Modern QR Ordering for Restaurants",
+    title: "TapBite — Modern QR Ordering for Restaurants",
     description:
       "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
     url: SITE_URL,
     type: "website",
-    images: [{ url: OG_IMAGE, width: 1000, height: 1000, alt: "Tab Bite" }],
+    images: [{ url: OG_IMAGE, width: 1000, height: 1000, alt: "TapBite" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tab Bite — Modern QR Ordering for Restaurants",
+    title: "TapBite — Modern QR Ordering for Restaurants",
     description:
       "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
     images: [OG_IMAGE],
@@ -132,7 +132,7 @@ const MOCK_ITEMS = [
 ];
 
 const PRICING_INCLUDES =
-  "Includes your domain, hosting, and Tab Bite — no separate domain or hosting bills.";
+  "Includes your domain, hosting, and TapBite — no separate domain or hosting bills.";
 
 const PRICING = [
   {
@@ -175,24 +175,24 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Tab Bite",
+      name: "TapBite",
       description: "Modern QR Ordering for Restaurants",
     },
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Tab Bite",
+      name: "TapBite",
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
         url: OG_IMAGE,
       },
       description:
-        "Tab Bite provides per-table QR menus and WhatsApp ordering for restaurants in Bangladesh — zero commission, no app install for guests.",
+        "TapBite provides per-table QR menus and WhatsApp ordering for restaurants in Bangladesh — zero commission, no app install for guests.",
     },
     {
       "@type": "SoftwareApplication",
-      name: "Tab Bite",
+      name: "TapBite",
       url: SITE_URL,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
@@ -252,7 +252,7 @@ export default function Home() {
               />
             </span>
             <span className="text-sm font-bold tracking-[0.16em] uppercase sm:text-base">
-              Tab Bite
+              TapBite
             </span>
           </Link>
           <div className="flex items-center gap-3 text-xs sm:gap-4 sm:text-sm">
@@ -444,7 +444,7 @@ export default function Home() {
               Profit-Boosting by Design
             </h2>
             <p className="lp-reveal mx-auto mb-10 max-w-2xl text-center text-sm text-secondary-ui">
-              Tab Bite removes hidden operational costs while making ordering
+              TapBite removes hidden operational costs while making ordering
               faster for both dine-in and delivery customers.
             </p>
 
@@ -611,7 +611,7 @@ export default function Home() {
             <span className="relative h-20 w-20 shrink-0 overflow-hidden sm:h-24 sm:w-24">
               <Image
                 src="/logo/logo3.png"
-                alt="Tab Bite logo"
+                alt="TapBite logo"
                 width={96}
                 height={96}
                 className="h-full w-full object-cover"
@@ -619,7 +619,7 @@ export default function Home() {
             </span>
             <div>
               <p className="text-[0.9rem] font-bold tracking-[0.16em] uppercase text-(--color-action-primary)">
-                Tab Bite
+                TapBite
               </p>
               <p className="mt-1 text-xs text-muted-ui">
                 Modern QR Ordering for Restaurants
@@ -654,7 +654,7 @@ export default function Home() {
           </nav>
         </div>
         <div className="mx-auto mt-5 max-w-6xl border-t border-(--color-border-soft) px-4 pt-4 text-xs text-muted-ui sm:px-5">
-          © {new Date().getFullYear()} Tab Bite. Built for Restaurants in
+          © {new Date().getFullYear()} TapBite. Built for Restaurants in
           Bangladesh.
         </div>
       </footer>

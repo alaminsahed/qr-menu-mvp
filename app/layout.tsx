@@ -16,16 +16,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tab Bite — Modern QR Ordering for Restaurants",
-    template: "%s | Tab Bite",
+    default: "TapBite — Modern QR Ordering for Restaurants",
+    template: "%s | TapBite",
   },
   description:
     "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tapbite.org"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tapbite.org",
   ),
   openGraph: {
-    siteName: "Tab Bite",
+    siteName: "TapBite",
     type: "website",
     locale: "en_US",
   },
