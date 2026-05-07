@@ -8,7 +8,7 @@ const OG_IMAGE = `${SITE_URL}/logo/logo3.png`;
 export const metadata: Metadata = {
   title: "TapBite — Modern QR Ordering for Restaurants",
   description:
-    "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission.",
+    "Per-table QR menus and WhatsApp ordering for restaurants: guests scan at their table, you see the right table number, and you can run dine-in or local delivery without marketplace commission. TapBite is also searched as Tap Bite or Tab Bite.",
   keywords: [
     "QR menu restaurant",
     "WhatsApp ordering system",
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     "no commission ordering",
     "digital menu QR",
     "TapBite",
+    "Tap Bite",
+    "Tab Bite",
   ],
   alternates: {
     canonical: SITE_URL,
@@ -176,12 +178,14 @@ const jsonLd = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: "TapBite",
+      alternateName: ["Tap Bite", "Tab Bite"],
       description: "Modern QR Ordering for Restaurants",
     },
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
       name: "TapBite",
+      alternateName: ["Tap Bite", "Tab Bite"],
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
@@ -298,6 +302,9 @@ export default function Home() {
                 order in WhatsApp with that table already attached. You skip
                 marketplace commission, keep the floor calm, and use your own
                 rider group when guests want delivery.
+              </p>
+              <p className="lp-fade-up lp-d2 mt-2 max-w-xl text-xs text-muted-ui sm:text-sm">
+                TapBite is also commonly searched as Tap Bite or Tab Bite.
               </p>
 
               <div className="lp-fade-up lp-d3 mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
