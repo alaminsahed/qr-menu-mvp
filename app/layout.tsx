@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@tapbite",
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
   robots: {
     index: true,
     follow: true,
