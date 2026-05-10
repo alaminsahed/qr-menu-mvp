@@ -1,6 +1,5 @@
 ---
 description: Next.js Server Actions patterns for validation, security, and reliability
-globs: app/**/*.{ts,tsx}
 alwaysApply: false
 ---
 

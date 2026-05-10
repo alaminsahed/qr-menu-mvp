@@ -1,8 +1,8 @@
 import {
-  AdminButton,
   AdminField,
   AdminInput,
 } from "@/app/admin/_components/admin-primitives";
+import { AdminSubmitButton } from "@/app/admin/_components/form-submit-button";
 import { type CategoryRow } from "@/app/admin/categories/_components/types";
 
 type EditCategoryModalProps = {
@@ -66,13 +66,22 @@ export function EditCategoryModal({
             />
           </AdminField>
           <div className="flex flex-wrap gap-2">
-            <AdminButton
-              type="submit"
+            <AdminSubmitButton
               className="inline-flex items-center gap-2"
+              pendingChildren={
+                <span className="inline-flex items-center gap-2">
+                  <span className="material-symbols-outlined animate-spin text-base">
+                    progress_activity
+                  </span>
+                  Saving...
+                </span>
+              }
             >
-              <span className="material-symbols-outlined text-base">save</span>
-              Save changes
-            </AdminButton>
+              <span className="inline-flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">save</span>
+                Save changes
+              </span>
+            </AdminSubmitButton>
             <a
               href="/admin/categories"
               className="inline-flex items-center gap-2 rounded-full border border-default bg-surface px-4 py-2 text-sm font-semibold text-secondary-ui hover:bg-surface-soft"

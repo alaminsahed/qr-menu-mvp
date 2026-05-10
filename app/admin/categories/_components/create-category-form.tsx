@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import {
-  AdminButton,
   AdminField,
   AdminInput,
 } from "@/app/admin/_components/admin-primitives";
+import { AdminSubmitButton } from "@/app/admin/_components/form-submit-button";
 
 type CreateCategoryFormProps = {
   defaultSortOrder: number;
@@ -74,10 +74,22 @@ export function CreateCategoryForm({
             />
           </AdminField>
           <div className="lg:col-span-3">
-            <AdminButton type="submit" className="inline-flex items-center gap-2">
-              <span className="material-symbols-outlined text-base">add</span>
-              Add category
-            </AdminButton>
+            <AdminSubmitButton
+              className="inline-flex items-center gap-2"
+              pendingChildren={
+                <span className="inline-flex items-center gap-2">
+                  <span className="material-symbols-outlined animate-spin text-base">
+                    progress_activity
+                  </span>
+                  Adding category...
+                </span>
+              }
+            >
+              <span className="inline-flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">add</span>
+                Add category
+              </span>
+            </AdminSubmitButton>
           </div>
         </form>
       </div>

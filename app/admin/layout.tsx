@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AdminNav } from "@/app/admin/_components/admin-nav";
+import { FormSubmitButton } from "@/app/admin/_components/form-submit-button";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { getAdminRestaurant } from "@/lib/admin/get-restaurant";
 
@@ -125,12 +126,19 @@ export default async function AdminLayout({
                 View public menu
               </Link>
               <form action={signOut} className="shrink-0">
-                <button
-                  type="submit"
+                <FormSubmitButton
                   className="cursor-pointer whitespace-nowrap rounded-full bg-primary-ui px-4 py-2 text-sm font-semibold text-white hover:opacity-95"
+                  pendingChildren={
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="material-symbols-outlined animate-spin text-base">
+                        progress_activity
+                      </span>
+                      Signing out...
+                    </span>
+                  }
                 >
                   Sign out
-                </button>
+                </FormSubmitButton>
               </form>
             </div>
           </div>

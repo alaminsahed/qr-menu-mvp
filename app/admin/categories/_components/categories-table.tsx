@@ -1,4 +1,4 @@
-import { AdminButton } from "@/app/admin/_components/admin-primitives";
+import { AdminSubmitButton, FormSubmitButton } from "@/app/admin/_components/form-submit-button";
 import { type CategoryRow } from "@/app/admin/categories/_components/types";
 
 type CategoriesTableProps = {
@@ -70,28 +70,42 @@ export function CategoriesTable({
                       <form action={onMoveCategory} className="inline-flex">
                         <input type="hidden" name="id" value={category.id} />
                         <input type="hidden" name="direction" value="up" />
-                        <AdminButton
-                          type="submit"
+                        <AdminSubmitButton
                           variant="secondary"
                           disabled={globalIndex <= 0}
                           className="inline-flex h-auto min-h-0! min-w-0! items-center gap-1 rounded-full! border border-violet-200/90! bg-violet-50/95! px-2.5! py-1! text-[11px] font-semibold tracking-tight text-violet-900! shadow-sm! transition hover:border-violet-300! hover:bg-violet-100/95! hover:shadow-md active:scale-[0.98] disabled:border-zinc-200! disabled:bg-zinc-100/80! disabled:text-zinc-400! disabled:opacity-100!"
+                          pendingChildren={
+                            <span className="inline-flex items-center gap-1">
+                              <span className="material-symbols-outlined animate-spin text-[16px] opacity-90">
+                                progress_activity
+                              </span>
+                              Moving...
+                            </span>
+                          }
                         >
                           <span className="material-symbols-outlined text-[16px] opacity-90">arrow_upward</span>
                           Up
-                        </AdminButton>
+                        </AdminSubmitButton>
                       </form>
                       <form action={onMoveCategory} className="inline-flex">
                         <input type="hidden" name="id" value={category.id} />
                         <input type="hidden" name="direction" value="down" />
-                        <AdminButton
-                          type="submit"
+                        <AdminSubmitButton
                           variant="secondary"
                           disabled={globalIndex < 0 || globalIndex >= allCategories.length - 1}
                           className="inline-flex h-auto min-h-0! min-w-0! items-center gap-1 rounded-full! border border-violet-200/90! bg-violet-50/95! px-2.5! py-1! text-[11px] font-semibold tracking-tight text-violet-900! shadow-sm! transition hover:border-violet-300! hover:bg-violet-100/95! hover:shadow-md active:scale-[0.98] disabled:border-zinc-200! disabled:bg-zinc-100/80! disabled:text-zinc-400! disabled:opacity-100!"
+                          pendingChildren={
+                            <span className="inline-flex items-center gap-1">
+                              <span className="material-symbols-outlined animate-spin text-[16px] opacity-90">
+                                progress_activity
+                              </span>
+                              Moving...
+                            </span>
+                          }
                         >
                           <span className="material-symbols-outlined text-[16px] opacity-90">arrow_downward</span>
                           Down
-                        </AdminButton>
+                        </AdminSubmitButton>
                       </form>
                       <a
                         href={`/admin/categories?edit=${category.id}`}
@@ -114,30 +128,41 @@ export function CategoriesTable({
                         >
                           {category.is_active ? "On" : "Off"}
                         </span>
-                        <button
-                          type="submit"
+                        <FormSubmitButton
                           className={`relative inline-flex h-[18px] w-8 shrink-0 items-center rounded-full shadow-inner transition hover:opacity-95 active:scale-95 ${
                             category.is_active ? "bg-secondary-ui" : "bg-zinc-300"
                           }`}
                           aria-label={category.is_active ? "Disable category" : "Enable category"}
+                          pendingChildren={
+                            <span className="material-symbols-outlined animate-spin text-[13px] text-white">
+                              progress_activity
+                            </span>
+                          }
                         >
                           <span
                             className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition ${
                               category.is_active ? "translate-x-4" : "translate-x-0.5"
                             }`}
                           />
-                        </button>
+                        </FormSubmitButton>
                       </form>
                       <form action={onDeleteCategory} className="inline-flex">
                         <input type="hidden" name="id" value={category.id} />
-                        <AdminButton
-                          type="submit"
+                        <AdminSubmitButton
                           variant="secondary"
                           className="inline-flex h-auto min-h-0! min-w-0! items-center gap-1 rounded-full! border border-red-200/90! bg-red-50/95! px-2.5! py-1! text-[11px] font-semibold tracking-tight text-red-800! shadow-sm! transition hover:border-red-300! hover:bg-red-100! hover:shadow-md active:scale-[0.98]"
+                          pendingChildren={
+                            <span className="inline-flex items-center gap-1">
+                              <span className="material-symbols-outlined animate-spin text-[16px] opacity-90">
+                                progress_activity
+                              </span>
+                              Deleting...
+                            </span>
+                          }
                         >
                           <span className="material-symbols-outlined text-[16px] opacity-90">delete</span>
                           Delete
-                        </AdminButton>
+                        </AdminSubmitButton>
                       </form>
                     </div>
                   </td>

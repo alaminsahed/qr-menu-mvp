@@ -1,4 +1,4 @@
-import { AdminButton } from "@/app/admin/_components/admin-primitives";
+import { AdminSubmitButton, FormSubmitButton } from "@/app/admin/_components/form-submit-button";
 import {
   type MenuCategoryOption,
   type MenuItemRow,
@@ -98,19 +98,23 @@ export function MenuItemsTable({
                         >
                           {item.available ? "In stock" : "Out"}
                         </span>
-                        <button
-                          type="submit"
+                        <FormSubmitButton
                           className={`relative inline-flex h-[18px] w-8 shrink-0 items-center rounded-full shadow-inner transition hover:opacity-95 active:scale-95 ${
                             item.available ? "bg-secondary-ui" : "bg-zinc-300"
                           }`}
                           aria-label={item.available ? "Mark unavailable" : "Mark available"}
+                          pendingChildren={
+                            <span className="material-symbols-outlined animate-spin text-[13px] text-white">
+                              progress_activity
+                            </span>
+                          }
                         >
                           <span
                             className={`inline-block h-3 w-3 transform rounded-full bg-white shadow-sm transition ${
                               item.available ? "translate-x-4" : "translate-x-0.5"
                             }`}
                           />
-                        </button>
+                        </FormSubmitButton>
                       </form>
                     </td>
                     <td className="px-3 py-2">
@@ -124,14 +128,21 @@ export function MenuItemsTable({
                         </a>
                         <form action={onDeleteMenuItem} className="inline-flex">
                           <input type="hidden" name="id" value={item.id} />
-                          <AdminButton
-                            type="submit"
+                          <AdminSubmitButton
                             variant="secondary"
                             className="inline-flex h-auto min-h-0! min-w-0! items-center gap-1 rounded-full! border border-red-200/90! bg-red-50/95! px-2.5! py-1! text-[11px] font-semibold tracking-tight text-red-800! shadow-sm! transition hover:border-red-300! hover:bg-red-100! hover:shadow-md active:scale-[0.98]"
+                            pendingChildren={
+                              <span className="inline-flex items-center gap-1">
+                                <span className="material-symbols-outlined animate-spin text-[16px] opacity-90">
+                                  progress_activity
+                                </span>
+                                Deleting...
+                              </span>
+                            }
                           >
                             <span className="material-symbols-outlined text-[16px] opacity-90">delete</span>
                             Delete
-                          </AdminButton>
+                          </AdminSubmitButton>
                         </form>
                       </div>
                     </td>
