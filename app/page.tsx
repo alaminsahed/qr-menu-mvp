@@ -318,7 +318,7 @@ export default function Home() {
                   </span>
                 </Link>
                 <Link
-                  href="/menu?table=5"
+                  href="https://home-spicy.tapbite.org"
                   className="inline-flex w-full items-center justify-center gap-1 text-sm font-medium text-secondary-ui transition-colors duration-200 hover:-translate-y-0.5 hover:text-primary-ui sm:w-auto"
                 >
                   See Live Demo
