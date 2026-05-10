@@ -40,11 +40,17 @@ export function FormSubmitButton({
   children,
   pendingChildren,
   disabled = false,
+  className,
   ...props
 }: FormSubmitButtonProps) {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={disabled || pending} {...props}>
+    <button
+      type="submit"
+      disabled={disabled || pending}
+      className={`cursor-pointer disabled:cursor-not-allowed ${className ?? ""}`}
+      {...props}
+    >
       {pending ? pendingChildren ?? resolveChildren(children, true) : resolveChildren(children, false)}
     </button>
   );

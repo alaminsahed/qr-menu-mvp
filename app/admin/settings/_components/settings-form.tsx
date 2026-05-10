@@ -62,7 +62,7 @@ function LogoUploadField({ currentUrl }: { currentUrl: string | null }) {
             name="logo"
             type="file"
             accept="image/jpeg,image/png,image/webp"
-            className="ui-input block max-w-xs text-sm text-secondary-ui file:mr-3 file:rounded-lg file:border-0 file:bg-surface-soft file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-ui"
+            className="ui-input block max-w-xs cursor-pointer text-sm text-secondary-ui file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-surface-soft file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-ui"
             onChange={(e) => {
               const file = e.target.files?.[0];
               setPreview((prev) => {

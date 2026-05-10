@@ -47,7 +47,7 @@ export function MenuImagePicker({
           const nextFile = event.currentTarget.files?.[0] ?? null;
           setSelectedFile(nextFile);
         }}
-        className="ui-input file:mr-3 file:rounded-full file:border-0 file:bg-surface-soft file:px-3 file:py-1.5 file:text-sm file:font-medium"
+        className="ui-input cursor-pointer file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-surface-soft file:px-3 file:py-1.5 file:text-sm file:font-medium"
       />
       {helpText ? <p className="text-xs text-muted-ui">{helpText}</p> : null}
       {resolvedPreview ? (

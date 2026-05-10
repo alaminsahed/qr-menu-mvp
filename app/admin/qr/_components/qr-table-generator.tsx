@@ -158,7 +158,7 @@ export function QrTableGenerator({
             id="qr-tab-takeaway"
             aria-controls="qr-panel-takeaway"
             onClick={() => setActiveTab("takeaway")}
-            className={`min-h-8 flex-1 rounded-md px-2 py-1 text-xs font-semibold transition ${
+            className={`min-h-8 flex-1 cursor-pointer rounded-md px-2 py-1 text-xs font-semibold transition ${
               activeTab === "takeaway"
                 ? "bg-surface text-primary-ui shadow-sm"
                 : "text-secondary-ui hover:text-primary-ui"
@@ -173,7 +173,7 @@ export function QrTableGenerator({
             id="qr-tab-restaurant"
             aria-controls="qr-panel-restaurant"
             onClick={() => setActiveTab("restaurant")}
-            className={`min-h-8 flex-1 rounded-md px-2 py-1 text-xs font-semibold transition ${
+            className={`min-h-8 flex-1 cursor-pointer rounded-md px-2 py-1 text-xs font-semibold transition ${
               activeTab === "restaurant"
                 ? "bg-surface text-primary-ui shadow-sm"
                 : "text-secondary-ui hover:text-primary-ui"
@@ -374,7 +374,7 @@ export function QrTableGenerator({
                 type="button"
                 onClick={closeModal}
                 aria-label="Close"
-                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-default text-secondary-ui hover:bg-surface-soft"
+                className="inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-default text-secondary-ui hover:bg-surface-soft"
               >
                 <span className="material-symbols-outlined text-base">
                   close

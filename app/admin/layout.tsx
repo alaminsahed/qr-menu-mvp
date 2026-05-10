@@ -112,7 +112,7 @@ export default async function AdminLayout({
             <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2 lg:w-auto lg:flex-nowrap">
               <button
                 type="button"
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-secondary-ui hover:bg-surface-soft"
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-secondary-ui hover:bg-surface-soft"
                 aria-label="Notifications"
               >
                 <span className="material-symbols-outlined text-[20px]">

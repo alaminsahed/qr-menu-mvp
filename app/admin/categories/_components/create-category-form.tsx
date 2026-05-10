@@ -47,7 +47,7 @@ export function CreateCategoryForm({
             event.stopPropagation();
             setIsOpen((previous) => !previous);
           }}
-          className="inline-flex shrink-0 items-center justify-center self-start rounded-lg bg-primary-ui px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40 sm:self-center"
+          className="inline-flex cursor-pointer shrink-0 items-center justify-center self-start rounded-lg bg-primary-ui px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-ui/40 sm:self-center"
         >
           Add Category
         </button>

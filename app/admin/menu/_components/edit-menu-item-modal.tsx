@@ -55,7 +55,7 @@ export function EditMenuItemModal({
               id="edit_category_id"
               name="category_id"
               required
-              className="ui-input pr-10"
+              className="ui-input cursor-pointer pr-10"
               defaultValue={item.category_id}
             >
               {categories.map((category) => (
