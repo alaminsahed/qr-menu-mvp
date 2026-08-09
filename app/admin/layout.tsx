@@ -149,7 +149,7 @@ export default async function AdminLayout({
 
         <main className="flex-1 px-3 py-5 sm:px-6 sm:py-6">{children}</main>
         <footer className="bg-white px-3 py-4 text-center text-xs uppercase tracking-[0.14em] text-muted-ui shadow-[0_-4px_14px_rgba(15,23,42,0.04)] sm:px-6 sm:py-5">
-          © 2024 Bhojon Hub. Artisanal Bangladeshi culinary management platform.
+          © 2024 Tap Bite
         </footer>
       </div>
     </div>
